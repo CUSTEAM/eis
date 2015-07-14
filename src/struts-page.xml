@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="publiclogin" extends="abstract_struts" namespace="/">				
+		<action name="Logout" class="action.Logout">
+			<result name="logout">/index.jsp</result>
+		</action>	
+		
+		<action name="Aqansw" class="action.calendar.Aqansw">
+			<result>/jsp/Aqansw.jsp</result>
+		</action>
+		
+			
+	</package>
+	
+	<package name="calendar" extends="abstract_struts" namespace="/">		
+		<action name="Calendar" class="action.calendar.MyCalendar">
+			<result name="intro">/jsp/calendar.jsp</result>
+		</action>		
+	</package>
+	
+	<package name="eis" extends="abstract_struts" namespace="/">		
+		<action name="Outlook" class="action.eis.OutlookAction">
+			<result>/jsp/eis/Outlook.jsp</result>
+			<result name="dilg">/jsp/eis/Outlook/dilg.jsp</result>
+			<result name="desd">/jsp/eis/Outlook/desd.jsp</result>
+			<result name="stdfrom">/jsp/eis/Outlook/stdfrom.jsp</result>
+			<result name="stdaddr">/jsp/eis/Outlook/stdaddr.jsp</result>
+			<result name="stdlost">/jsp/eis/Outlook/stdlost.jsp</result>
+			<result name="merge">/jsp/eis/Outlook/merge.jsp</result>
+		</action>	
+		
+		
+		
+		
+			
+	</package>
+	
+	<package name="account" extends="abstract_struts" namespace="/">		
+		<action name="AccountManager" class="action.account.AccountManager">
+			<result>/jsp/AccountManager.jsp</result>
+		</action>		
+	</package>
+	
+	<package name="ams" extends="abstract_struts" namespace="/">		
+		<action name="ExcuseManager" class="action.ams.ExcuseManager">
+			<result>/jsp/ams/ExcuseManager.jsp</result>
+		</action>		
+	</package>
+	
+	<package name="sa" extends="abstract_struts" namespace="/">		
+		<action name="CalendarManager" class="action.sa.CalendarManager">
+			<result>/jsp/sa/CalendarManager.jsp</result>
+		</action>		
+		
+		<action name="QAManager" class="action.sa.QAManager">
+			<result>/jsp/sa/QAManager.jsp</result>
+		</action>
+		
+		<action name="QAPGManager" class="action.sa.QAPGManagerAction">
+			<result>/jsp/sa/QAPGManager.jsp</result>
+		</action>
+		
+		<action name="CheckNoHist" class="action.sa.CheckNoHistAction">
+			<result>/jsp/sa/CheckNoHist.jsp</result>
+		</action>
+		
+		<!--action name="DeLasTermData" class="action.sa.DeLasTermDataAction">
+			<result>/jsp/sa/DeLasTermData.jsp</result>
+		</action-->
+		
+		<action name="ChangeTerm" class="action.sa.ChangeTermAction">
+			<result>/jsp/sa/ChangeTerm.jsp</result>
+		</action>
+		
+		<action name="FlowChart" class="action.sa.ChangeTermAction">
+			<result>/jsp/sa/ChangeTerm.jsp</result>
+		</action>
+		
+	</package>
+	
+	<package name="task" extends="abstract_struts" namespace="/">		
+		<action name="TaskTemplateManager" class="action.task.TaskTemplateManagerAction">
+			<result>/jsp/task/TaskTemplateManager.jsp</result>
+		</action>	
+		
+		<action name="TaskAdd" class="action.task.TaskAddAction">
+			<result>/jsp/task/TaskAdd.jsp</result>
+			<result name="edit">/jsp/task/TaskAdd/edit.jsp</result>
+		</action>
+		
+		<action name="TaskDeal" class="action.task.TaskDealAction">
+			<result>/jsp/task/TaskDeal.jsp</result>
+			<result name="edit">/jsp/task/TaskDeal/edit.jsp</result>
+		</action>
+			
+	</package>
+
+</struts>

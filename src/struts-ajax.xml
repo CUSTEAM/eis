@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<package name="ajax" extends="struts-default, json-default" namespace="/">		
+		<action name="getMySchedule" class="ajax.getMySchedule"/>
+		<action name="editMySchedule" class="ajax.editMySchedule"/>
+		
+		<!-- 操行評語 -->
+		<action name="autoCompleteCode1" class="ajax.autoCompleteCode1">
+			<result type="json"/>
+		</action>
+		
+		<!-- 學號姓名 -->
+		<action name="autoCompleteStmd" class="ajax.autoCompleteStmd">
+			<result type="json"/>
+		</action>
+		
+		<!-- 學號姓名 -->
+		<action name="autoCompleteDtime" class="ajax.autoCompleteDtime">
+			<result type="json"/>
+		</action>
+		
+		<!-- 獎懲原因 -->
+		<action name="autoCompleteCODE_DESD_CAUSE" class="ajax.autoCompleteCODE_DESD_CAUSE">
+			<result type="json"/>
+		</action>
+		
+		<!-- 學生缺曠 -->
+		<action name="getStdDilg" class="ajax.dilg.getStdDilg">
+			<result type="json"/>
+		</action>
+		
+		<!-- 學生連絡資訊 -->
+		<action name="getStdContectInfo" class="ajax.reg.getStdContectInfo">
+			<result type="json"/>
+		</action>
+		
+		<!-- 學生成績資訊 -->
+		<action name="getStdScoreInfo" class="ajax.reg.getStdScoreInfo">
+			<result type="json"/>
+		</action>
+		
+		<!-- 點名 -->
+		<action name="editDilg" class="ajax.dilg.editDilg">
+			<result type="json"/>
+		</action>
+		
+		<!-- 學生缺曠JSON -->
+		<action name="getStdDilgJson" class="ajax.student.getStdDilgJson">
+			<result type="json">
+			    <param name="jData">list</param>
+			</result>
+		</action>		
+		
+		<!-- 學生缺曠chart -->
+		<action name="getStdDilgChart" class="ajax.student.getStdDilgChart">
+			<result type="json"/>
+		</action>
+		
+		<!-- 學生成績 -->
+		<action name="getStdScore" class="ajax.student.getStdScore">
+			<result type="json"/>
+		</action>
+		
+		<action name="getStdScoreJsonp" class="ajax.student.getStdScore">
+		    <result type="json">
+		      <param name="callbackParameter">callback</param>
+		    </result>		
+		 </action>
+		
+		<!-- 學生成績chart -->
+		<action name="getStdScoreChart" class="ajax.student.getStdScoreChart">
+			<result type="json"/>
+		</action>		
+		
+		<!-- 學生輔導記錄 -->
+		<action name="getStudCounseling" class="ajax.student.getStudCounseling">
+			<result type="json"/>
+		</action>
+		
+		<!-- 學生獎懲記錄 -->
+		<action name="getStDesd" class="ajax.student.getStDesd">
+			<result type="json"/>
+		</action>
+		
+		<!-- 導師資訊 -->
+		<action name="getTutor" class="ajax.empl.getTutor">
+			<result type="json"/>
+		</action>
+		
+		<!-- 隨機檢查(初步為問卷) -->
+		<action name="initCheck" class="ajax.empl.initCheck">
+			<result type="json"/>
+		</action>
+		
+		<!-- 教職員自動完成 -->
+		<action name="autoCompleteEmpl" class="ajax.autoCompleteEmpl">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+		<!-- 科目代碼自動完成 -->
+		<action name="autoCompleteCscode" class="ajax.autoCompleteCscode">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+		<!-- 教職員自動完成 -->
+		<action name="autoCompleteEmplOid" class="ajax.autoCompleteEmplOid">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+		<!-- 教室自動完成 -->
+		<action name="autoCompleteNabbr" class="ajax.autoCompleteNabbr">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+		<!-- 取各項代碼 -->
+		<action name="autoCompAnyCode" class="ajax.autoCompAnyCode">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+		<!-- 取各項課表 -->
+		<action name="getTimeTable" class="ajax.getTimeTable">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+	</package>
+	
+	<package name="ajax.account" extends="struts-default, json-default" namespace="/">	
+		<!-- 帳號唯一 -->
+		<action name="checkAccountUnique" class="ajax.account.checkAccountUnique">
+			<result type="json"/>
+		</action>
+		
+	</package>
+	
+	<package name="stdimage" extends="abstract_struts, struts-default, json-default" namespace="/">				
+		<!-- 取FTP上的學生照片 -->
+		<action name="getStdimage" class="ajax.ftp.stdimage.getStdimage">
+		    <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+	    	</result>		    
+		</action>
+		
+		<!-- 將學生照片放上FTP -->
+		<action name ="putStdimage" class ="ajax.ftp.stdimage.putStdimage" > 
+            <!-- interceptor-ref name ="fileUploadStack" /--> 
+            <result type="json"/>
+        </action > 		
+	</package>
+	
+	<package name="ftp" extends="abstract_struts, struts-default, json-default" namespace="/">
+	    <action name="getFtpFile" class="ajax.ftp.getFtpFile">
+		    <result type="stream">  
+		        <param name="contentType">${mimeType}</param>  
+		        <param name="inputName">inStream</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+	    	</result>		    
+		</action>
+		
+	    <!-- 將系統文件附件照片FTP -->
+		<action name ="putSysDocFile" class ="ajax.ftp.putSysDocFile" > 
+            <!-- interceptor-ref name ="fileUploadStack" /--> 
+            <result type="json"/>
+        </action > 
+	</package>
+	
+	<package name="seld" extends="abstract_struts, struts-default, json-default" namespace="/">
+	    <!-- 選課歷程 -->
+		<action name="getSeldHist" class="ajax.seld.getSeldHist">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+			    <param name="format">yyyy/MM/DD HH:mm</param>
+		   	</result>
+		</action>		
+	</package>
+	
+	<package name="tasks" extends="abstract_struts, struts-default, json-default" namespace="/">
+	    <!-- 任務模版細節 -->
+		<action name="getTaskInfo" class="ajax.task.getTaskInfo">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+		<!-- 任務模版細節 -->
+		<action name="getTaskAppInfo" class="ajax.task.getTaskAppInfo">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+	</package>
+
+	<include file="struts-ajax-dtime.xml" />
+</struts>
