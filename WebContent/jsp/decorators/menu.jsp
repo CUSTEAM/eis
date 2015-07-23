@@ -60,7 +60,7 @@
 							<li class="divider"></li>
 							<li class="dropdown-submenu"><a><i class="icon-search" style="margin-top: 3px;"></i> 公用查詢</a>
 								<ul class="dropdown-menu">									
-									<li><a href="/CIS/Teacher/StdinfoSh.do">學生查詢</a></li>
+									<li><a href="/eis/StdSearch">學生查詢</a></li>
 									<li><a href="/CIS/Personnel/ListStudent.do">班級查詢</a></li>
 									<li><a href="/pis/PubCsSearch">課程查詢</a></li>
 									<li><a href="/pis/PubCsSearch">教師留校時間查詢</a></li>									
