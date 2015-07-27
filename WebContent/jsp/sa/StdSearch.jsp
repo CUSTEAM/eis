@@ -16,6 +16,8 @@
 
 $(document).ready(function() {
 	
+	
+	
 	$('.help').popover("show");
 	setTimeout(function() {
 		$('.help').popover("hide");
@@ -23,9 +25,9 @@ $(document).ready(function() {
 	
 	$("select[name='week'], select[name='beginCls'], select[name='endCls']" ).change(function() {
 		if($("#week").val()+$("#beginCls").val()+$("#endCls").val()!=""){
-			$(".tname, .tsex, .tadd, .tsch, .tsch, .tstds" ).hide("slow");
+			$(".gtype, .tname, .tsex, .tide, .tadd, .tsch, .tsch, .tstds" ).hide("slow");
 		}else{
-			$(".tname, .tsex, .tadd, .tsch, .tsch, .tstds" ).show("slow");
+			$(".gtype, .tname, .tsex, .tide, .tadd, .tsch, .tsch, .tstds" ).show("slow");
 		}
 		  
 	});
@@ -34,9 +36,9 @@ $(document).ready(function() {
 	
 	$("#stds").keyup(function() {		
 		if(this.value!=""){
-			$(".tcls, .tsel,.tname, .tsex, .tadd, .tsch, .tsch" ).hide("slow");
+			$(".tcls, .tsel,.tname, .tsex, .tide, .tadd, .tsch, .tsch" ).hide("slow");
 		}else{
-			$(".tcls, .tsel,.tname, .tsex, .tadd, .tsch, .tsch" ).show("slow");
+			$(".tcls, .tsel,.tname, .tsex, .tide, .tadd, .tsch, .tsch" ).show("slow");
 		}
 	});
 		
@@ -54,23 +56,26 @@ $(document).ready(function() {
 </head>
 <body>
 
-
+<div class="alert">
+學生查詢
+</div>
 <form action="StdSearch" method="post" class="form-horizontal" enctype="multipart/form-data">
 <table class="table">
-	<tr class="tsel">
-		<td><%@ include file="/inc/jsp-kit/classSelectorFull.jsp"%></td>
-	</tr>
 	<tr class="gtype">
 		<td>
 		<div class="input-prepend">
 		<span class="add-on">目標</span>
-		<select name="">
-			<option <c:if test="${type eq'stmd'}">selected</c:if> value="stmd">在校</option>
-			<option <c:if test="${type eq'Gstmd'}">selected</c:if> value="Gstmd">離校</option>
+		<select name="type">
+			<option <c:if test="${type eq'stmd'}">selected</c:if> value="stmd">在校生</option>
+			<option <c:if test="${type eq'Gstmd'}">selected</c:if> value="Gstmd">離校生</option>
 		</select>
 		</div>
 		</td>
 	</tr>
+	<tr class="tsel">
+		<td><%@ include file="/inc/jsp-kit/classSelectorFull.jsp"%></td>
+	</tr>
+	
 	<tr class="tname">
 		<td>
 		<div class="input-prepend">
@@ -95,6 +100,19 @@ $(document).ready(function() {
 		</div>
 		
 		<div class="input-prepend">
+			<span class="add-on">身份別</span>
+			<select name="ident">
+				<option value="">全部</option>
+				<c:forEach items="${CODE_STMD_IDENT}" var="i">
+				<option <c:if test="${ident eq i.id}"></c:if> value="${i.id}">${i.name}</option>
+				</c:forEach>
+			</select>
+		</div>
+		</td>
+	</tr>
+	<tr class="tide">
+		<td>		
+		<div class="input-prepend">
 			<span class="add-on">生日範圍</span>
 			<input type="text" id="beginDate" placeholder="點一下輸入日期" name="beginDate" value="${beginDate}"/>
 		</div>
@@ -104,8 +122,10 @@ $(document).ready(function() {
 			<input type="text" id="endDate" placeholder="點一下輸入日期" name="endDate" value="${endDate}"/>
 		</div>
 		<div rel="popover" title="說明" data-content="輸入開始日期則回傳自開始日期至今,輸入結束日期則回傳至結束日期,兩欄均輸入則回傳範圍內的學生名單" data-placement="right" class="help btn btn-warning">?</div>			
+		
 		</td>
 	</tr>
+	
 	<tr class="tcls">
 		<td>
 		<div class="input-prepend">
@@ -175,7 +195,7 @@ $(document).ready(function() {
 		<a href="StdSearch" class="btn">重新查詢</a>
 		</div>
 		
-      <input style="margin:5px;" type="checkbox" checked disabled><small>遵守各項規定並同意記錄查詢過程</small>
+      <input style="margin:5px;" type="checkbox" checked disabled><small>遵守各項<a target="_blank" href="http://law.moj.gov.tw/">法律規定</a>並同意記錄查詢過程</small>
 		</td>
 	</tr>
 </table>

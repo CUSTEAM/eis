@@ -15,6 +15,7 @@ public class StdSearch extends BaseAction{
 	public String cno, stno, sno, cono, dno, gno, zno;
 	public String stdName;
 	public String sex;
+	public String ident;
 	public String beginDate, endDate;
 	public String week, beginCls, endCls;
 	public String addr;
@@ -63,6 +64,7 @@ public class StdSearch extends BaseAction{
 		if(!gno.equals(""))sb.append(" AND c.Grade='"+gno+"'");
 		if(!zno.equals(""))sb.append(" AND c.SeqNo='"+zno+"'");			
 		if(!sex.equals(""))sb.append(" AND s.sex='"+sex+"'");
+		if(!ident.equals(""))sb.append(" AND s.ident='"+ident+"'");
 		if(!beginDate.equals(""))sb.append(" AND s.birthday>='"+beginDate+"'");
 		if(!endDate.equals(""))sb.append(" AND s.birthday<'"+endDate+"'");			
 		if(!sch.equals(""))sb.append(" AND s.schl_name LIKE'%"+sch+"%'");
@@ -95,10 +97,7 @@ public class StdSearch extends BaseAction{
 		sb.append("ORDER BY c.SchoolType, c.ClassNo");
 		PrintWriter out=response.getWriter();
 		
-		List list=df.sqlGet(sb.toString());
-		
-		
-		
+		List list=df.sqlGet(sb.toString());		
 		out.println("<style>td{font-size:18px;}</style>");
 		List students;
 		List selds;
@@ -106,8 +105,7 @@ public class StdSearch extends BaseAction{
 		int x;
 		int y;
 		for(int i=0; i<list.size(); i++){
-			students=df.sqlGet("SELECT s.student_no, s.student_name FROM " +type
-					+" s WHERE s.depart_class='"+((Map)list.get(i)).get("ClassNo")+"'");
+			students=df.sqlGet("SELECT s.student_no, s.student_name FROM "+type+" s WHERE s.depart_class='"+((Map)list.get(i)).get("ClassNo")+"'");
 			
 			if(students.size()<1){
 				continue;
