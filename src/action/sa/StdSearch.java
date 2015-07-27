@@ -11,7 +11,7 @@ import action.BaseAction;
 
 public class StdSearch extends BaseAction{
 	
-	
+	public String type;
 	public String cno, stno, sno, cono, dno, gno, zno;
 	public String stdName;
 	public String sex;
@@ -46,7 +46,7 @@ public class StdSearch extends BaseAction{
 		StringBuilder sb=new StringBuilder("SELECT s.*,c.ClassName, "
 		+ "d.name as DeptName, c5.name,c51.name as team,c3.name as county,"
 		+ "c31.name as province, c52.name as status_name, c53.name as caurse_name,"
-		+ "c54.name as ident_name2 FROM(((((((stmd s LEFT OUTER JOIN Class c ON "
+		+ "c54.name as ident_name2 FROM((((((("+type+" s LEFT OUTER JOIN Class c ON "
 		+ "s.depart_class=c.ClassNo)LEFT OUTER JOIN code5 c5 ON c5.idno=s.ident AND "
 		+ "c5.category='Identity')LEFT OUTER JOIN code5 c51 ON c51.idno=s.divi AND "
 		+ "c51.category='GROUP')LEFT OUTER JOIN code3 c3 ON s.birth_county=c3.no)LEFT "
@@ -66,9 +66,12 @@ public class StdSearch extends BaseAction{
 		if(!beginDate.equals(""))sb.append(" AND s.birthday>='"+beginDate+"'");
 		if(!endDate.equals(""))sb.append(" AND s.birthday<'"+endDate+"'");			
 		if(!sch.equals(""))sb.append(" AND s.schl_name LIKE'%"+sch+"%'");
-		if(!addr.equals(" AND s.perm_addr LIKE'%"+addr+"%' || s.curr_addr LIKE'%"+addr+"%'"))			
+		if(!stdName.equals("")){
+			sb.append(" AND (s.student_no LIKE'%"+stdName+"%' OR s.student_name LIKE '%"+stdName+"%')");
+		}
+		if(!addr.equals(""))sb.append(" AND s.perm_addr LIKE'%"+addr+"%' || s.curr_addr LIKE'%"+addr+"%'");
+			
 		sb.append(" ORDER BY c.ClassNo, s.student_no");		
-		System.out.println(sb);
 		print(df.sqlGet(sb.toString()));
 		
 		
@@ -103,8 +106,8 @@ public class StdSearch extends BaseAction{
 		int x;
 		int y;
 		for(int i=0; i<list.size(); i++){
-			students=df.sqlGet("SELECT s.student_no, s.student_name FROM " +
-					"stmd s WHERE s.depart_class='"+((Map)list.get(i)).get("ClassNo")+"'");
+			students=df.sqlGet("SELECT s.student_no, s.student_name FROM " +type
+					+" s WHERE s.depart_class='"+((Map)list.get(i)).get("ClassNo")+"'");
 			
 			if(students.size()<1){
 				continue;
@@ -170,7 +173,7 @@ public class StdSearch extends BaseAction{
 	
 	private void note() throws IOException{
 		
-		List<Map<String,String>>s=df.sqlGet("SELECT student_no, student_name FROM stmd");
+		List<Map<String,String>>s=df.sqlGet("SELECT student_no, student_name FROM "+type);
 		List<Map>in=new ArrayList();
 		for(int i=0; i<s.size(); i++){			
 			if(stds.indexOf(s.get(i).get("student_name"))>=0){
@@ -180,7 +183,7 @@ public class StdSearch extends BaseAction{
 		StringBuilder sb=new StringBuilder("SELECT s.*,c.ClassName, "
 		+ "d.name as DeptName, c5.name,c51.name as team,c3.name as county,"
 		+ "c31.name as province, c52.name as status_name, c53.name as caurse_name,"
-		+ "c54.name as ident_name2 FROM(((((((stmd s LEFT OUTER JOIN Class c ON "
+		+ "c54.name as ident_name2 FROM((((((("+type+" s LEFT OUTER JOIN Class c ON "
 		+ "s.depart_class=c.ClassNo)LEFT OUTER JOIN code5 c5 ON c5.idno=s.ident AND "
 		+ "c5.category='Identity')LEFT OUTER JOIN code5 c51 ON c51.idno=s.divi AND "
 		+ "c51.category='GROUP')LEFT OUTER JOIN code3 c3 ON s.birth_county=c3.no)LEFT "

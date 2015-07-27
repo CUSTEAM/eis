@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
+<title>學生查詢</title>
+<script src="/eis/inc/js/plugin/bootstrap-tooltip.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui-timepicker-addon.js"></script>
 <link href="/eis/inc/css/jquery-ui.css" rel="stylesheet"/>
@@ -16,7 +16,10 @@
 
 $(document).ready(function() {
 	
-	
+	$('.help').popover("show");
+	setTimeout(function() {
+		$('.help').popover("hide");
+	}, 0);
 	
 	$("select[name='week'], select[name='beginCls'], select[name='endCls']" ).change(function() {
 		if($("#week").val()+$("#beginCls").val()+$("#endCls").val()!=""){
@@ -45,26 +48,6 @@ $(document).ready(function() {
 		}
 		
 	});
-	
-	
-	
-	$("input[id='stdName']").typeahead({
-		remote:"#stdNo",
-		source : [],
-		items : 30,
-		updateSource:function(inputVal, callback){			
-			$.ajax({
-				type:"POST",
-				url:"/eis/autoCompleteStmd",
-				dataType:"json",
-				data:{length:10, nameno:inputVal},
-				success:function(d){
-					callback(d.list);
-				}
-			});
-		}		
-	});	
-	
 });
 </script>
 
@@ -77,13 +60,26 @@ $(document).ready(function() {
 	<tr class="tsel">
 		<td><%@ include file="/inc/jsp-kit/classSelectorFull.jsp"%></td>
 	</tr>
+	<tr class="gtype">
+		<td>
+		<div class="input-prepend">
+		<span class="add-on">目標</span>
+		<select name="">
+			<option <c:if test="${type eq'stmd'}">selected</c:if> value="stmd">在校</option>
+			<option <c:if test="${type eq'Gstmd'}">selected</c:if> value="Gstmd">離校</option>
+		</select>
+		</div>
+		</td>
+	</tr>
 	<tr class="tname">
 		<td>
 		<div class="input-prepend">
 			<span class="add-on">學號或姓名</span>
 			<input class="span4" onClick="$('#stdName').val(''), $('#stdNo').val('');" autocomplete="off" type="text" id="stdName" value="${stdName}" name="stdName"
 			 data-provide="typeahead" onClick="addStd()" placeholder="學號或姓名片段" />
-		</div>		
+			 
+		</div>	
+		<div rel="popover" title="說明" data-content="以姓名片段查詢如:「陳怡君」,「陳」,「陳怡」,「怡君」,「陳_君」,中間字不詳請輸入下底線「_」" data-placement="right" class="help btn btn-warning">?</div>	
 		</td>
 	</tr>
 	
@@ -106,7 +102,8 @@ $(document).ready(function() {
 		<div class="input-prepend">
 			<span class="add-on">至</span>
 			<input type="text" id="endDate" placeholder="點一下輸入日期" name="endDate" value="${endDate}"/>
-		</div>			
+		</div>
+		<div rel="popover" title="說明" data-content="輸入開始日期則回傳自開始日期至今,輸入結束日期則回傳至結束日期,兩欄均輸入則回傳範圍內的學生名單" data-placement="right" class="help btn btn-warning">?</div>			
 		</td>
 	</tr>
 	<tr class="tcls">
@@ -137,7 +134,9 @@ $(document).ready(function() {
 			<c:forEach begin="1" end="14" varStatus="i">
 			<option <c:if test="${endCls eq i.index}">selected</c:if> value="${i.index}">至第${i.index}節</option>
 			</c:forEach>
-		</select>		
+		</select>	
+		
+		<div rel="popover" title="說明" data-content="輸入星期與節次,回傳學生名單並標記範圍內有課的節次" data-placement="right" class="help btn btn-warning">?</div>	
 		</td>
 	</tr>
 	<tr class="tadd">
@@ -146,7 +145,7 @@ $(document).ready(function() {
 			<span class="add-on">現居住址</span>
 			<input type="text" name="addr" value="${addr}"/>
 		</div>
-		<button class="btn" type="button">?</button>
+		<div rel="popover" title="說明" data-content="請以關鍵字查詢如：「台北」,「新北」,「南港」,「忠孝東路四段」查詢" data-placement="right" class="help btn btn-warning">?</div>
 		</td>
 	</tr>
 	
@@ -156,7 +155,7 @@ $(document).ready(function() {
 			<span class="add-on">畢業學校</span>
 			<input type="text" name="sch" value="${sch}"/>
 		</div>
-		<button class="btn" type="button">?</button>
+		<div rel="popover" title="說明" data-content="請以關鍵字查詢如：「育達」,「協和」,「中華」,「大學」查詢" data-placement="right" class="help btn btn-warning">?</div>
 		</td>
 	</tr>
 	<tr class="tstds">
@@ -165,7 +164,7 @@ $(document).ready(function() {
 			<span class="add-on">名單查詢</span>
 			<textarea style="height:20px;" name="stds" id="stds">${stds}</textarea>
 		</div>
-		<button class="btn" type="button">?</button>
+		<div rel="popover" title="說明" data-content="連續輸入或貼上多個學生名單,可接受多餘的文字或符號,但不接受姓名中有缺少文字" data-placement="right" class="help btn btn-warning">?</div>
 		</td>
 	</tr>
 
@@ -175,6 +174,8 @@ $(document).ready(function() {
 		<button class="btn btn-danger" name="method:clSearch">查詢</button>
 		<a href="StdSearch" class="btn">重新查詢</a>
 		</div>
+		
+      <input style="margin:5px;" type="checkbox" checked disabled><small>遵守各項規定並同意記錄查詢過程</small>
 		</td>
 	</tr>
 </table>
