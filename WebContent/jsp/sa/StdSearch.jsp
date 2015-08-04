@@ -9,15 +9,8 @@
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui-timepicker-addon.js"></script>
 <link href="/eis/inc/css/jquery-ui.css" rel="stylesheet"/>
-<script>  
-
-
-
-
-$(document).ready(function() {
-	
-	
-	
+<script>
+$(document).ready(function() {	
 	$('.help').popover("show");
 	setTimeout(function() {
 		$('.help').popover("hide");
@@ -30,9 +23,7 @@ $(document).ready(function() {
 			$(".gtype, .tname, .tsex, .tide, .tadd, .tsch, .tsch, .tstds" ).show("slow");
 		}
 		  
-	});
-	
-	
+	});	
 	
 	$("#stds").keyup(function() {		
 		if(this.value!=""){
@@ -52,10 +43,8 @@ $(document).ready(function() {
 	});
 });
 </script>
-
 </head>
 <body>
-
 <div class="alert">
 學生查詢
 </div>
@@ -81,7 +70,7 @@ $(document).ready(function() {
 		<div class="input-prepend">
 			<span class="add-on">學號或姓名</span>
 			<input class="span4" onClick="$('#stdName').val(''), $('#stdNo').val('');" autocomplete="off" type="text" id="stdName" value="${stdName}" name="stdName"
-			 data-provide="typeahead" onClick="addStd()" placeholder="學號或姓名片段" />
+			 data-provide="typeahead" onClick="addStd()" placeholder="學號、姓名或身分證字號片段" />
 			 
 		</div>	
 		<div rel="popover" title="說明" data-content="以姓名片段查詢如:「陳怡君」,「陳」,「陳怡」,「怡君」,「陳_君」,中間字不詳請輸入下底線「_」" data-placement="right" class="help btn btn-warning">?</div>	

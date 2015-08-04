@@ -69,7 +69,7 @@ public class StdSearch extends BaseAction{
 		if(!endDate.equals(""))sb.append(" AND s.birthday<'"+endDate+"'");			
 		if(!sch.equals(""))sb.append(" AND s.schl_name LIKE'%"+sch+"%'");
 		if(!stdName.equals("")){
-			sb.append(" AND (s.student_no LIKE'%"+stdName+"%' OR s.student_name LIKE '%"+stdName+"%')");
+			sb.append(" AND (s.student_no LIKE'%"+stdName+"%' OR s.student_name LIKE '%"+stdName+"%' OR s.idno LIKE '%"+stdName+"%')");
 		}
 		if(!addr.equals(""))sb.append(" AND s.perm_addr LIKE'%"+addr+"%' || s.curr_addr LIKE'%"+addr+"%'");
 			
