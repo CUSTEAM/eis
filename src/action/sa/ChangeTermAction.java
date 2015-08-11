@@ -38,8 +38,9 @@ public class ChangeTermAction extends BaseAction{
 		
 		//檢查本年度作業
 		List<Map>stor=df.sqlGet("SELECT * FROM SYS_REUSE_STOR");
-		for(int i=0; i<stor.size();i++)stor.get(i).put("cnt", 
-		df.sqlGetInt("SELECT COUNT(*)FROM "+stor.get(i).get("table_name")+" WHERE school_year='"+stor.get(i).get("yearKey")+"' AND school_term='"+stor.get(i).get("termKey")+"'"));
+		for(int i=0; i<stor.size();i++){
+			stor.get(i).put("cnt", df.sqlGetInt("SELECT COUNT(*)FROM "+stor.get(i).get("table_name")+" WHERE school_year='"+getContext().getAttribute("school_year")+"' AND school_term='"+getContext().getAttribute("school_term")+"'"));
+		}
 		request.setAttribute("stor", stor);		
 		return SUCCESS;
 	}
