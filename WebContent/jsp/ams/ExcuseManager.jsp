@@ -217,7 +217,7 @@ $('.timepick').datetimepicker({
 	stepHour: 1,
 	stepMinute: 30,
 	hourMin: 7,
-	hourMax: 22
+	hourMax: 23
 });
 </script>
 </body>
