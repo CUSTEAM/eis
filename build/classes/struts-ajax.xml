@@ -182,7 +182,11 @@
 		<action name ="putSysDocFile" class ="ajax.ftp.putSysDocFile" > 
             <!-- interceptor-ref name ="fileUploadStack" /--> 
             <result type="json"/>
-        </action > 
+        </action> 
+        
+       
+        
+        
 	</package>
 	
 	<package name="seld" extends="abstract_struts, struts-default, json-default" namespace="/">

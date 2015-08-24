@@ -51,9 +51,6 @@ public class putSysDocFile extends BaseAction {
 	        return SUCCESS;
 		}
 		
-		
-		
-		
 		String fullpath=getContext().getRealPath("/tmp" )+"/";
 		
 		//檔名為時間

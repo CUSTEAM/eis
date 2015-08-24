@@ -12,7 +12,7 @@ import action.BaseAction;
  * 儲存學生照片檔案
  * @author John
  */
-public class putStdimage extends BaseAction {
+public class putTaskFile extends BaseAction {
 	
 	//private static final long serialVersionUID = 572146812454l;
 	//private static final int BUFFER_SIZE = 16 * 1024;
