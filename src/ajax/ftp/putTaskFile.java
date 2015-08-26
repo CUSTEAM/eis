@@ -1,4 +1,4 @@
-package ajax.ftp.stdimage;
+package ajax.ftp;
 
 import java.io.File;
 import java.io.IOException;
