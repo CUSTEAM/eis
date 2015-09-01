@@ -15,8 +15,7 @@
 		            <!-- li><a href="/CIS/Course/DtimeReserverSync.do"> 課程規劃開課作業</a></li-->	
 		            
 		            <li><a href="/eis/sa/CalendarManager?sys=cisa"> 各項日期管理</a></li>	
-		            
-		            
+		            <li><a href="/eis/sa/CardManager"> 卡片管理</a></li>		            
 		            <li class="dropdown-submenu"><a><i class="icon-tasks" style="margin-top: 5px;"></i> 工作單管理</a>
 						<ul class="dropdown-menu">
 							<li><a href="/eis/TaskAdd">工作單申請與查詢</a></li>

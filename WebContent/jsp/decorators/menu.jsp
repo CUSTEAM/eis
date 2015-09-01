@@ -185,7 +185,6 @@
 									<li><a href="/tis/OneThirdView">課程曠缺預警</a></li>
 									<li><a href="/tis/DilgApp">學生假單審核</a></li>
 									<li><a href="/sais/ConductCredits">操行成績及評語管理</a></li>
-									<li><a href="/CIS/Teacher/Tutor/LifeCounseling.do">生活輔導時間</a></li>
 									<li><a href="/CIS/Teacher/Tutor/CounselingT.do">職涯與學習輔導記錄</a></li>							
 									<li><a href="/CIS/Teacher/Tutor/GraduateInvestigation.do">應屆畢業生調查表</a></li>									
 									<li><a href="/CIS/Teacher/ClassCadre.do">班級幹部聯繫資料</a></li>

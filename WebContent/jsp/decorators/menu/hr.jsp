@@ -5,6 +5,7 @@
             <li><a href="/CIS/Personnel/HRmanager.do">人事基本資料管理</a></li>
             <li><a href="/CIS/Personnel/HRChecker.do">人事基本資料查核</a></li>
             <li><a href="/hris/UnitManager">單位管理</a></li>
+            <li><a href="/eis/sa/CardManager"> 識別證管理</a></li>
             <!--li><a href="/hris/UnitManager">單位管理</a></li-->
             <!-- li class="dropdown-submenu"><a href="#">教師資料設定</a>
                 <ul class="dropdown-menu">

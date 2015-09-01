@@ -45,17 +45,17 @@ public class StdSearch extends BaseAction{
 	}
 	
 	private void list() throws IOException{
-		StringBuilder sb=new StringBuilder("SELECT s.*,c.ClassName, "
+		StringBuilder sb=new StringBuilder("SELECT w.inco, s.*,c.ClassName, "
 		+ "d.name as DeptName, c5.name,c51.name as team,c3.name as county,"
 		+ "c31.name as province, c52.name as status_name, c53.name as caurse_name,"
-		+ "c54.name as ident_name2 FROM((((((("+type+" s LEFT OUTER JOIN Class c ON "
+		+ "c54.name as ident_name2 FROM(((((((("+type+" s LEFT OUTER JOIN Class c ON "
 		+ "s.depart_class=c.ClassNo)LEFT OUTER JOIN code5 c5 ON c5.idno=s.ident AND "
 		+ "c5.category='Identity')LEFT OUTER JOIN code5 c51 ON c51.idno=s.divi AND "
 		+ "c51.category='GROUP')LEFT OUTER JOIN code3 c3 ON s.birth_county=c3.no)LEFT "
 		+ "OUTER JOIN code3 c31 ON c31.no=s.birth_province)LEFT OUTER JOIN code5 c52 ON "
 		+ "s.occur_status=c52.idno AND c52.category='Status')LEFT OUTER JOIN code5 c53 ON "
 		+ "s.occur_cause=c53.idno AND c53.category='Cause')LEFT OUTER JOIN code5 c54 ON "
-		+ "s.ident_basic=c54.idno AND c53.category='Identity', CODE_DEPT d WHERE "
+		+ "s.ident_basic=c54.idno AND c53.category='Identity', CODE_DEPT d)LEFT OUTER JOIN wwpass w ON s.student_no=w.username WHERE "
 		+ "d.id=c.DeptNo");
 		if(!cno.equals(""))sb.append(" AND c.CampusNo='"+cno+"'");			
 		if(!stno.equals(""))sb.append(" AND c.SchoolType='"+stno+"'");
@@ -75,6 +75,7 @@ public class StdSearch extends BaseAction{
 		if(!addr.equals(""))sb.append(" AND s.perm_addr LIKE'%"+addr+"%' || s.curr_addr LIKE'%"+addr+"%'");
 			
 		sb.append(" ORDER BY c.ClassNo, s.student_no");		
+		System.out.println(sb);
 		print(df.sqlGet(sb.toString()));
 		
 		
@@ -98,22 +99,22 @@ public class StdSearch extends BaseAction{
 		sb.append("ORDER BY c.SchoolType, c.ClassNo");
 		PrintWriter out=response.getWriter();
 		
-		List list=df.sqlGet(sb.toString());		
+		List<Map>list=df.sqlGet(sb.toString());		
 		out.println("<style>td{font-size:18px;}</style>");
-		List students;
-		List selds;
+		List<Map>students;
+		List<Map>selds;
 		String str[];
 		int x;
 		int y;
 		for(int i=0; i<list.size(); i++){
-			students=df.sqlGet("SELECT s.student_no, s.student_name FROM "+type+" s WHERE s.depart_class='"+((Map)list.get(i)).get("ClassNo")+"'");
+			students=df.sqlGet("SELECT s.student_no, s.student_name FROM "+type+" s WHERE s.depart_class='"+list.get(i).get("ClassNo")+"'");
 			
 			if(students.size()<1){
 				continue;
 			}
 			out.println("<table border='1'>");
 			out.println("  <tr>");
-			out.println("    <td colspan='16'>"+((Map)list.get(i)).get("ClassName")+"</td>");			
+			out.println("    <td colspan='16'>"+list.get(i).get("ClassName")+"</td>");			
 			out.println("  </tr>");
 			out.println("  <tr>");			
 			out.println("    <td>學號</td>");
@@ -139,11 +140,11 @@ public class StdSearch extends BaseAction{
 				selds=df.sqlGet("SELECT dc.* FROM Seld s, Dtime d, Dtime_class dc WHERE " +
 				"dc.Dtime_oid=d.Oid AND dc.week='"+week+"' AND " +
 				"d.Oid=s.Dtime_oid AND d.Sterm='"+sterm+"' AND " +
-				"s.student_no='"+((Map)students.get(j)).get("student_no")+"'");
+				"s.student_no='"+students.get(j).get("student_no")+"'");
 				
 				for(int k=0; k<selds.size(); k++){
-					x=Integer.parseInt(((Map)selds.get(k)).get("begin").toString())-1;
-					y=Integer.parseInt(((Map)selds.get(k)).get("end").toString())-1;
+					x=Integer.parseInt(selds.get(k).get("begin").toString())-1;
+					y=Integer.parseInt(selds.get(k).get("end").toString())-1;
 					str[x]="*";
 					str[y]="*";
 					if(y-x>=2){
@@ -154,8 +155,8 @@ public class StdSearch extends BaseAction{
 				}
 				
 				out.println("  <tr>");
-				out.println("    <td>"+((Map)students.get(j)).get("student_no")+"&nbsp</td>");
-				out.println("    <td>"+((Map)students.get(j)).get("student_name")+"</td>");
+				out.println("    <td>"+students.get(j).get("student_no")+"&nbsp</td>");
+				out.println("    <td>"+students.get(j).get("student_name")+"</td>");
 				
 				for(int k=0; k<str.length; k++){
 					out.println("    <td>"+str[k]+"</td>");
@@ -179,32 +180,28 @@ public class StdSearch extends BaseAction{
 				in.add(s.get(i));
 			}			
 		}
-		StringBuilder sb=new StringBuilder("SELECT s.*,c.ClassName, "
+		StringBuilder sb=new StringBuilder("SELECT w.inco,s.*,c.ClassName, "
 		+ "d.name as DeptName, c5.name,c51.name as team,c3.name as county,"
 		+ "c31.name as province, c52.name as status_name, c53.name as caurse_name,"
-		+ "c54.name as ident_name2 FROM((((((("+type+" s LEFT OUTER JOIN Class c ON "
+		+ "c54.name as ident_name2 FROM(((((((("+type+" s LEFT OUTER JOIN Class c ON "
 		+ "s.depart_class=c.ClassNo)LEFT OUTER JOIN code5 c5 ON c5.idno=s.ident AND "
 		+ "c5.category='Identity')LEFT OUTER JOIN code5 c51 ON c51.idno=s.divi AND "
 		+ "c51.category='GROUP')LEFT OUTER JOIN code3 c3 ON s.birth_county=c3.no)LEFT "
 		+ "OUTER JOIN code3 c31 ON c31.no=s.birth_province)LEFT OUTER JOIN code5 c52 ON "
 		+ "s.occur_status=c52.idno AND c52.category='Status')LEFT OUTER JOIN code5 c53 ON "
 		+ "s.occur_cause=c53.idno AND c53.category='Cause')LEFT OUTER JOIN code5 c54 ON "
-		+ "s.ident_basic=c54.idno AND c53.category='Identity', CODE_DEPT d WHERE "
-		+ "d.id=c.DeptNo AND s.student_no IN(");
-		
+		+ "s.ident_basic=c54.idno AND c53.category='Identity', CODE_DEPT d)LEFT OUTER JOIN wwpass w ON s.student_no=w.username WHERE "
+		+ "d.id=c.DeptNo AND s.student_no IN(");		
 		for(int i=0; i<in.size(); i++){
 			sb.append("'"+in.get(i).get("student_no")+"',");
 		}
-		sb.delete(sb.length()-1, sb.length());
-		
-		sb.append(")ORDER BY c.ClassNo");
+		sb.delete(sb.length()-1, sb.length());		
+		sb.append(")ORDER BY c.ClassNo");		
 		try{
 			print(df.sqlGet(sb.toString()));
 		}catch(Exception e){
 			print(new ArrayList());
-		}
-		
-		
+		}		
 	}
 	
 	private void print(List<Map>list) throws IOException{
@@ -254,6 +251,7 @@ public class StdSearch extends BaseAction{
 		out.println("<td align='center' style='mso-number-format:\\@' nowrap>電子郵件</td>");
 		out.println("<td align='center' style='mso-number-format:\\@' nowrap>身份備註</td>");
 		out.println("<td align='center' style='mso-number-format:\\@' nowrap>英譯姓名</td>");
+		out.println("<td align='center' style='mso-number-format:\\@' nowrap>卡號</td>");
 		out.println("</tr>");			
 		for(int i=0; i<list.size(); i++){
 			
@@ -270,7 +268,7 @@ public class StdSearch extends BaseAction{
 			out.println("<td align='center' style='mso-number-format:\\@' nowrap>"+list.get(i).get("student_no") + "</td>");
 
 			// 性別
-			if (((Map)list.get(i)).get("sex").equals("1")) {
+			if (list.get(i).get("sex").equals("1")) {
 				out.println("<td align='center' style='mso-number-format:\\@' nowrap>男</td>");
 			} else {
 				out.println("<td align='center' style='mso-number-format:\\@' nowrap>女</td>");
@@ -278,104 +276,104 @@ public class StdSearch extends BaseAction{
 			
 			out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("idno") + "</td>");// 身份證
 			out.println("<td align='center' style='mso-number-format:\\@' nowrap>"+list.get(i).get("birthday") + "</td>"); // 生日
-			if (((Map)list.get(i)).get("entrance") != null) {
+			if (list.get(i).get("entrance") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("entrance") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("gradyear") != null) {
+			if (list.get(i).get("gradyear") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("gradyear") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("name") != null) {
+			if (list.get(i).get("name") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("name") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("team") != null) {
+			if (list.get(i).get("team") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("team") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("province") != null) {
+			if (list.get(i).get("province") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("province") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("county") != null) {
+			if (list.get(i).get("county") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("county") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("telephone") != null) {
+			if (list.get(i).get("telephone") != null) {
 				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("telephone") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("CellPhone") != null) {
+			if (list.get(i).get("CellPhone") != null) {
 				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("CellPhone") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("curr_post") != null) {
+			if (list.get(i).get("curr_post") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("curr_post") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("curr_addr") != null) {
+			if (list.get(i).get("curr_addr") != null) {
 				out.println("<td align='left' style='mso-number-format:\\@' nowrap>"+list.get(i).get("curr_addr") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("perm_post") != null) {
+			if (list.get(i).get("perm_post") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("perm_post") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("perm_addr") != null) {
+			if (list.get(i).get("perm_addr") != null) {
 				out.println("<td align='left' style='mso-number-format:@' nowrap>"+list.get(i).get("perm_addr") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 			
-			if (((Map)list.get(i)).get("liner") != null) {
+			if (list.get(i).get("liner") != null) {
 				out.println("<td align='left' style='mso-number-format:@' nowrap>"+list.get(i).get("liner") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("schl_code") != null) {
+			if (list.get(i).get("schl_code") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("schl_code") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("schl_name") != null) {
+			if (list.get(i).get("schl_name") != null) {
 				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("schl_name") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("grad_dept") != null) {
+			if (list.get(i).get("grad_dept") != null) {
 				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("grad_dept") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("gradu_status") != null) {
-				if (((Map)list.get(i)).get("gradu_status").equals("1")) {
+			if (list.get(i).get("gradu_status") != null) {
+				if (list.get(i).get("gradu_status").equals("1")) {
 					out.println("<td align='center' style='mso-number-format:\\@'>畢</td>");
 				} else {
 					out.println("<td align='center' style='mso-number-format:\\@'>肆</td>");
@@ -384,74 +382,74 @@ public class StdSearch extends BaseAction{
 				out.println("<td align='center' style='mso-number-format:\\@'>啥</td>");
 			}
 
-			if (((Map)list.get(i)).get("parent_name") != null) {
+			if (list.get(i).get("parent_name") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("parent_name") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("occur_year") != null) {
+			if (list.get(i).get("occur_year") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_year") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("occur_term") != null) {
+			if (list.get(i).get("occur_term") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_term") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("status_name") != null) {
+			if (list.get(i).get("status_name") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("status_name") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("caurse_name") != null) {
+			if (list.get(i).get("caurse_name") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("caurse_name") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("occur_date") != null) {
+			if (list.get(i).get("occur_date") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_date") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("occur_docno") != null) {
+			if (list.get(i).get("occur_docno") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_docno") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("occur_graduate_no") != null) {
+			if (list.get(i).get("occur_graduate_no") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_graduate_no") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("ExtraStatus") != null) {
+			if (list.get(i).get("ExtraStatus") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("ExtraStatus") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("ExtraDept") != null) {
+			if (list.get(i).get("ExtraDept") != null) {
 				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("ExtraDept") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
-			if (((Map)list.get(i)).get("Email") != null) {
+			if (list.get(i).get("Email") != null) {
 				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("Email") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}
 
 			// out.println("<td align='left'
-			// style='mso-number-format:\\@'>"+((Map)list.get(i)).get("ident_remark")+"</td>");
+			// style='mso-number-format:\\@'>"+list.get(i).get("ident_remark")+"</td>");
 			
 			//if (rmark != null) {
 				//out.println("<td align='left' style='mso-number-format:\\@'>"+ rmark.get("remark_name") + rmark.get("military")+ rmark.get("certificate") + "</td>");
@@ -459,8 +457,14 @@ public class StdSearch extends BaseAction{
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			//}
 
-			if (((Map)list.get(i)).get("student_ename") != null) {
+			if (list.get(i).get("student_ename") != null) {
 				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("student_ename") + "</td>");
+			} else {
+				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+			}
+			
+			if (list.get(i).get("inco") != null) {
+				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("inco") + "</td>");
 			} else {
 				out.println("<td align='left' style='mso-number-format:\\@'></td>");
 			}

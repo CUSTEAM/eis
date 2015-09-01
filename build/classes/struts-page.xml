@@ -81,6 +81,15 @@
 			<result>/jsp/sa/StdSearch.jsp</result>
 		</action>
 		
+		
+		
+	</package>
+	
+	<package name="card" extends="abstract_struts" namespace="/">
+		<action name="CardManager" class="action.card.CardManagerAction">
+			<result>/jsp/card/CardManager.jsp</result>
+		</action>
+	
 	</package>
 	
 	<package name="task" extends="abstract_struts" namespace="/">		
