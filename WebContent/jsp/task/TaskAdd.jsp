@@ -223,7 +223,7 @@ function getTaskApp(Oid){
 		    function(d){ 
 				str="";
 				str="<table class='table'>";
-				$("#title").append(d.app.title);
+				$("#title").html(d.app.title);
 				$("#appInfo").html("");
 				
 				str+="<tr><td nowrap>申請時間</td><td nowrap>"+d.app.sdate+"</td><td width='100%'></td></tr>";

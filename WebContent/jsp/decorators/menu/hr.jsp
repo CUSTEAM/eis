@@ -27,6 +27,7 @@
                     <li><a href="/CIS/AMS/CheckOvertime.do">超時工作查核</a></li>
                     <li><a href="/CIS/AMS/LeaveDocManager.do">審核者管理</a></li> 
                     <li><a href="/CIS/AMS/ArtificialInput.do">人工補登作業</a></li>
+                    <!-- li><a href="/hris/WorkDateManager">人工補登作業</a></li-->
                     <li class="divider"></li>
                     <li><a href="/CIS/AMS/AmsMeeting.do">重要集會維護</a></li> 
                     <li><a href="/CIS/AMS/MeetingAttend.do">集會出席狀況維護</a></li>

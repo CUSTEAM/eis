@@ -174,7 +174,7 @@
 						<ul class="dropdown-menu">							
 							<li><a href="/tis/RollCall"><i class="icon-check" style="margin-top: 3px;"></i> 線上點名</a></li>							
 							<li class="dropdown"><a href="/tis/ScoreManager"><i class="icon-edit" style="margin-top: 3px;"></i> 成績輸入與列印</a></li>
-							<li class="dropdown"><a href="/tis/CareForStudents"><i class="icon-globe" style="margin-top: 3px;"></i> 學生動態</a></li>
+							<!--li class="dropdown"><a href="/tis/CareForStudents"><i class="icon-globe" style="margin-top: 3px;"></i> 學生動態</a></li-->
 							<li class="divider"></li>
 							<li class="dropdown"><a href="/CIS/Teacher/SummerRat.do"><i class="icon-edit" style="margin-top: 3px;"></i> 成績輸入(暑修課程)</a></li>
 							<li><a href="/CIS/Teacher/CourseInfo.do"><i class="icon-book" style="margin-top: 5px;"></i> 課程簡介管理</a></li>

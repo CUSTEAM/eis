@@ -365,13 +365,14 @@
 		                    <li><a href="/CIS/AMS/EmplAmsInfo.do"><i class="icon-search" style="margin-top: 3px;"></i> 查詢全校差勤記錄</a></li>
 		                    <li><a href="/CIS/AMS/CheckOvertime.do">超時工作查核</a></li>
 		                    <li><a href="/CIS/AMS/LeaveDocManager.do">審核者管理</a></li> 
-		                    <li><a href="/CIS/AMS/ArtificialInput.do">人工補登作業</a></li>
+		                    <li><a href="/CIS/AMS/ArtificialInput.do">人工補登作業*</a></li>
+		                    <li><a href="/hris/WorkDateManager">人工補登作業</a></li>		                    
 		                    <li class="divider"></li>
 		                    <li><a href="/CIS/AMS/AmsMeeting.do">重要集會維護</a></li> 
 		                    <li><a href="/CIS/AMS/MeetingAttend.do">集會出席狀況維護</a></li>
 		                    <li class="divider"></li> 
 		                    <li><a href="/CIS/AMS/ReportPrint.do"><i class="icon-print" style="margin-top: 3px;"></i>報表列印</a></li> 
-		                    <li class="divider"></li>
+		                    <li class="divider"></li>		                    
 		                    <li><a href="/CIS/AMS/Holiday.do">設定例假日期</a></li> 
 		                    <li><a href="/CIS/AMS/ShiftManager.do">設定應上應下班別時間</a></li> 
 		                    <li><a href="/CIS/AMS/EmplShiftManager.do">人員個人排班管理</a></li> 
