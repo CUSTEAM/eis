@@ -75,12 +75,15 @@ public class StdSearch extends BaseAction{
 		if(!addr.equals(""))sb.append(" AND s.perm_addr LIKE'%"+addr+"%' || s.curr_addr LIKE'%"+addr+"%'");
 			
 		sb.append(" ORDER BY c.ClassNo, s.student_no");		
-		System.out.println(sb);
 		print(df.sqlGet(sb.toString()));
 		
 		
 	}
 	
+	/**
+	 * 以班級
+	 * @throws IOException
+	 */
 	private void cls() throws IOException{
 		Date d=new Date();
 		response.setContentType("text/html; charset=UTF-8");
@@ -171,6 +174,10 @@ public class StdSearch extends BaseAction{
 		
 	}
 	
+	/**
+	 * 以名單
+	 * @throws IOException
+	 */
 	private void note() throws IOException{
 		
 		List<Map<String,String>>s=df.sqlGet("SELECT student_no, student_name FROM "+type);
@@ -214,8 +221,9 @@ public class StdSearch extends BaseAction{
 		out.println("<table border='1'>  ");
 
 		out.println("<tr bgcolor='#dddddd'>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>班級名稱</td>");
+		out.println("<td align='center' style='mso-number-format:\\@' nowrap>系所名稱</td>");
 		out.println("<td align='center' style='mso-number-format:\\@' nowrap>班級代碼</td>");
+		out.println("<td align='center' style='mso-number-format:\\@' nowrap>班級名稱</td>");		
 		out.println("<td align='center' style='mso-number-format:\\@' nowrap>姓名</td>");
 		out.println("<td align='center' style='mso-number-format:\\@' nowrap>學號</td>");
 		out.println("<td align='center' style='mso-number-format:\\@' nowrap>性別</td>");
@@ -261,6 +269,7 @@ public class StdSearch extends BaseAction{
 				out.println("<tr bgcolor='#dddddd'>");
 			}
 			
+			out.println("<td align='center' style='mso-number-format:\\@' nowrap>"+list.get(i).get("DeptName") + "</td>");
 			out.println("<td align='center' style='mso-number-format:\\@' nowrap>"+list.get(i).get("depart_class") + "</td>");
 			out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("ClassName") + "</td>");
 

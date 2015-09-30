@@ -17,8 +17,7 @@
 			
 			<li class="dropdown-submenu"><a><i class="icon-share-alt" style="margin-top: 5px;"></i> 批次作業</a>
     			<ul class="dropdown-menu">
-    				<li><a href="/sris/DumpNewStmd">新生資料批次滙入</a></li>
-    				<li><a href="/eis/sa/CardManager"> 學生證管理</a></li>
+    				<li><a href="/sris/DumpNewStmd">新生資料批次滙入</a></li>    				
     				<li><a href="/CIS/Regstration/Recruit/Config/EditStmdSchl.do">學生畢業學校維護</a></li>
     				<li><a href="/CIS/Course/UploadStdImage.do">學生照片批次匯入</a></li>
     				<li><a href="/CIS/Registration/EntranceDocNo.do">入學資格核准文號</a></li>    				
@@ -80,6 +79,7 @@
 			
     		
 			<li class="divider"></li>
+			<li><a href="/eis/sa/CardManager"><i class="icon-barcode"></i> 學生證資料匯入</a></li>
 			<li><a href="/CIS/Registration/Register.do">註冊管理系統</a></li>
 			<li><a href="/CIS/FEE/StdTransferAccount.do">學生轉帳帳號資料維護</a></li>
 			<li><a href="/CIS/StudAffair/CounselingReport.do?idenType=A">輔導記錄列印</a></li>
