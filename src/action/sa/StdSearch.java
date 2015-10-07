@@ -10,23 +10,83 @@ import java.util.Map;
 
 import action.BaseAction;
 
+/**
+ * 學生查詢與報表列印程式
+ * <p>
+ * 教職員透過條件選擇列出學生資料
+ * <ol>
+ *  <li>基本資料欄位</li>
+ *  <li>上課星期節次</li>
+ *  <li>輸入名單</li>
+ * </ol>
+ * </p>
+ * @version 3.1 新增照片匯出
+ * @version 3.0.2 新增身份證條件至名單輸入查詢
+ * @version 3.0.1 新增身份證條件至學號姓名欄位查詢
+ * @version 3.0 新增依名單輸入查詢
+ * @version 2.1 新增身份別欄位
+ * @version 2.0 新增依節次單查詢
+ * @version 1.0.1 新增同意條款
+ * @version 1.0 init
+ * 
+ * @author shawn 
+ */
 public class StdSearch extends BaseAction{
 	
+	/**
+	 * 部制
+	 */
 	public String type;
+	
+	/**
+	 * 校區 部制 學制 院 科系 年級 班級
+	 */
 	public String cno, stno, sno, cono, dno, gno, zno;
+	/**
+	 * 學號或姓名
+	 */
 	public String stdName;
+	/**
+	 * 姓別
+	 */
 	public String sex;
+	/**
+	 * 身份別
+	 */
 	public String ident;
+	/**
+	 * 出生年月日起始範圍
+	 */
 	public String beginDate, endDate;
+	/**
+	 * 星期 開始節次 結束節次
+	 */
 	public String week, beginCls, endCls;
+	/**
+	 * 住址
+	 */
 	public String addr;
+	/**
+	 * 畢業學校
+	 */
 	public String sch;
+	/**
+	 * 輸入名單
+	 */
 	public String stds;
 	
+	/**
+	 * init
+	 */
 	public String execute(){		
 		return SUCCESS;
 	}
 	
+	/**
+	 * 查詢
+	 * @return
+	 * @throws IOException
+	 */
 	public String clSearch() throws IOException{	
 		
 		if(stds.trim().equals("") && week.equals("")){
@@ -44,6 +104,15 @@ public class StdSearch extends BaseAction{
 		return null;
 	}
 	
+	private void pic(){
+		
+		
+	}
+	
+	/**
+	 * 以標準方式查詢
+	 * @throws IOException
+	 */
 	private void list() throws IOException{
 		StringBuilder sb=new StringBuilder("SELECT w.inco, s.*,c.ClassName, "
 		+ "d.name as DeptName, c5.name,c51.name as team,c3.name as county,"
@@ -75,13 +144,11 @@ public class StdSearch extends BaseAction{
 		if(!addr.equals(""))sb.append(" AND s.perm_addr LIKE'%"+addr+"%' || s.curr_addr LIKE'%"+addr+"%'");
 			
 		sb.append(" ORDER BY c.ClassNo, s.student_no");		
-		print(df.sqlGet(sb.toString()));
-		
-		
+		print(df.sqlGet(sb.toString()));		
 	}
 	
 	/**
-	 * 以班級
+	 * 以節次查詢並立即產生excel
 	 * @throws IOException
 	 */
 	private void cls() throws IOException{
@@ -175,7 +242,7 @@ public class StdSearch extends BaseAction{
 	}
 	
 	/**
-	 * 以名單
+	 * 以名單查詢
 	 * @throws IOException
 	 */
 	private void note() throws IOException{
@@ -211,6 +278,12 @@ public class StdSearch extends BaseAction{
 		}		
 	}
 	
+	/**
+	 * 輸出EXCEL
+	 * @param list 學生具體資料
+	 * 
+	 * @throws IOException
+	 */
 	private void print(List<Map>list) throws IOException{
 		Date d=new Date();
 		response.setContentType("text/html; charset=UTF-8");

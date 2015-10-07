@@ -5,9 +5,9 @@ import java.util.Map;
 import action.BaseAction;
 
 /**
- * 自動完成
+ * 自動完成CODE_DESD_CAUSE
  * @author John
- * TODO 要重整
+ * @category TODO 檢查是否可整合至AutoCompAnyCode中
  */
 public class autoCompleteCODE_DESD_CAUSE extends BaseAction{
 	

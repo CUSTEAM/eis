@@ -7,7 +7,7 @@ import service.impl.DataFinder;
 import action.BaseAction;
 
 /**
- * 變更帳號密碼
+ * 帳號密碼變更
  * @author John
  */
 public class AccountManager extends BaseAction{

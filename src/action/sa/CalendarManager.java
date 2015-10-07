@@ -3,6 +3,11 @@ package action.sa;
 import model.Message;
 import action.BaseAction;
 
+/**
+ * 個人/會議 行事曆管理
+ * @author shawn
+ *
+ */
 public class CalendarManager extends BaseAction{
 	
 	public String cdate[];

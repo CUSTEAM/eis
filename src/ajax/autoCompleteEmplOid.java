@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.Map;
 import action.BaseAction;
 
+/**
+ * 自動完成empl
+ * <p>以Oid為關鍵對應教職員</p>
+ * @author John
+ * @category TODO 檢查是否可整合至AutoCompAnyCode中
+ */
 public class autoCompleteEmplOid extends BaseAction{
 	
 	private Object list[];

@@ -8,6 +8,11 @@ import model.SYSDOC;
 
 import action.BaseAction;
 
+/**
+ * Q&A管理
+ * @author shawn
+ *
+ */
 public class QAManager extends BaseAction{
 	
 	public String parent_oid;

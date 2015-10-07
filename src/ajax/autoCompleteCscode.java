@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.Map;
 import action.BaseAction;
 
+/**
+ * 自動完成Cscode
+ * <p>以cscode為關鍵對應科目代碼</p>
+ * @author John
+ * @category TODO 檢查是否可整合至AutoCompAnyCode中
+ */
 public class autoCompleteCscode extends BaseAction{
 	
 	private Object list[];

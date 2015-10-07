@@ -5,6 +5,11 @@ import java.util.List;
 import model.Message;
 import action.BaseAction;
 
+/**
+ * 學期轉換前資料檢查
+ * @author shawn
+ * @category TODO: 1.存續必要？ 2.再測試？
+ */
 public class CheckNoHistAction extends BaseAction{
 	
 	public String cno, tno, year, term, gno, target;

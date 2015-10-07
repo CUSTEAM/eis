@@ -7,6 +7,10 @@ import java.util.Map;
 
 import action.BaseAction;
 
+/**
+ * 工作單建立
+ * @author shawn
+ */
 public class TaskAddAction extends BaseAction{
 	
 	public String Oid, addOid;

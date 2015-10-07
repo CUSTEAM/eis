@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 import action.BaseAction;
 
+/**
+ * 自動完成stmd
+ * <p>學號與學生姓名自動對應</p>
+ * @author John
+ */
 public class autoCompleteStmd extends BaseAction{
 	
 	private Object list[];

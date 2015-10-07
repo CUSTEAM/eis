@@ -9,7 +9,7 @@ import service.tools.ImageHandler;
 import action.BaseAction;
 
 /**
- * 儲存學生照片檔案
+ * 儲存工作單附件檔案
  * @author John
  */
 public class putTaskFile extends BaseAction {

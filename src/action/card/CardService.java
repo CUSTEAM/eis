@@ -5,6 +5,11 @@ import java.util.Map;
 
 import action.BaseAction;
 
+/**
+ * 列印卡號
+ * @author shawn
+ * @category TODO: 學生或教職員查詢時一併列出？
+ */
 public class CardService extends BaseAction{
 	
 	public String execute(){

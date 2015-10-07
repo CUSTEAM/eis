@@ -13,6 +13,10 @@ import model.Message;
 
 import action.BaseAction;
 
+/**
+ * 加班補休申請
+ * @author shawn
+ */
 public class ExcuseManager extends BaseAction{
 	
 	public String startDate;

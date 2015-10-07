@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.Map;
 import action.BaseAction;
 
+/**
+ * 自動完成Code1
+ * <p>以id為關鍵對應code1資料表</p>
+ * @author John
+ * @category TODO 檢查是否可整合至AutoCompAnyCode中
+ */
 public class autoCompleteCode1 extends BaseAction{
 	
 	private Object list[];

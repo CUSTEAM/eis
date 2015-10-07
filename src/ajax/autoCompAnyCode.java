@@ -7,12 +7,12 @@ import action.BaseAction;
 
 /**
  * 自動完成各項代碼 * 
- * idCol ID欄位
+ * <p>idCol ID欄位
  * nameCol NAME欄位
  * table 資料表
  * value 查詢值
  * 一般範例 /eis/autoCompAnyCode?idCol=id&nameCol=name&table=CODE_UNIT&value=電
- * bootstrap範例 /eis/autoCompAnyCode?bootstrap=1&idCol=id&nameCol=name&table=CODE_UNIT&value=電
+ * bootstrap範例 /eis/autoCompAnyCode?bootstrap=1&idCol=id&nameCol=name&table=CODE_UNIT&value=電</p>
  * @author shawn
  *
  */

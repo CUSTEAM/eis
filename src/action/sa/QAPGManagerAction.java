@@ -6,6 +6,10 @@ import java.util.Map;
 import model.Message;
 import action.BaseAction;
 
+/**
+ * Q&A類別管理
+ * @author shawn
+ */
 public class QAPGManagerAction extends BaseAction{
 	
 	public String Oid, parent, action, name;

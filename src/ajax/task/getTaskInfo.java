@@ -6,6 +6,11 @@ import java.util.List;
 
 import action.BaseAction;
 
+/**
+ * 工作單內容細節？
+ * @author shawn
+ *
+ */
 public class getTaskInfo extends BaseAction{
 	
 	private List list;

@@ -6,6 +6,11 @@ import java.util.Map;
 import model.Message;
 import action.BaseAction;
 
+/**
+ * 清除前學期資料
+ * - 停用中 -
+ * @author shawn
+ */
 public class DeLasTermDataAction extends BaseAction{
 	
 	

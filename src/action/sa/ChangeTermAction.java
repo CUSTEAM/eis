@@ -12,6 +12,11 @@ import java.util.Map;
 import model.Message;
 import action.BaseAction;
 
+/**
+ * 學期轉換
+ * @author shawn
+ * @category TODO: 下次實做前再測試
+ */
 public class ChangeTermAction extends BaseAction{
 	
 	static Calendar now=Calendar.getInstance();

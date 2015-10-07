@@ -9,7 +9,7 @@ import java.util.Map;
 import action.BaseAction;
 
 /**
- * 儲存系文件附件檔案
+ * 儲存QA文件附件檔案
  * @author John
  */
 public class putSysDocFile extends BaseAction {

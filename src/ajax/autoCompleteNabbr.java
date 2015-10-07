@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.Map;
 import action.BaseAction;
 
+/**
+ * 自動完成Nabbr
+ * <p>教室名稱及代碼自動對應</p>
+ * @author John
+ * @category TODO 檢查是否可整合至AutoCompAnyCode中
+ */
 public class autoCompleteNabbr extends BaseAction{
 	
 	private Object list[];

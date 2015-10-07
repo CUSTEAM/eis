@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Map;
 import action.BaseAction;
 
+/**
+ * 取得個人/會議行事曆
+ * @author shawn
+ *
+ */
 public class getMySchedule extends BaseAction{
 	
 	public String execute()throws Exception {			

@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.Map;
 import action.BaseAction;
 
+/**
+ * 混合條件課程查詢
+ * 產生JSONP
+ * @author shawn
+ *
+ */
 public class courseSearchMix extends BaseAction{
 	
 	private Object list[];

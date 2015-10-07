@@ -9,7 +9,8 @@ import service.tools.ImageHandler;
 import action.BaseAction;
 
 /**
- * 儲存學生照片檔案
+ * 儲存學生照片檔案至FTP伺服器
+ * 依SYS_HOST欄位對應伺服器存取資訊
  * @author John
  */
 public class putStdimage extends BaseAction {

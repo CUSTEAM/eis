@@ -8,7 +8,7 @@ import model.PubCalendar;
 import action.BaseAction;
 
 /**
- * 編輀行事曆
+ * 編輯個人/會議行事曆
  * @author JOHN
  */
 public class editMySchedule extends BaseAction {

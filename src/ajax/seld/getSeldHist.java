@@ -6,6 +6,10 @@ import java.util.List;
 
 import action.BaseAction;
 
+/**
+ * 取得學生加退選歷史
+ * @author John
+ */
 public class getSeldHist extends BaseAction{
 	
 	private List list;

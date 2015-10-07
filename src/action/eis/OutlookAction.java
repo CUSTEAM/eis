@@ -10,6 +10,11 @@ import org.json.JSONString;
 
 import action.BaseAction;
 
+/**
+ * 圖表展示
+ * @author shawn
+ * @category TODO: 核心能力指標
+ */
 public class OutlookAction extends BaseAction{
 	
 	public String execute(){

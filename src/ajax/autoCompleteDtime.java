@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 import action.BaseAction;
 
+/**
+ * 自動完成Dtime
+ * <p>以任何欄位自動對應課程</p>
+ * @author John
+ */
 public class autoCompleteDtime extends BaseAction{ 
 	
 	private Object list[];	

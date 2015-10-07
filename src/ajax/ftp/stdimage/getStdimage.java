@@ -6,6 +6,11 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import action.BaseAction;
 
+/**
+ * 取學生照片
+ * @author shawn
+ *
+ */
 public class getStdimage extends BaseAction {
 	private String filename;
 	private String mimeType;

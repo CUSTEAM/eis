@@ -8,6 +8,10 @@ import java.util.Map;
 import model.Message;
 import action.BaseAction;
 
+/**
+ * 工作單處理
+ * @author shawn
+ */
 public class TaskDealAction extends BaseAction{
 	
 	public String Oid;

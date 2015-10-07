@@ -7,7 +7,9 @@ import java.util.Map;
 import action.BaseAction;
 
 /**
- * 各種課表
+ * 學生或教職員課表
+ * <p>以學號或身分證號產生excel課表</p>
+ * @author shawn
  *
  */
 public class getTimeTable extends BaseAction{

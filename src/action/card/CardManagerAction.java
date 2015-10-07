@@ -12,15 +12,15 @@ import java.util.Map;
 import model.Message;
 import action.BaseAction;
 
+/**
+ * 匯入RFID內碼
+ * @author shawn
+ *
+ */
 public class CardManagerAction extends CardService{
 	
 	public File upload;
-	public String username, inco;
-	
-	
-	
-	
-	
+	public String username, inco;	
 	
 	public String saveTxtFile() throws IOException{
 		Message msg=new Message();

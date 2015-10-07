@@ -8,6 +8,12 @@ import java.util.Map;
 
 import action.BaseAction;
 
+/**
+ * 下載檔案至FTP伺服器
+ * 依參數對應伺服器資料夾位置
+ * 依SYS_HOST欄位對應伺服器存取資訊
+ * @author John
+ */
 public class getFtpFile extends BaseAction {
 	private String filename;
 	private String mimeType;

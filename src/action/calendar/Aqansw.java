@@ -13,6 +13,11 @@ import model.Message;
 
 import action.BaseAction;
 
+/**
+ * 行政滿意度問卷
+ * @author shawn
+ *
+ */
 public class Aqansw extends BaseAction{
 	
 	public String ans_oid;

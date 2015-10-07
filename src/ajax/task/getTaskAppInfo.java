@@ -4,6 +4,10 @@ import action.BaseAction;
 //import org.apache.struts2.json.annotations.JSON;
 import java.util.Map;
 
+/**
+ * 取工作單內容
+ * @author John
+ */
 public class getTaskAppInfo extends BaseAction{
 	
 	private Map app;

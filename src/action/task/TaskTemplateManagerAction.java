@@ -4,7 +4,8 @@ import model.Message;
 import action.BaseAction;
 
 /**
- * 單位任務管理
+ * 單位內部任務管理
+ * 工作單
  * @author shawn
  */
 public class TaskTemplateManagerAction extends BaseAction{
