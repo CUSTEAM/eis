@@ -7,8 +7,10 @@
 			<li><a href="http://ap168.cust.edu.tw/gradcheck/gradframe.php">畢業資格審查系統</a></li>
 			<li class="divider"></li>			
 			<li><a href="/csis/CourseManager?term=next"><i class="icon-share" style="margin-top: 5px;"></i> 課程規劃與管理</a></li>
-			<li><a href="/CIS/Course/CsCoreManager.do">核心課程管理</a></li>							
-			<li class="divider"></li>		
+			<li class="divider"></li>
+			<li><a href="/CIS/Course/CsCoreManager.do">核心課程管理</a></li>
+			<li><a href="/CIS/Course/CsCoreSystem/OpenStudentsCore.do">核心能力指標查詢</a></li>								
+			<li class="divider"></li>
 			<li><a href="/CIS/DeptAssistant/InvestigationSearch.do">應屆畢業生出路調查</a></li>
 			<li><a href="/CIS/DeptAssistant/ReportPrint.do">報表列印</a></li>			
 		</ul>
