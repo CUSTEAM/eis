@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <ul class="nav">
 	<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">系務系統 <b class="caret"></b></a>
 		<ul class="dropdown-menu">		
