@@ -228,6 +228,7 @@ public class OutlookAction extends BaseAction{
 		//系18週線圖
 		List<Map>dep=df.sqlGet("SELECT id, college, sname, name,(SELECT COUNT(*)FROM stmd s, Class c WHERE s.depart_class=c.ClassNo AND c.DeptNo=CODE_DEPT.id)as stds FROM CODE_DEPT WHERE id!='0' AND college IS NOT NULL");		
 		for(int i=0; i<dep.size(); i++){
+			if(Integer.parseInt(dep.get(i).get("stds").toString())==0)continue;
 			cnt=new int[18];
 			for(int j=0; j<18; j++){
 				
