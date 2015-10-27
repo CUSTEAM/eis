@@ -65,6 +65,10 @@
 			<result>/jsp/sa/CheckNoHist.jsp</result>
 		</action>
 		
+		<action name="ModuleUnitManager" class="action.sa.ModuleUnitManagerAction">
+			<result>/jsp/sa/ModuleUnitManager.jsp</result>
+		</action>
+		
 		<!--action name="DeLasTermData" class="action.sa.DeLasTermDataAction">
 			<result>/jsp/sa/DeLasTermData.jsp</result>
 		</action-->
