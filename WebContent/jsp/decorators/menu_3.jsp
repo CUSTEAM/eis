@@ -47,7 +47,7 @@
 							
 							<c:if test="${fn:length(mmm.menu)>0}">
 							<li class="dropdown-submenu">
-								<a tabindex="0" data-toggle="dropdown" data-submenu>${m.name}</a>
+								<a tabindex="0" data-toggle="dropdown" data-submenu>${mmm.name}</a>
 								<ul class="dropdown-menu">
 								<c:forEach items="${mmm.menu}" var="mmmm">
 									<li><a href="${mmmm.path}">${mmmm.name}</a></li>
