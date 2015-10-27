@@ -24,62 +24,53 @@
 			<ul class="nav navbar-nav">
 			
 			<c:forEach items="${sysmenu}" var="m">
-				<c:forEach items="${m.rule}" var="r">
-				
-				
-				<c:if test="${fn:indexOf(cookie['unit'].value, r.unit_id)>-1}">
-				
+				<c:forEach items="${m.rule}" var="r">				
+				<c:if test="${fn:indexOf(cookie['unit'].value, r.unit_id)>-1}">				
 				<li class="dropdown">
-					<a tabindex="0" data-toggle="dropdown" data-submenu>${m.name}<span class="caret"></span></a>
+					<a tabindex="0" data-toggle="dropdown" data-submenu>${m.name}</a>
 					<ul class="dropdown-menu">					
+					
 					<c:forEach items="${m.menu}" var="mm">
 					<c:if test="${fn:length(mm.menu)<1}">						
 						<li><a href="${mm.path}"><i class="icon-list-alt" style="margin-top: 3px;"></i> ${mm.name}</a></li>
-					</c:if>					
+					</c:if>
 					
 					<c:if test="${fn:length(mm.menu)>0}">					
 					<li class="dropdown-submenu">
 					<a tabindex="0"><i class="icon-calendar" style="margin-top: 5px;"></i> ${mm.name}</a>
-					<ul class="dropdown-menu">
-						<c:forEach items="${mm.menu}" var="mmm">
-						<li><a href="${mmm.path}">${mmm.name}</a></li>
-						</c:forEach>
-					</ul>
+						<ul class="dropdown-menu">
+							<c:forEach items="${mm.menu}" var="mmm">
+							
+							<c:if test="${fn:length(mmm.menu)<1}">
+							<li><a href="${mmm.path}">${mmm.name}</a></li>
+							</c:if>
+							
+							<c:if test="${fn:length(mmm.menu)>0}">
+							<li class="dropdown-submenu">
+								<a tabindex="0" data-toggle="dropdown" data-submenu>${m.name}</a>
+								<ul class="dropdown-menu">
+								<c:forEach items="${mmm.menu}" var="mmmm">
+									<li><a href="${mmmm.path}">${mmmm.name}</a></li>
+								</c:forEach>
+								</ul>
+							</li>
+							</c:if>						
+							</c:forEach>
+						</ul>
 					</li>					
-					</c:if>					
+					</c:if>										
 					</c:forEach>					
 					</ul>				
-				</li>
-				
-				</c:if>
-				
-				</c:forEach>
-					
-			
+				</li>				
+				</c:if>				
+				</c:forEach>			
 			</c:forEach>
-				
-
-				
-
-</ul>
-
-
-
-
-				
-
-
-
-
+			</ul>
 			<c:if test="${!empty cookie['unit']}">
-				<ul class="nav navbar-nav navbar-right">
-
-					<li class="dropdown"><a href="/eis/Logout">登出 </a></li>
-
-				</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a href="/eis/Logout">登出 </a></li>
+			</ul>
 			</c:if>
-
-
 		</div>
 	</div>
 </nav>
