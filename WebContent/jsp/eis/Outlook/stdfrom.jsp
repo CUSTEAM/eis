@@ -63,33 +63,33 @@ $(document).ready(function() {
 
 
 
-<div class="accordion" id="accordion2">
-  <div class="accordion-group">
-    <div class="accordion-heading"> 
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">全校</a>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-primary">
+    <div class="panel-heading"> 
+      <a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">全校</a>
     </div>
-    <div id="collapseOne" class="accordion-body collapse in">
+    <div id="collapseOne" class="panel-collapse collapse in">
       <div class="accordion-inner"><div id="map" style="height:400px; width:100%;"></div></div>
     </div>
   </div>
   
   <c:forEach items="${stdscol}" var="s">
-  <div class="accordion-group">
-    <div class="accordion-heading"> 
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${s.id}">${s.name}</a>
+  <div class="panel panel-primary">
+    <div class="panel-heading"> 
+      <a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse${s.id}">${s.name}</a>
     </div>
-    <div id="collapse${s.id}" class="accordion-body collapse">
+    <div id="collapse${s.id}" class="panel-collapse collapse">
       <div class="accordion-inner"><div id="map${s.id}" style="height:400px; width:100%;"></div></div>
     </div>
   </div>
   </c:forEach>
   
   <c:forEach items="${stdsdep}" var="s">
-  <div class="accordion-group">
-    <div class="accordion-heading"> 
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${s.id}${s.id}">${s.name}</a>
+  <div class="panel panel-default">
+    <div class="panel-heading"> 
+      <a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse${s.id}${s.id}">${s.name}</a>
     </div>
-    <div id="collapse${s.id}${s.id}" class="accordion-body collapse">
+    <div id="collapse${s.id}${s.id}" class="panel-collapse collapse">
       <div class="accordion-inner"><div id="map${s.id}${s.id}" style="height:400px; width:100%;"></div></div>
     </div>
   </div>
