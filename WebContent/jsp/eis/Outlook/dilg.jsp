@@ -35,8 +35,8 @@ function drawDateChart() {
 		height: 350,
    	};
 
-	chart = new google.visualization.Calendar(document.getElementById('calendar_sch'));	
-	chart.draw(data, options);
+	//chart = new google.visualization.Calendar(document.getElementById('calendar_sch'));	
+	//chart.draw(data, options);
 	 
 	//院
 	<c:forEach items="${col}" var="c">	
@@ -53,7 +53,7 @@ function drawDateChart() {
 		title: "每日缺曠統計",
 		height: 350,
    	};
-
+/*
 	chart = new google.visualization.Calendar(document.getElementById('calendar_col${c.id}'));	
 	chart.draw(data, options);	
 	</c:forEach>
@@ -75,93 +75,105 @@ function drawDateChart() {
    	};
 	chart = new google.visualization.Calendar(document.getElementById('calendar_dep${d.id}'));	
 	chart.draw(data, options);	
-	</c:forEach>	
+	</c:forEach>
+	*/
 }
 </script>
 </head>
 <body>
-<div class="alert alert alert-warning" role="alert"><b>缺曠趨勢</b> 僅統計曠課、病假及事假</div>
-	<div class="accordion" id="accordion">
-		<div class="accordion-group">
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-				<h5><i class="icon-chevron-right"></i> 全校趨勢</h5>
-				</a>
-			</div>
-			<div id="collapseOne" class="accordion-body collapse in">
-				<div class="accordion-inner">
-				<canvas id="linechart_sch" width="1000" height="300"></canvas>
-				</div>
-			</div>
-		</div>
-		
-		
-		<div class="accordion-group">
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-				<h5><i class="icon-chevron-right"></i> 院趨勢</h5>
-				</a>
-			</div>
-			<div id="collapseTwo" class="accordion-body collapse">
-				<div class="accordion-inner">
-				<canvas id="linechart_col" width="1000" height="600"></canvas>
-				<div id="calendar_sch"></div>
-				</div>
-			</div>
-		</div>
-		<c:forEach items="${col}" var="c" varStatus="i">
-		<div class="accordion-group">
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse${i.index}">
-				<h5><i class="icon-chevron-down"></i> ${c.name}</h5>
-				</a>
-			</div>
-			<div id="collapse${i.index}" class="accordion-body collapse">
-				<div class="accordion-inner">
-				<canvas  id="linechart_col${i.index}" width="1000" height="600"></canvas >
-				<div id="calendar_col${c.id}"></div>				
-				</div>
-			</div>
-		</div>		
-		<c:forEach items="${dep}" var="d">					
-				<c:if test="${d.college eq c.id }">					
-					
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse${d.id}${d.id}">
-							${d.name}
-							</a>
-						</div>
-						<div id="collapse${d.id}${d.id}" class="accordion-body collapse">
-							<div class="accordion-inner">
-							<canvas  id="linechart_dep${d.id}" width="1000" height="300"></canvas>
-							<div id="calendar_dep${d.id}"></div>
-							</div>
-						</div>
-					</div>					
-				</c:if>								
-		</c:forEach>
-		
-		
-		
-		
-		
-			
-		</c:forEach>		
-	</div>
 
-
-
-
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  
+  
+  <div class="panel panel-primary">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          	全校趨勢
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+      <canvas id="linechart_sch" width="1000" height="300"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+	<div class="panel panel-primary">
+	    <div class="panel-heading" role="tab" id="headingTwo">
+	      <h4 class="panel-title">
+	        <a class="collapsed" role="button" 
+	        data-toggle="collapse" 
+	        data-parent="#accordion" 
+	        href="#collapseTwo" 
+	        aria-expanded="false" 
+	        aria-controls="collapseTwo">院趨勢</a>
+	      </h4>
+	    </div>
+	    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+	      <div class="panel-body">
+	      <canvas id="linechart_col" width="1000" height="600"></canvas>
+			<div id="calendar_sch"></div>
+	      </div>
+	    </div>
+  	</div>  
+  
+	<c:forEach items="${col}" var="c" varStatus="i">
+	<div class="panel panel panel-primary">
+		<div class="panel-heading" role="tab" id="Eheading${c.id}">
+	    <h4 class="panel-title">
+	        <a class="collapsed" 
+	        role="button" 
+	        data-toggle="collapse" 
+	        data-parent="#accordion" 
+	        href="#Ecollapse${c.id}" 
+	        aria-expanded="false" 
+	        aria-controls="Ecollapse${c.id}">
+	        <b>${c.name}</b></a>
+	    </h4>
+	    </div>
+	    <div id="Ecollapse${c.id}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Eheading${c.id}">
+	      <div class="panel-body">
+	      <canvas  id="linechart_col${i.index}" width="1000" height="600"></canvas >
+			<div id="Ecollapse${c.id}"></div>
+	      </div>
+	    </div>
+    </div>
 	
-
-
-
+	<c:forEach items="${dep}" var="d">					
+	<c:if test="${d.college eq c.id }">					
+	<div class="panel panel-default">
+	<div class="panel-heading" role="tab" id="heading${d.id}">
+    <h4 class="panel-title">
+	    <a class="collapsed" 
+	    role="button" 
+	    data-toggle="collapse" 
+	    data-parent="#accordion" 
+	    href="#collapse${d.id}" 
+	    aria-expanded="false" 
+	    aria-controls="collapse${d.id}">
+	    ${d.name}</a>
+    </h4>
+    </div>
+    <div id="collapse${d.id}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${d.id}">
+      <div class="panel-body">
+      <canvas  id="linechart_dep${d.id}" width="1000" height="300"></canvas >
+		<div id="calendar_col${d.id}"></div>
+      </div>
+    </div>
+    </div>
+	</c:if>								
+	</c:forEach>		
+	</c:forEach>
+</div>
 <canvas style="display:none;" id="linechart_depx" width="1000" height="300"></canvas>
 
 <script>
-
-
 var op={
 		
 	inGraphDataShow : true,
