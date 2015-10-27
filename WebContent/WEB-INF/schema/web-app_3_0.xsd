@@ -104,8 +104,7 @@
 
 <!-- **************************************************** -->
 
-  <xsd:element name="web-app"
-               type="javaee:web-appType">
+  <xsd:element name="web-app" type="javaee:web-appType">
     <xsd:annotation>
       <xsd:documentation>
 
@@ -269,4 +268,8 @@
     </xsd:keyref>
   </xsd:element>
 
+
+  <xsd:simpleType name="web-appType">
+  	<xsd:restriction base="string"></xsd:restriction>
+  </xsd:simpleType>
 </xsd:schema>

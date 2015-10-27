@@ -45,7 +45,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div class="alert">
+<div class="alert alert alert-warning" role="alert">
 學生查詢
 </div>
 <form action="StdSearch" method="post" class="form-horizontal" enctype="multipart/form-data">

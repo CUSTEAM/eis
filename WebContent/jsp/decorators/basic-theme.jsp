@@ -9,58 +9,65 @@
 <base href="<%=basePath%>">
 <meta name="JOHN HSIAO" content="http://blog.xuite.net/hsiao/blog" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
 <meta HTTP-EQUIV="expires" CONTENT="-1">
 <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <meta name="ROBOTS" content="none">
 <title><decorator:title default="Welcome!" /> - 中華科大教職員資訊系統</title>
-<link rel="stylesheet" href="inc/css/bootstrap.css" />
-<link rel="stylesheet" href="inc/css/bootstrap-responsive.css" />
+<link rel="stylesheet" href="inc/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="inc/css/advance.css" />
 <script src="inc/js/jquery.js"></script>
-<script src="inc/js/bootstrap.js"></script>
+<script src="inc/bootstrap/js/bootstrap.js"></script>
 <script src="inc/js/plugin/jquery.blockUI.js"></script>
+<link rel="stylesheet" href="inc/bootstrap/plugin/bootstrap-submenu/css/bootstrap-submenu.min.css">
+<script src="inc/bootstrap/plugin/bootstrap-submenu/js/bootstrap-submenu.min.js" defer></script>
 <script>
+
 $.ajaxSetup ({ 
 	cache: false 
 });
 </script>
 <decorator:head />
 </head>
-<body
-	<decorator:getProperty property="body.onload" writeEntireProperty="true" />>	
+<body <decorator:getProperty property="body.onload" writeEntireProperty="true" />>
+	<%@ include file="/jsp/decorators/menu_3.jsp"%>		
+	<div class="content-page-3">
+		<decorator:body />
+	</div>
+	
 	<c:if test="${!empty msg}">
 		<script>
 			$(window).load(function() {
 				$('#webdialog').modal('show');
 			});
 		</script>
-		<div id="webdialog" class="modal hide fade" tabindex="-1"
-			role="dialog" aria-labelledby="webdialog" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">×</button>
-				<h3>系統資訊</h3>
-			</div>
-			<div class="modal-body">
-				<p class="lead">${msg.msg}</p>
-				<p class="lead text-warning">${msg.warning}</p>
-				<p class="lead text-error">${msg.error}</p>
-				<p class="lead text-info">${msg.info}</p>
-				<p class="lead text-success">${msg.success}</p>
-				<p>點畫面任意處繼續..</p>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">關閉
-				</button>
+		<div class="modal fade" id="webdialog" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span> <span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">訊息</h4>
+					</div>
+					<div class="modal-body">
+					<p class="lead">${msg.msg}</p>
+					<p class="lead text-warning">${msg.warning}</p>
+					<p class="lead text-error">${msg.error}</p>
+					<p class="lead text-info">${msg.info}</p>
+					<p class="lead text-success">${msg.success}</p>
+					<p>點畫面任意處繼續...</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">關閉</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</c:if>	
-	<%@ include file="/jsp/decorators/menu.jsp"%>	
-	<div id="mainmenu"></div>	
-	<div class="content-page">
-		<decorator:body />
-	</div>
 </body>
 </html>

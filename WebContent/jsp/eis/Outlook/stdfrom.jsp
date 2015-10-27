@@ -57,7 +57,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div class="alert"><b>學生來源</b> 學生合計: ${stdsall}名, 學歷不詳: ${stdsall-stdsnoschl}名<br>滑鼠拖放或滾動檢視細部資訊</div>
+<div class="alert alert alert-warning" role="alert"><b>學生來源</b> 學生合計: ${stdsall}名, 學歷不詳: ${stdsall-stdsnoschl}名<br>滑鼠拖放或滾動檢視細部資訊</div>
 
 
 

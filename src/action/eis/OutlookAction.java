@@ -14,6 +14,8 @@ import action.BaseAction;
  * 圖表展示
  * @author shawn
  * @category TODO: 核心能力指標
+ * TODO 消耗過多客戶端效能，需修改為單一項目檢視
+ * 
  */
 public class OutlookAction extends BaseAction{
 	

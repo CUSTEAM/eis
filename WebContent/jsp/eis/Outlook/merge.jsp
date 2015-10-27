@@ -9,7 +9,7 @@
 <script src="/eis/inc/js/plugin/ChartJS/ChartColor.js"></script>
 </head>
 <body>
-<div class="alert"><b>併班次數統計</b> 課程合併的次數，以被合併的課程或班級為單位累計</div>
+<div class="alert alert alert-warning" role="alert"><b>併班次數統計</b> 課程合併的次數，以被合併的課程或班級為單位累計</div>
 
 <canvas id="chart" width="1000" height="400"></canvas>
 

@@ -30,7 +30,7 @@ $(function () {
 <body>
    
 <div id="dialog"></div>
-<div class="alert">
+<div class="alert alert alert-warning" role="alert">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
 <strong>程式管理</strong></div>
 

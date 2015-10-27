@@ -86,7 +86,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div class="alert"><b>學生來源</b> 學生合計: ${stdsall}名, 地址不詳: ${stdsall-fn:length(stdsgeo)}名<br>滑鼠拖放或滾動檢視細部資訊</div>
+<div class="alert alert alert-warning" role="alert"><b>學生來源</b> 學生合計: ${stdsall}名, 地址不詳: ${stdsall-fn:length(stdsgeo)}名<br>滑鼠拖放或滾動檢視細部資訊</div>
 <div class="accordion" id="accordion2">
   <div class="accordion-group">
     <div class="accordion-heading"> 

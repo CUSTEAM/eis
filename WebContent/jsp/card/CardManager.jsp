@@ -29,7 +29,7 @@ $(document).ready(function() {
 </script>  
 </head>
 <body>
-<div class="alert">
+<div class="alert alert alert-warning" role="alert">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	<strong>卡片匯入</strong> 請依格式建立匯入檔案
 </div>

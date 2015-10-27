@@ -52,7 +52,7 @@ function checkUnit(id){
 <body>
    
 <div id="dialog"></div>
-<div class="alert">
+<div class="alert alert alert-warning" role="alert">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
 <strong>系統文件管理</strong></div>
 

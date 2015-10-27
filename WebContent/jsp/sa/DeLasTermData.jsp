@@ -9,7 +9,7 @@
 
 </head>
 <body>    
-<div class="alert">
+<div class="alert alert alert-warning" role="alert">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
 <strong>刪除前學期資料</strong> 
 </div>

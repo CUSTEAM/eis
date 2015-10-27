@@ -7,15 +7,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<script src="/eis/inc/js/plugin/jquery-ui.js"></script>
-<script src="/eis/inc/js/plugin/jquery-ui-timepicker-addon.js"></script>
-<script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
-<script src="/eis/inc/js/plugin/jquery.knob.js"></script>
-
 <link href="/eis/inc/css/jquery-ui.css" rel="stylesheet"/>
 <link href="/eis/inc/css/bootstrap-tree.css" rel="stylesheet"/>
 <link href="/eis/inc/css/advance/autoscale_1152.css" rel="stylesheet"/>
 <link href="/eis/inc/css/wizard-step.css" rel="stylesheet"/>
+<link href="/eis/inc/js/plugin/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.css" rel="stylesheet"/>
+
+<script src="/eis/inc/js/plugin/jquery-ui.js"></script>
+<script src="/eis/inc/js/plugin/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js"></script>
+<script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
+<script src="/eis/inc/js/plugin/jquery.knob.js"></script>
+
+
+
+
 <title>加班補休申請</title>
 <script>  
 $(document).ready(function() {
@@ -52,7 +57,7 @@ $(document).ready(function() {
 <form action="ExcuseManager" method="post" class="form-horizontal">
 
 
-<div class="alert">
+<div class="alert alert alert-warning" role="alert">
 <button type="button" class="close" onClick="window.parent.$.unblockUI()">&times;</button>
 <strong>加班補休申請</strong> 
 </div>

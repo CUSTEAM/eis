@@ -13,7 +13,7 @@
 <form action="Aqansw" method="post" class="form-horizontal">
 
 
-    <div class="alert">
+    <div class="alert alert alert-warning" role="alert">
     <button type="button" class="close" onClick="window.parent.$.unblockUI()">&times;</button>
     <strong>中華科技大學「行政與教學單位服務品質之滿意度調查」</strong> 
     </div>

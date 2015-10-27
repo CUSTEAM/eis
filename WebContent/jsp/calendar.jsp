@@ -16,7 +16,7 @@
 	.dhx_cal_event_line.past_event{background-color:#AAAAAA !important;color:white !important;}		
 	.dhx_cal_event_clear.past_event{color:#AAAAAA !important;}
 	.dhx_title{height:18px !important;}	
-	@media screen and (min-width:840px){.dhx_now_time{left:-30px !important;}}
+	/*@media screen and (min-width:840px){.dhx_now_time{left:-30px !important;}}*/
 	</style>
 	
 	<script>

@@ -115,7 +115,7 @@ function showPass(str){
 
 </head>
 <body>
-<div class="alert">
+<div class="alert alert-success" role="alert">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
 <strong>個人帳號密碼管理</strong> 
 <div id="funbtn" rel="popover" title="說明" data-content="請定期更換密碼或自訂帳號" data-placement="right" class="btn btn-warning">?</div>

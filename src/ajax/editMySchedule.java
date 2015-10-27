@@ -30,6 +30,7 @@ public class editMySchedule extends BaseAction {
 			id = id.substring(0, request.getParameter("id").indexOf("#"));
 		}
 		
+		System.out.println(details);
 		PubCalendar c;
 
 		// 修改

@@ -80,7 +80,7 @@ function drawDateChart() {
 </script>
 </head>
 <body>
-<div class="alert"><b>缺曠趨勢</b> 僅統計曠課、病假及事假</div>
+<div class="alert alert alert-warning" role="alert"><b>缺曠趨勢</b> 僅統計曠課、病假及事假</div>
 	<div class="accordion" id="accordion">
 		<div class="accordion-group">
 			<div class="accordion-heading">

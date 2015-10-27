@@ -78,7 +78,7 @@ $(function () {
 </head>
 <body>
 
-<div class="alert">
+<div class="alert alert alert-warning" role="alert">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>工作單申請</strong>    
 </div>

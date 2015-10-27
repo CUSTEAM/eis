@@ -10,7 +10,7 @@
 	<title>工作單處理</title>
 </head>
 <body>
-<div class="alert">
+<div class="alert alert alert-warning" role="alert">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>工作單處理</strong>    
 </div>
