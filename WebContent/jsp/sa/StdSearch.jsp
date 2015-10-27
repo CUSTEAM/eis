@@ -48,13 +48,13 @@ $(document).ready(function() {
 <div class="alert alert alert-warning" role="alert">
 學生查詢
 </div>
-<form action="StdSearch" method="post" class="form-horizontal" enctype="multipart/form-data">
+<form action="StdSearch" method="post" class="form-inline" enctype="multipart/form-data">
 <table class="table">
 	<tr class="gtype">
 		<td>
-		<div class="input-prepend">
-		<span class="add-on">目標</span>
-		<select name="type">
+		<div class="input-group">
+		<span class="input-group-addon">目標</span>
+		<select class="form-control"name="type">
 			<option <c:if test="${type eq'stmd'}">selected</c:if> value="stmd">在校生</option>
 			<option <c:if test="${type eq'Gstmd'}">selected</c:if> value="Gstmd">離校生</option>
 		</select>
@@ -67,9 +67,9 @@ $(document).ready(function() {
 	
 	<tr class="tname">
 		<td>
-		<div class="input-prepend">
-			<span class="add-on">學號或姓名</span>
-			<input class="span4" onClick="$('#stdName').val(''), $('#stdNo').val('');" autocomplete="off" type="text" id="stdName" value="${stdName}" name="stdName"
+		<div class="input-group">
+			<span class="input-group-addon">學號或姓名</span>
+			<input class="form-control" class="span4" onClick="$('#stdName').val(''), $('#stdNo').val('');" autocomplete="off"  class="form-control" type="text" id="stdName" value="${stdName}" name="stdName"
 			 data-provide="typeahead" onClick="addStd()" placeholder="學號、姓名或身分證字號片段" />
 			 
 		</div>	
@@ -79,18 +79,18 @@ $(document).ready(function() {
 	
 	<tr class="tsex">
 		<td>
-		<div class="input-prepend">
-			<span class="add-on">性別</span>
-			<select name="sex">
+		<div class="input-group">
+			<span class="input-group-addon">性別</span>
+			<select class="form-control" name="sex">
 				<option <c:if test="${sex eq''}">selected</c:if> value="">全部</option>
 				<option <c:if test="${sex eq'1'}">selected</c:if> value="1">男</option>
 				<option <c:if test="${sex eq'2'}">selected</c:if> value="2">女</option>
 			</select>
 		</div>
 		
-		<div class="input-prepend">
-			<span class="add-on">身份別</span>
-			<select name="ident">
+		<div class="input-group">
+			<span class="input-group-addon">身份別</span>
+			<select class="form-control" name="ident">
 				<option value="">全部</option>
 				<c:forEach items="${CODE_STMD_IDENT}" var="i">
 				<option <c:if test="${ident eq i.id}"></c:if> value="${i.id}">${i.name}</option>
@@ -101,14 +101,14 @@ $(document).ready(function() {
 	</tr>
 	<tr class="tide">
 		<td>		
-		<div class="input-prepend">
-			<span class="add-on">生日範圍</span>
-			<input type="text" id="beginDate" placeholder="點一下輸入日期" name="beginDate" value="${beginDate}"/>
+		<div class="input-group">
+			<span class="input-group-addon">生日範圍</span>
+			<input class="form-control" type="text" id="beginDate" placeholder="點一下輸入日期" name="beginDate" value="${beginDate}"/>
 		</div>
 		
-		<div class="input-prepend">
-			<span class="add-on">至</span>
-			<input type="text" id="endDate" placeholder="點一下輸入日期" name="endDate" value="${endDate}"/>
+		<div class="input-group">
+			<span class="input-group-addon">至</span>
+			<input class="form-control" type="text" id="endDate" placeholder="點一下輸入日期" name="endDate" value="${endDate}"/>
 		</div>
 		<div rel="popover" title="說明" data-content="輸入開始日期則回傳自開始日期至今,輸入結束日期則回傳至結束日期,兩欄均輸入則回傳範圍內的學生名單" data-placement="right" class="help btn btn-warning">?</div>			
 		
@@ -117,9 +117,9 @@ $(document).ready(function() {
 	
 	<tr class="tcls">
 		<td>
-		<div class="input-prepend">
-			<span class="add-on">到課日</span>
-			<select name="week" id="week">
+		<div class="input-group">
+			<span class="input-group-addon">到課日</span>
+			<select class="form-control"name="week" id="week" class="form-control">
 			<option value=""></option>			
 			<option <c:if test="${week==1}">selected</c:if> value="1">星期一</option>
 			<option <c:if test="${week==2}">selected</c:if> value="2">星期二</option>
@@ -132,13 +132,13 @@ $(document).ready(function() {
 		</div>
 		
 		
-		<select name="beginCls" id="beginCls">
+		<select class="form-control"name="beginCls" id="beginCls" class="form-control">
 			<option value=""></option>
 			<c:forEach begin="1" end="14" varStatus="i">
 			<option <c:if test="${beginCls eq i.index}">selected</c:if> value="${i.index}">自第${i.index}節</option>
 			</c:forEach>
 		</select>		
-		<select name="endCls" id="endCls">
+		<select class="form-control"name="endCls" id="endCls" class="form-control">
 			<option value=""></option>
 			<c:forEach begin="1" end="14" varStatus="i">
 			<option <c:if test="${endCls eq i.index}">selected</c:if> value="${i.index}">至第${i.index}節</option>
@@ -150,9 +150,9 @@ $(document).ready(function() {
 	</tr>
 	<tr class="tadd">
 		<td>
-		<div class="input-prepend">
-			<span class="add-on">現居住址</span>
-			<input type="text" name="addr" value="${addr}"/>
+		<div class="input-group">
+			<span class="input-group-addon">現居住址</span>
+			<input class="form-control" type="text" name="addr" value="${addr}"/>
 		</div>
 		<div rel="popover" title="說明" data-content="請以關鍵字查詢如：「台北」,「新北」,「南港」,「忠孝東路四段」查詢" data-placement="right" class="help btn btn-warning">?</div>
 		</td>
@@ -160,18 +160,18 @@ $(document).ready(function() {
 	
 	<tr class="tsch">
 		<td>
-		<div class="input-prepend">
-			<span class="add-on">畢業學校</span>
-			<input type="text" name="sch" value="${sch}"/>
+		<div class="input-group">
+			<span class="input-group-addon">畢業學校</span>
+			<input class="form-control" type="text" name="sch" value="${sch}"/>
 		</div>
 		<div rel="popover" title="說明" data-content="請以關鍵字查詢如：「育達」,「協和」,「中華」,「大學」查詢" data-placement="right" class="help btn btn-warning">?</div>
 		</td>
 	</tr>
 	<tr class="tstds">
 		<td>
-		<div class="input-prepend">
-			<span class="add-on">名單查詢</span>
-			<textarea style="height:20px;" name="stds" id="stds">${stds}</textarea>
+		<div class="input-group">
+			<span class="input-group-addon">名單查詢</span>
+			<textarea class="form-control" style="height:28px;" name="stds" id="stds">${stds}</textarea>
 		</div>
 		<div rel="popover" title="說明" data-content="連續輸入或貼上多個學生名單,可接受多餘的文字或符號,但不接受姓名中有缺少文字" data-placement="right" class="help btn btn-warning">?</div>
 		</td>
@@ -181,7 +181,7 @@ $(document).ready(function() {
 		<td>
 		<div class="btn-group">
 		<button class="btn btn-danger" name="method:clSearch">查詢</button>
-		<a href="StdSearch" class="btn">重新查詢</a>
+		<a href="StdSearch" class="btn btn-default">重新查詢</a>
 		</div>
 		
       <input style="margin:5px;" type="checkbox" checked disabled><small>遵守各項<a target="_blank" href="http://law.moj.gov.tw/">法律規定</a>並同意記錄查詢過程</small>
