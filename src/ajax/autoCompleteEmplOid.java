@@ -24,6 +24,8 @@ public class autoCompleteEmplOid extends BaseAction{
 
 	public String execute(){
 		
+		System.out.println(request.getAttribute("title"));
+		
 		List<Map>tmp=df.sqlGet("SELECT e.cname, e.Oid as idno, IFNULL(d.name,'')as edunit, IFNULL(u.name,'')as unit FROM " +
 		"(empl e LEFT OUTER JOIN CODE_DEPT d ON e.unit=d.id)LEFT OUTER JOIN CODE_UNIT u ON e.unit_module=u.id " +
 		"WHERE (e.cname LIKE '"+request.getParameter("nameno")+"%')");

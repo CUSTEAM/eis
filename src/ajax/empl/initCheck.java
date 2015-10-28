@@ -34,7 +34,7 @@ public class initCheck extends BaseAction{
 		Date coansw_end=(Date)getContext().getAttribute("date_aqansw_end");		
 		Date now=new Date();
 		if(now.getTime()>=coansw_begin.getTime() && now.getTime()<coansw_end.getTime()){
-			if(df.sqlGetInt("SELECT COUNT(*)FROM Dtime WHERE techid='"+getSession().getAttribute("userid")+"'")>0){
+			if(df.sqlGetInt("SELECT COUNT(*)FROM Dtime d, empl e WHERE d.techid=e.idno AND (e.unit IS NOT NULL AND e.unit !='') AND d.techid='"+getSession().getAttribute("userid")+"'")>0){
 				setAq(df.sqlGetInt("SELECT COUNT(*)FROM AQ_anser a WHERE a.idno='"+getSession().getAttribute("userid")+"'"));
 			}else{
 				setAq(999);

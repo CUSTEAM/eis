@@ -51,7 +51,11 @@ public class CardManagerAction extends CardService{
 			b=false;
 			for(int i=0; i<w.size(); i++){
 				if(w.get(i).get("username").equals(d[0])){
-					df.exSql("UPDATE wwpass SET inco='"+d[1]+"' WHERE username='"+d[0]+"'");
+					try{
+						df.exSql("UPDATE wwpass SET inco='"+d[1]+"' WHERE username='"+d[0]+"'");
+					}catch(Exception e){
+						break;
+					}
 					success.add(d);
 					w.remove(i);
 					b=true;
@@ -64,17 +68,7 @@ public class CardManagerAction extends CardService{
 		}		
 		fis.close();
 		fr.close();
-		br.close();
-		
-		/*StringBuilder sb=new StringBuilder("SELECT username FROM wwpass WHERE username IN(");
-		for(int i=0; i<list.size(); i++){
-			sb.append("'"+list.get(i)[0]+"',");	
-			df.exSql("UPDATE wwpass SET inco='"+list.get(i)[1]+"' WHERE username='"+list.get(i)[0]+"'");
-		}
-		sb.delete(sb.length()-1, sb.length());
-		sb.append(")");		
-		
-		*/
+		br.close();		
 		
 		request.setAttribute("fail", fail);
 		request.setAttribute("success", success);

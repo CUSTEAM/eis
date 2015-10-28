@@ -15,7 +15,7 @@
 
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js"></script>
-<script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
+<script src="/eis/inc/bootstrap/plugin/bootstrap-typeahead.js"></script>
 <script src="/eis/inc/js/plugin/jquery.knob.js"></script>
 
 
@@ -43,10 +43,7 @@ $(document).ready(function() {
 			    }
 			});
 		}		
-	});
-	
-	
-	
+	});	
 });
 
 
@@ -54,19 +51,19 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<form action="ExcuseManager" method="post" class="form-horizontal">
-
+<form action="ExcuseManager" method="post" class="form-inline">
 
 <div class="alert alert alert-warning" role="alert">
 <button type="button" class="close" onClick="window.parent.$.unblockUI()">&times;</button>
 <strong>加班補休申請</strong> 
 </div>
 
-<div class="container-fluid">
-	<div class="row-fluid">
-		<div class="span4">
-			<div class="well" style="border:1px solid #3a87ad;">
-			
+<div class="row">
+	
+	<div class="col-md-3">
+		<div class="panel panel-primary">
+			<div class="panel-heading"><h3 class="panel-title">狀態</h3></div>
+			<div class="panel-body">
 			<table>
 				<tr>
 					<td nowrap>
@@ -79,34 +76,36 @@ $(document).ready(function() {
 					</td>
 				</tr>
 			</table>
-			
 			</div>
-		</div>
-		
-		<div class="span4">		
-			<div class="well" style="border:1px solid #3a87ad;">
-			<table class="table control-group success">				
+		</div>	
+	</div>
+	
+	<div class="col-md-4">
+	<div class="panel panel-primary">
+		<div class="panel-heading"><h3 class="panel-title">加班申請</h3></div>
+		<div class="panel-body">
+		<table class="table control-group success">				
 				<tr>
 					<td width="100%">
-					<div class="input-prepend">
-					<span class="add-on">加班開始</span>
-					<input class="timepick" type="text" name="startDate1" id="startDate1" />
+					<div class="input-group">
+      				<div class="input-group-addon">加班開始</div>
+					<input class="form-control timepick" type="text" name="startDate1" id="startDate1" />
 					</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-					<div class="input-prepend">
-					<span class="add-on">加班結束</span>
-					<input type="text" class="timepick" name="endDate1" id="endDate1" />
+					<div class="input-group">
+      				<div class="input-group-addon">加班結束</div>
+					<input type="text" class="form-control timepick" name="endDate1" id="endDate1" />
 					</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-					<div class="input-prepend">
-					<span class="add-on">加班原因</span>
-					<input type="text" name="reason1"/>
+					<div class="input-group">
+      				<div class="input-group-addon">加班原因</div>
+					<input type="text" class="form-control" name="reason1"/>
 					</div>
 					</td>
 				</tr>
@@ -114,41 +113,44 @@ $(document).ready(function() {
 					<td><button class="btn btn-success" name="method:add1" type="submit">申請加班</button></td>
 				</tr>
 			</table>
-			</div>
 		</div>
-		
-		<div class="span4">		
-			<div class="well" style="border:1px solid #3a87ad;">
+	</div>
+	</div>
+	
+	<div class="col-md-5">	
+	<div class="panel panel-primary">
+		<div class="panel-heading"><h3 class="panel-title">補休申請</h3></div>
+			<div class="panel-body">
 			<table class="table control-group error">
 				<tr>
 					<td width="100%">
-					<div class="input-prepend">
-					<span class="add-on">補休開始</span>
-					<input class="timepick" type="text" name="startDate" id="startDate" />
+					<div class="input-group">
+      				<div class="input-group-addon">補休開始</div>
+					<input class="form-control timepick" type="text" name="startDate" id="startDate" />
 					</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-					<div class="input-prepend">
-					<span class="add-on">補休結束</span>
-					<input type="text" class="timepick" name="endDate" id="endDate" />
+					<div class="input-group">
+      				<div class="input-group-addon">補休結束</div>
+					<input type="text" class="form-control timepick" name="endDate" id="endDate" />
 					</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-					<div class="input-prepend">
-					<span class="add-on">補休原因</span>
-					<input type="text" name="reason"/>
+					<div class="input-group">
+      				<div class="input-group-addon">補休原因</div>
+					<input type="text" class="form-control" name="reason"/>
 					</div>
 					</td>
 				</tr>
 				<tr>
 					<td>
-					<div class="input-prepend">
-					<span class="add-on">代理人</span>
-					<input type="text" name="asshole" onClick="this.value='', $('#agent').val('');" id="asshole" data-provide="typeahead"/>
+					<div class="input-group">
+      				<div class="input-group-addon">代理人 ★</div>
+					<input type="text" name="asshole" class="form-control" onClick="this.value='', $('#agent').val('');" id="asshole" data-provide="typeahead"/>
 					</div>
 					<input type="hidden" name="agent" id="agent" />
 					</td>
@@ -156,13 +158,28 @@ $(document).ready(function() {
 				<tr>
 					<td><button class="btn btn-danger" name="method:add" type="submit">申請補休</button></td>
 				</tr>
-			</table>			
+			</table>
 			</div>
-		</div>		
+		</div>	
 	</div>
+</div>
+
+
+
+
 	
-	<div class="row-fluid">
-		<div class="span6">
+			
+		
+		
+			
+			
+		
+		
+		
+			
+	
+<div class="row">
+	<div class="col-md-6">
 		<div class="alert alert-success">加班申請列表</div>
 		<display:table name="${docs2}" id="row" class="table table-condensed" sort="list" excludedParams="*" >
 		  	<display:column title="開始" property="startDate" sortable="true" />
@@ -182,10 +199,10 @@ $(document).ready(function() {
 	        	</c:if>
 	        </display:column>
 		</display:table>
-		</div>
+	</div>
 		
-		<div class="span6">
-		<div class="alert alert-error">補休申請列表</div>
+	<div class="col-md-6">
+		<div class="alert alert-danger">補休申請列表</div>
 		<display:table name="${docs09}" id="row" class="table table-condensed" sort="list" excludedParams="*" >
 		  	<display:column title="開始" property="startDate" sortable="true" />
 		  	<display:column title="結束" property="endDate" sortable="true"/>
@@ -204,9 +221,9 @@ $(document).ready(function() {
 	        	</c:if>
 	        </display:column>
 		</display:table>
-		</div>
-	</div>	
-</div>
+	</div>
+</div>	
+
 
 </form>
 <script>

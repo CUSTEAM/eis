@@ -72,7 +72,7 @@ public class Aqansw extends BaseAction{
 		
 		//初入
 		//UserCredential c = (UserCredential) session.getAttribute("Credential");		
-		getSession().setAttribute("dept", df.sqlGetStr("SELECT c.idno2 FROM CodeEmpl c, empl e WHERE e.unit=c.idno AND e.idno='"+getSession().getAttribute("userid")+"'"));
+		getSession().setAttribute("dept", df.sqlGetStr("SELECT c.id as idno2 FROM CODE_UNIT c, empl e WHERE e.unit=c.id AND e.idno='"+getSession().getAttribute("userid")+"'"));
 		getSession().setAttribute("depts", df.sqlGet("SELECT * FROM AQ_unit WHERE id='Q'"));
 		getSession().setAttribute("myduty", df.sqlGetStr("SELECT Director FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'"));		
 		

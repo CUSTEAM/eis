@@ -121,12 +121,13 @@ function showPass(str){
 <div id="funbtn" rel="popover" title="說明" data-content="請定期更換密碼或自訂帳號" data-placement="right" class="btn btn-warning">?</div>
 </div>
 
-<form action="AccountManager" method="post" class="form-horizontal control-group info text-info">
+<form action="AccountManager" method="post" class="form-inline">
+<div class="form-group has-success">
 <table class="table" >
 	<tr>
 		<td nowrap>永久帳號</td>
 		<td nowrap>
-			<input type="text" disabled value="${wwpass.username}"/>
+			<input type="text" class="form-control" disabled value="${wwpass.username}"/>
 			<div id="q1" rel="popover" title="說明" data-content="系統預設帳號,永不變更" data-placement="right" class="btn btn-warning">?</div>
 		</td>
 		<td width="100"></td>
@@ -135,7 +136,7 @@ function showPass(str){
 	<tr>
 		<td nowrap>自訂帳號</td>
 		<td nowrap>
-			<input type="text" name="freename" value="${wwpass.freename}" onClick="$('#q2').popover('hide');" autocomplete="off" onKeyup="getAjaxReturn(this.value);"/>
+			<input type="text" class="form-control" name="freename" value="${wwpass.freename}" onClick="$('#q2').popover('hide');" autocomplete="off" onKeyup="getAjaxReturn(this.value);"/>
 			<div id="q2" rel="popover" title="說明" data-content="自訂帳號與永內帳號均可登入系統,在公共場合登入時可利用自訂帳號登入" data-placement="right" class="btn btn-warning">?</div>
 			</td>
 		<td nowrap id="msg"></td>
@@ -144,7 +145,7 @@ function showPass(str){
 	<tr>
 		<td nowrap>現在密碼</td>
 		<td nowrap>
-			<input type="password" disabled value="${wwpass.password}"/>
+			<input type="password" class="form-control" disabled value="${wwpass.password}"/>
 			<div id="q3" rel="popover" title="說明" data-content="目前的密碼${wwpass.password}" data-placement="right" class="btn btn-warning">?</div>
 		</td>
 		<td nowrap><c:if test="${!empty wwpass.updated}"> 上次變更 ${fn:substring(wwpass.updated, 0, 16)}</c:if></td>
@@ -153,7 +154,7 @@ function showPass(str){
 	<tr>
 		<td nowrap>變更密碼</td>
 		<td nowrap>
-			<input type="password" onKeyUp="showPass(this.value), $('#strength').show(), checkPwd(this.value);" id="password" name="password" autocomplete="off"/>
+			<input type="password" class="form-control" onKeyUp="showPass(this.value), $('#strength').show(), checkPwd(this.value);" id="password" name="password" autocomplete="off"/>
 			<div id="q4" rel="popover" title="說明" data-content="變更密碼" data-placement="right" class="btn btn-warning">?</div>
 		</td>
 		<td id="msg1" nowrap></td>
@@ -189,7 +190,7 @@ function showPass(str){
 </table>
 
 
-
+</div>
 </form>    
 <script>
 var e =document.getElementById("password"); 

@@ -8,12 +8,14 @@
 
 
 <title>識別證卡號匯入</title>
-<script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
-<script src="/eis/inc/js/plugin/bootstrap-fileupload.js"></script>
-
 <link href="/eis/inc/css/jquery-ui.css" rel="stylesheet"/>
 <link href="/eis/inc/css/wizard-step.css" rel="stylesheet"/>
-<link href="/eis/inc/css/bootstrap-fileupload.css" rel="stylesheet">
+<link href="/eis/inc/bootstrap/plugin/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet">
+
+<script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
+<script src="/eis/inc/bootstrap/plugin/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="/eis/inc/bootstrap/plugin/bootstrap-fileinput/js/fileinput_locale_zh-TW.js"></script>
+
 <script>  
 $(document).ready(function() {
 	$('.help').popover("show");
@@ -31,9 +33,9 @@ $(document).ready(function() {
 <body>
 <div class="alert alert alert-warning" role="alert">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
-	<strong>卡片匯入</strong> 請依格式建立匯入檔案
+	<strong>卡片匯入</strong> <div rel="popover" title="說明" data-content="依照格式欄位匯入資料後，學生基本資料及卡號於公用查詢→學生查詢依條件下載，教職員基本資料及卡號請洽人事單位。" data-placement="right" class="help btn btn-warning">?</div>
 </div>
-<form action="CardManager" method="post" class="form-horizontal" enctype="multipart/form-data">
+<form action="CardManager" method="post" enctype="multipart/form-data">
 <div class="wizard-steps">
 	<div><a href="#"><span>1</span> 下載格式</a></div>
 	<div><a href="#"><span>2</span> 依格式編輯資料</a></div>
@@ -41,31 +43,28 @@ $(document).ready(function() {
 </div>
 
 <table class="table">
-	
 	<tr>
 		<td>
-		
-		<div class="fileupload fileupload-new" data-provides="fileupload" style="float:left;">    
-		<a class="btn" href="jsp/card/card.csv">下載格式</a>		    
-			<div class="input-append">			
-				<div class="uneditable-input">
-					<i class="icon-file fileupload-exists"></i> 
-					<span class="fileupload-preview"></span>
-				</div>	
-				<span class="btn btn-file btn-info">					
-					<span class="fileupload-new">選擇檔案</span>
-					<span class="fileupload-exists">重選檔案 </span>
-					<input type="file" name="upload"/>
-				</span>				
-				<a href="#" class="btn fileupload-exists btn-info" data-dismiss="fileupload">取消</a>
-			</div>
-		</div>
-		&nbsp;
-		<button class="btn btn-danger" name="method:saveTxtFile" type="submit">匯入卡片對應資料</button>
-		<div rel="popover" title="說明" data-content="依照格式欄位匯入資料後，學生基本資料及卡號於公用查詢→學生查詢依條件下載，教職員基本資料及卡號請洽人事單位。" data-placement="right" class="help btn btn-warning">?</div>
+		<a class="btn btn-primary btn-lg btn-block" href="jsp/card/card.csv"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>下載格式</a>	<br>			    
+		<input id="upload" name="upload" multiple type="file" class="file file-loading " data-allowed-file-extensions='["csv"]'><br>
+		<script>
+		$("#upload").fileinput({
+		    language: "zh-TW",
+		    uploadUrl: "/file-upload-batch/2",
+		    allowedFileExtensions: ["jpg", "png", "gif"]
+		});
+		</script>
+					
+				
+				
+		<button class="btn btn-primary btn-lg btn-block" name="method:saveTxtFile" type="submit"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>匯入卡片對應資料</button> 
+				
 		</td>
 	</tr>
 </table>
+
+
+
 
 <c:if test="${!empty fail || !empty success}">
 
