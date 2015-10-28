@@ -87,10 +87,10 @@ $(document).ready(function() {
 </head>
 <body>
 <div class="alert alert alert-warning" role="alert"><b>學生來源</b> 學生合計: ${stdsall}名, 地址不詳: ${stdsall-fn:length(stdsgeo)}名<br>滑鼠拖放或滾動檢視細部資訊</div>
-<div class="accordion" id="accordion2">
-  <div class="accordion-group">
-    <div class="accordion-heading"> 
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">全校</a>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-primary">
+    <div class="panel-heading"> 
+      <a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">全校</a>
     </div>
     <div id="collapseOne" class="accordion-body collapse in">
       <div class="accordion-inner"><div id="map" style="height:400px; width:100%;"></div></div>
@@ -98,9 +98,9 @@ $(document).ready(function() {
   </div>
   
   <c:forEach items="${stdscol}" var="s">
-  <div class="accordion-group">
-    <div class="accordion-heading"> 
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${s.id}">${s.name}</a>
+  <div class="panel panel-primary">
+    <div class="panel-heading"> 
+      <a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse${s.id}">${s.name}</a>
     </div>
     <div id="collapse${s.id}" class="accordion-body collapse">
       <div class="accordion-inner"><div id="map${s.id}" style="height:400px; width:100%;">map${s.id}</div></div>
@@ -109,9 +109,9 @@ $(document).ready(function() {
   </c:forEach>
   
   <c:forEach items="${stdsdep}" var="s">
-  <div class="accordion-group">
-    <div class="accordion-heading"> 
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${s.id}${s.id}">${s.name}</a>
+  <div class="panel panel-default">
+    <div class="panel-heading"> 
+      <a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse${s.id}${s.id}">${s.name}</a>
     </div>
     <div id="collapse${s.id}${s.id}" class="accordion-body collapse">
       <div class="accordion-inner"><div id="map${s.id}${s.id}" style="height:400px; width:100%;"></div></div>
