@@ -8,6 +8,14 @@
 	margin-right: 10px;
 }
 
+.ui-datepicker-year{
+	color:#555555 !important;
+}
+
+.ui-datepicker-month{
+	color:#555555 !important;
+}
+
 /*.input-group-addon{
 	font-size: 18px !important;
 }
