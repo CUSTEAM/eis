@@ -27,7 +27,7 @@
 				<c:forEach items="${m.rule}" var="r">				
 				<c:if test="${fn:indexOf(cookie['unit'].value, r.unit_id)>-1}">				
 				<li class="dropdown">
-					<a tabindex="0" data-toggle="dropdown" data-submenu>${m.name}</a>
+					<a tabindex="0" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-submenu>${m.name}</a>
 					<ul class="dropdown-menu">					
 					
 					<c:forEach items="${m.menu}" var="mm">
