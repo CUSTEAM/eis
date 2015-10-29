@@ -15,18 +15,7 @@
 				
 				
 				
-			<ul class="nav">									
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+			<ul class="nav">				
 				<c:forEach items="${sysmenu}" var="m">
 				<c:forEach items="${m.rule}" var="r">				
 				<c:if test="${fn:indexOf(cookie['unit'].value, r.unit_id)>-1}">				
@@ -67,7 +56,14 @@
 				</c:if>				
 				</c:forEach>			
 			</c:forEach>	
-			</ul>							
+			</ul>	
+			
+			<c:if test="${!empty cookie['unit']}">
+				<ul id="xLogout" class="nav pull-right">					
+					<li class="divider-vertical"></li>			
+					<li><a href="/eis/Logout">登出</a></li>
+				</ul>
+			</c:if>						
 			</div>	
 			
 		</div>
