@@ -16,6 +16,15 @@ $(document).ready(function() {
 		$('.help').popover("hide");
 	}, 0);
 	
+	$("#type" ).change(function() {
+		if($("#type").val()=="Gstmd"){
+			$(".tcls" ).hide("hide");
+		}else{
+			$(".tcls" ).show("slow");
+		}
+		  
+	});	
+	
 	$("select[name='week'], select[name='beginCls'], select[name='endCls']" ).change(function() {
 		if($("#week").val()+$("#beginCls").val()+$("#endCls").val()!=""){
 			$(".gtype, .tname, .tsex, .tide, .tadd, .tsch, .tsch, .tstds" ).hide("slow");
@@ -54,7 +63,7 @@ $(document).ready(function() {
 		<td>
 		<div class="input-group">
 		<span class="input-group-addon">目標</span>
-		<select class="form-control"name="type">
+		<select class="form-control" name="type" id="type">
 			<option <c:if test="${type eq'stmd'}">selected</c:if> value="stmd">在校生</option>
 			<option <c:if test="${type eq'Gstmd'}">selected</c:if> value="Gstmd">離校生</option>
 		</select>

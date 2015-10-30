@@ -23,7 +23,13 @@ $(document).ready(function() {
 	
 	setTimeout(function() {
 		$('.help').popover("hide");
-	}, 5000);
+	}, 5000);	
+	
+	/*$(".fileinput-upload-button").click(function(){
+		
+		$("#saveTxtFile").click();
+		event.stopPropagation();
+	})*/
 	
 });
 
@@ -33,7 +39,8 @@ $(document).ready(function() {
 <body>
 <div class="alert alert alert-warning" role="alert">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
-	<strong>卡片匯入</strong> <div rel="popover" title="說明" data-content="依照格式欄位匯入資料後，學生基本資料及卡號於公用查詢→學生查詢依條件下載，教職員基本資料及卡號請洽人事單位。" data-placement="right" class="help btn btn-warning">?</div>
+	<strong>卡片匯入</strong>
+	<div  class="help btn btn-warning" data-toggle="popover" title="說明" data-content="依照格式欄位匯入資料後，學生基本資料及卡號於公用查詢→學生查詢依條件下載，教職員基本資料及卡號請洽人事單位。" data-placement="right">?</div>
 </div>
 <form action="CardManager" method="post" enctype="multipart/form-data">
 <div class="wizard-steps">
@@ -46,18 +53,21 @@ $(document).ready(function() {
 	<tr>
 		<td>
 		<a class="btn btn-primary btn-lg btn-block" href="jsp/card/card.csv"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span>下載格式</a>	<br>			    
-		<input id="upload" name="upload" multiple type="file" class="file file-loading " data-allowed-file-extensions='["csv"]'><br>
+		<input name="upload" type="file" data-show-upload="false"
+		id="upload" class="file file-loading "/><br>
 		<script>
 		$("#upload").fileinput({
+			multiple: false,
+			
 		    language: "zh-TW",
-		    uploadUrl: "/file-upload-batch/2",
-		    allowedFileExtensions: ["jpg", "png", "gif"]
+		    uploadUrl: "",
+		    allowedFileExtensions: ["csv", "txt"]
 		});
 		</script>
 					
 				
 				
-		<button class="btn btn-primary btn-lg btn-block" name="method:saveTxtFile" type="submit"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>匯入卡片對應資料</button> 
+		<button class="btn btn-primary btn-lg btn-block" id="saveTxtFile" name="method:saveTxtFile" type="submit"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>匯入卡片對應資料</button> 
 				
 		</td>
 	</tr>
@@ -68,26 +78,34 @@ $(document).ready(function() {
 
 <c:if test="${!empty fail || !empty success}">
 
+<div class="row">
+	<div class="col-md-6">
+	<table class="table table-striped">		
+		<tr>
+			<td>已建立</td>
+		</tr>
+		<c:forEach items="${success}" var="s">
+		<tr>
+			<td>${s[0]} : ${s[1]}</td>
+		</tr>
+		</c:forEach>
+	</table>
+	</div>
+	<div class="col-md-6">
+	<table class="table table-striped">
+		<tr>
+			<td>無法建立</td>
+		</tr>
+		<c:forEach items="${fail}" var="f">
+		<tr>
+			<td>${f[0]} : ${f[1]}</td>
+		</tr>
+		</c:forEach>	
+	</table>	
+	</div>
+</div>
 
 
-<table class="table">
-	<tr class="error">
-		<td>無法建立</td>
-	</tr>
-	<c:forEach items="${fail}" var="f">
-	<tr>
-		<td>${f[0]} : ${f[1]}</td>
-	</tr>
-	</c:forEach>
-	<tr class="success">
-		<td>已建立</td>
-	</tr>
-	<c:forEach items="${success}" var="s">
-	<tr>
-		<td>${s[0]} : ${s[1]}</td>
-	</tr>
-	</c:forEach>
-</table>
 </c:if>
 
 

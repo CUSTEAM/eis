@@ -4,15 +4,21 @@
 	<package name="publiclogin" extends="abstract_struts" namespace="/">				
 		<action name="Logout" class="action.Logout">
 			<result name="logout">/index.jsp</result>
-		</action>	
+		</action>
 		
 		<action name="Aqansw" class="action.calendar.Aqansw">
 			<result>/jsp/Aqansw.jsp</result>
 		</action>
-		
-			
 	</package>
 	
+	<!-- 實驗室 -->
+	<package name="nabbr" extends="abstract_struts" namespace="/">
+		<action name="NabbrBoroManager" class="action.nabbr.NabbrManagerAction">
+			<result>/jsp/nabbr/NabbrBoroManager.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 行事曆 -->
 	<package name="calendar" extends="abstract_struts" namespace="/">		
 		<action name="Calendar" class="action.calendar.MyCalendar">
 			<result name="intro">/jsp/calendar.jsp</result>
