@@ -13,8 +13,8 @@
 	
 	<!-- 實驗室 -->
 	<package name="nabbr" extends="abstract_struts" namespace="/">
-		<action name="NabbrBoroManager" class="action.nabbr.NabbrManagerAction">
-			<result>/jsp/nabbr/NabbrBoroManager.jsp</result>
+		<action name="NabbrBoroRegister" class="action.nabbr.NabbrBoroRegisterAction">
+			<result>/jsp/nabbr/NabbrBoroRegister.jsp</result>
 		</action>
 	</package>
 	

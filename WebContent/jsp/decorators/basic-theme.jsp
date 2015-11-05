@@ -18,6 +18,7 @@
 <title><decorator:title default="Welcome!" /> - 中華科大教職員資訊系統</title>
 <link rel="stylesheet" href="inc/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="inc/css/advance.css" />
+<link href="/eis/inc/bootstrap/css/docs.min.css" rel="stylesheet"/>
 <script src="inc/js/jquery.js"></script>
 <script src="inc/bootstrap/js/bootstrap.js"></script>
 <script src="inc/js/plugin/jquery.blockUI.js"></script>

@@ -21,7 +21,7 @@
 <div class="alert alert alert-warning" role="alert">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
 <strong>各項日期管理</strong></div>
-<form action="CalendarManager" method="post" class="form-horizontal">
+<form action="CalendarManager" method="post" class="form-inline">
 <table class="table control-group info">
 	<tr>
 		<td nowrap>日期</td>
@@ -34,15 +34,13 @@
 	<tr>
 		<td>
 		
-		<input onClick="$('#name${c.name}').val('${c.name}')" 
-		class="dtpick" type="text" id="cdate${c.name}" placeholder="點一下輸入日期" 
-		name="cdate" value="${c.date}"/>
+		<input class="dtpick form-control" type="text" id="${c.name}" placeholder="點一下輸入日期" name="cdate" value="${c.date}"/>
 		</td>
 		<td nowrap>${c.note}</td>
 		<td nowrap>${c.edate}</td>
 		<td width="100%">${c.editor}
-		<input type="hidden" id="name${c.name}" name="name" value="">
-		<input type="hidden" value="${c.sys}">
+		<input type="text" id="name${c.name}" name="name" value="">
+		<input type="text" value="${c.sys}">
 		</td>
 	</tr>
 	</c:forEach>
@@ -51,7 +49,12 @@
 </form>
     
 <script>
-$(".dtpick" ).datetimepicker();
+$(".dtpick" ).datetimepicker({
+		onSelect:function(){
+			//alert(this.id);
+			$("#name"+this.id).val(this.id);
+		}
+});
 
 </script>
 </body>
