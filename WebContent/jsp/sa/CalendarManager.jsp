@@ -39,8 +39,8 @@
 		<td nowrap>${c.note}</td>
 		<td nowrap>${c.edate}</td>
 		<td width="100%">${c.editor}
-		<input type="text" id="name${c.name}" name="name" value="">
-		<input type="text" value="${c.sys}">
+		<input type="hidden" id="name${c.name}" name="name" value="">
+		<input type="hidden" value="${c.sys}">
 		</td>
 	</tr>
 	</c:forEach>
