@@ -36,6 +36,8 @@
             	<value>model/AqUnit.hbm.xml</value>
             	<value>model/SYSDOC.hbm.xml</value>
             	<value>model/AmsDocApply.hbm.xml</value>
+            	<value>model/NabbrBorApp.hbm.xml</value>
+            	<value>model/NabbrBoro.hbm.xml</value>
             </list>
         </property>
     </bean>

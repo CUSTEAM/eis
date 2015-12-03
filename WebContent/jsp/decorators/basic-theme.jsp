@@ -25,10 +25,12 @@
 <link rel="stylesheet" href="inc/bootstrap/plugin/bootstrap-submenu/css/bootstrap-submenu.min.css">
 <script src="inc/bootstrap/plugin/bootstrap-submenu/js/bootstrap-submenu.min.js" defer></script>
 <script>
-
 $.ajaxSetup ({ 
 	cache: false 
 });
+window.onbeforeunload = function() {
+	$.unblockUI();
+};
 </script>
 <decorator:head />
 </head>
@@ -64,7 +66,7 @@ $.ajaxSetup ({
 					<p>點畫面任意處繼續...</p>
 					</div>
 					<div class="modal-footer">
-						<button class="btn" data-dismiss="modal" aria-hidden="true">關閉</button>
+						<button class="btn btn-lg btn-primary" data-dismiss="modal" aria-hidden="true">關閉</button>
 					</div>
 				</div>
 			</div>

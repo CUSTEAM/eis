@@ -58,6 +58,7 @@
 			scheduler.config.minicalendar.mark_events = false;
 			scheduler.config.full_day = true;
 			scheduler.config.xml_date = "%Y-%m-%d %H:%i";
+			scheduler.config.default_date = "%m月%d日";
 			scheduler.init('myCalendar', new Date(), "week");			
 			scheduler.config.cascade_event_display = true;			
 			scheduler.attachEvent("onEventAdded", addEvent);
@@ -72,7 +73,7 @@
       			{name:"description", height:43, map_to:"text", type:"textarea" , focus:true},
       			{name:"detail", height:130, type:"textarea", map_to:"details" },
       			{name:"members", height:86, type:"textarea", map_to:"members" },
-      			//{name:"recurring", type: "recurring", map_to: "rec_type", button: "recurring"},    			
+      			{name:"recurring", type: "recurring", map_to: "rec_type", button: "recurring"},//重複活動			
       			{name:"time", height:72, type:"time", map_to:"auto"}
       		];			
       		scheduler.locale.labels.section_detail="細節";
@@ -139,28 +140,17 @@
 		<div class="dhx_cal_next_button">&nbsp;</div>
 		<div class="dhx_cal_today_button"></div>
 		<div class="dhx_cal_date"></div>
+		
 		<div class="dhx_cal_tab dhx_cal_tab_first" name="day_tab" style="left:14px;"></div>
 		<div class="dhx_cal_tab" name="week_tab" style="left:75px;"></div>
 		<div class="dhx_cal_tab dhx_cal_tab_last" name="month_tab" style="left:136px;"></div>
 		<div class="dhx_cal_tab" style="border-radius:5px; left:210px;"><a href="/csis/TimeTable?nonStay=1&emplOid=${emplOid}" style="color:#777777;">課表</a></div>
-		<div class="dhx_cal_tab" style="border-radius:5px; left:280px;"><a href="/csis/TimeTable?emplOid=${emplOid}" style="color:#777777;">留校時間</a></div>	
+		<div class="dhx_cal_tab" style="border-radius:5px; left:280px;"><a href="/csis/TimeTable?emplOid=${emplOid}" style="color:#777777;">留校時間</a></div>
+		<div class="dhx_cal_tab" style="left:350px; border-style:none;">週次 <span class="badge">${sweek}</span></div>
+			
 	</div>	
 	<div class="dhx_cal_header"></div>
 	<div class="dhx_cal_data"></div>
 </div>
-<!-- div style="position:absolute; bottom:20px; right:14px; padding:5px; color:#444444;">
-	<div style="float:left; backGround:#444444; width:16px; height:16px; margin:5px;"></div>
-	<div style="float:left; margin:2px;">循環</div>
-	<div style="float:left; backGround:#AAAAAA; width:16px; height:16px; margin:5px;"></div>
-	<div style="float:left; margin:2px;">過期</div>
-	<div style="float:left; backGround:#FFAD46; width:16px; height:16px; margin:5px;"></div>
-	<div style="float:left; margin:2px;">受邀</div>
-	<div style="float:left; backGround:#5484ED; width:16px; height:16px; margin:5px;"></div>
-	<div style="float:left; margin:2px;">個人</div>
-</div>
-
-<div style="position:absolute; bottom:20px; left:50px; padding:5px; color:#444444;">	
-	<img src="/CIS/pages/images/icon_info.gif"/>滑鼠點擊時間欄點2下，或滑鼠拖拉時間欄，即可編輯
-</div-->
 </body>
 </html>

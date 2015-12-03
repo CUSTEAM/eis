@@ -45,9 +45,5 @@
 </div>
 </c:if>
 </form>
-
-
-
-
 </body>
 </html>

@@ -30,8 +30,15 @@
 		
 		<global-results>
 			<result name="Relogin">/index.jsp</result>
+			<result name="error">/error.jsp</result>			
 		</global-results>
+		
+		<global-exception-mappings>
+  			<exception-mapping exception="java.lang.Exception" result="error" />
+		</global-exception-mappings>
 	</package>
+	
+	
 	
 	<include file="struts-page.xml" />
 	<include file="struts-ajax.xml" />

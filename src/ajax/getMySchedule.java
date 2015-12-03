@@ -162,12 +162,12 @@ public class getMySchedule extends BaseAction{
 			out.println("<start_date><![CDATA["+list.get(i).get("begin")+"]]></start_date>");
 			out.println("<end_date><![CDATA["+list.get(i).get("end")+"]]></end_date>");
 			
-			/*循環
+			/*循環*/
 			if(((Map)list.get(i)).get("rec_type")!=null){
 				//若為循環							
-				out.println("<rec_type><![CDATA["+((Map)list.get(i)).get("rec_type")+"]]></rec_type>");
-				out.println("<event_length><![CDATA["+((Map)list.get(i)).get("rec_event_length")+"]]></event_length>");
-				out.println("<event_pid><![CDATA["+((Map)list.get(i)).get("no")+"]]></event_pid>");
+				out.println("<rec_type><![CDATA["+list.get(i).get("rec_type")+"]]></rec_type>");
+				out.println("<event_length><![CDATA["+list.get(i).get("rec_event_length")+"]]></event_length>");
+				out.println("<event_pid><![CDATA["+list.get(i).get("no")+"]]></event_pid>");
 				//色彩
 				out.println("<color><![CDATA[#555555]]></color>");
 				out.println("<textColor><![CDATA[#FFFFFF]]></textColor>");
@@ -181,7 +181,7 @@ public class getMySchedule extends BaseAction{
 					out.println("<textColor><![CDATA[#555555]]></textColor>");
 				}			
 			}
-			*/
+			
 			
 			if(list.get(i).get("sender")==null){
 				out.println("<color><![CDATA[#5484ED]]></color>");

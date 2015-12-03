@@ -36,10 +36,10 @@ public class editMySchedule extends BaseAction {
 		// 修改
 		if (method.equals("changeEvent")) {
 			try {
-				// 擁有者，砍了自己和所有人，再塞一份新的給自己和所有人
+				// 擁有者，刪除自己和所有人，再塞一份新的給自己和所有人
 				c = (PubCalendar) df.hqlGetListBy(
-						"FROM PubCalendar WHERE no='" + id + "' AND sender='"
-								+ getSession().getAttribute("userid") + "'").get(0);//
+				"FROM PubCalendar WHERE no='" + id + "' AND sender='"
+				+ getSession().getAttribute("userid") + "'").get(0);//
 				c.setOid(null);
 				c.setBegin(sf.parse(start_date));
 				c.setEnd(sf.parse(end_date));
@@ -68,10 +68,10 @@ public class editMySchedule extends BaseAction {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				// 非擁有者，砍了自己，再塞一份給自己
+				// 非擁有者，刪除自己，再塞一份給自己
 				c = (PubCalendar) df.hqlGetListBy(
-						"FROM PubCalendar WHERE no='" + id + "' AND account='"
-								+ getSession().getAttribute("userid") + "'").get(0);
+				"FROM PubCalendar WHERE no='" + id + "' AND account='"
+				+ getSession().getAttribute("userid") + "'").get(0);
 				c.setOid(null);
 				df.exSql("DELETE FROM Calendar WHERE no='" + id
 						+ "' AND account='" + getSession().getAttribute("userid") + "'");

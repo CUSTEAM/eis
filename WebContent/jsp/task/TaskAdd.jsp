@@ -17,14 +17,6 @@
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
 <link href="/eis/inc/css/jquery-ui.css" rel="stylesheet"/>
-<style>
-    body .modal {
-    /* new custom width */
-    width: 60%;
-    /* must be half of the width, minus scrollbar on the left (30px) */
-    margin-left: -30%;
-}
-</style>
 <script>
 $(document).ready(function(){    	
 	
@@ -196,49 +188,48 @@ $(function () {
 </display:table>
 </c:if>
 </form>
-
-
-
 <!-- Modal -->
-<div id="taskAppInfo" class="modal hide fade" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal"
-			aria-hidden="true">×</button>
-		<h3 id="title"></h3>
-	</div>
-	<div class="modal-body" id="appInfo"></div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">關閉</button>
-	</div>
-</div>
-
-
+<div class="modal fade" id="taskAppInfo">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <h4 class="modal-title">Modal title</h4>
+			</div>
+			<div class="modal-body" id="appInfo">
+			  <p>One fine body&hellip;</p>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script>
 $(".tree li:has(ul)").find( "li" ).hide('fast');
 
-function getTaskApp(Oid){
-	
+function getTaskApp(Oid){	
 	$.get("/eis/getTaskAppInfo?Oid="+Oid+"&"+Math.floor(Math.random()*999),
-		    function(d){ 
-				str="";
-				str="<table class='table'>";
-				$("#title").html(d.app.title);
-				$("#appInfo").html("");
-				
-				str+="<tr><td nowrap>申請時間</td><td nowrap>"+d.app.sdate+"</td><td width='100%'></td></tr>";
-				str+="<tr><td nowrap>完成時間</td><td nowrap>"+d.app.edate+"</td><td width='100%'></td></tr>";
-				str+="<tr><td nowrap>申請人</td><td nowrap>"+d.app.cname+"</td><td width='100%'></td></tr>";
-				str+="<tr><td nowrap>問題描述</td><td colspan='2'>"+d.app.note+"</td></tr>";
-				str+="<tr><td colspan='3'><b>處理過程</b></td></tr>";
-				for(i=0; i<d.app.hist.length; i++){
-					str+="<tr><td colspan='3'>"+d.app.hist[i].edate+" - "+d.app.hist[i].cname+"</td></tr>";
-					str+="<tr><td colspan='3'>"+d.app.hist[i].reply+"</td></tr>";
-				}
-				
-				str+="</table>";
-				$("#appInfo").append(str);
-		    }, "json");
+    function(d){ 
+		str="";
+		str="<table class='table'>";
+		$("#title").html(d.app.title);
+		$("#appInfo").html("");
+		
+		str+="<tr><td nowrap>申請時間</td><td nowrap>"+d.app.sdate+"</td><td width='100%'></td></tr>";
+		str+="<tr><td nowrap>完成時間</td><td nowrap>"+d.app.edate+"</td><td width='100%'></td></tr>";
+		str+="<tr><td nowrap>申請人</td><td nowrap>"+d.app.cname+"</td><td width='100%'></td></tr>";
+		str+="<tr><td nowrap>問題描述</td><td colspan='2'>"+d.app.note+"</td></tr>";
+		str+="<tr><td colspan='3'><b>處理過程</b></td></tr>";
+		for(i=0; i<d.app.hist.length; i++){
+			str+="<tr><td colspan='3'>"+d.app.hist[i].edate+" - "+d.app.hist[i].cname+"</td></tr>";
+			str+="<tr><td colspan='3'>"+d.app.hist[i].reply+"</td></tr>";
+		}
+		
+		str+="</table>";
+		$("#appInfo").append(str);
+    }, "json");
 	
 }
 

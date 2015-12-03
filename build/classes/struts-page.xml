@@ -16,6 +16,19 @@
 		<action name="NabbrBoroRegister" class="action.nabbr.NabbrBoroRegisterAction">
 			<result>/jsp/nabbr/NabbrBoroRegister.jsp</result>
 		</action>
+		
+		<action name="NabbrManager" class="action.nabbr.NabbrManagerAction">
+			<result>/jsp/nabbr/NabbrManager.jsp</result>
+		</action>
+		
+		<action name="NabbrSetter" class="action.nabbr.NabbrSetterAction">
+			<result>/jsp/nabbr/NabbrSetter.jsp</result>
+		</action>
+	</package>
+	
+	<package name="nabbr.print" extends="abstract_struts" namespace="/">
+		<action name="UseDetail" class="action.nabbr.print.UseDetail"/>
+		
 	</package>
 	
 	<!-- 行事曆 -->
