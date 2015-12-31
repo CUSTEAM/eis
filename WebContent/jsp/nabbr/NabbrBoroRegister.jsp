@@ -211,9 +211,9 @@ $(document).ready(function() {
 	  	<display:column style="width:10%; white-space:nowrap;" title="開始日期" property="begin" sortable="true"/>
 	  	<display:column style="width:10%; white-space:nowrap;" title="結束日期" property="end" sortable="true"/>
 	  	<display:column style="width:5%; white-space:nowrap;" title="時數" property="cnt" sortable="true"/>
-	  	<display:column style="width:5%; white-space:nowrap;" title="人數" property="cnt" sortable="true"/>
-	  	<display:column style="width:5%; white-space:nowrap;" title="狀態" property="cnt" sortable="true"/>
-	  	<display:column style="width:100%;" title="審核" property="cnt" sortable="true"/>	  	
+	  	<display:column style="width:5%; white-space:nowrap;" title="人數" property="users" sortable="true"/>
+	  	<display:column style="width:5%; white-space:nowrap;" title="狀態" property="lender" sortable="true"/>
+	  	<display:column style="width:100%;" title="審核" property="result" sortable="true"/>	  	
 	  	
 	</display:table>
 </div>

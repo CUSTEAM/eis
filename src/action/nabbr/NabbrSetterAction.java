@@ -77,7 +77,7 @@ public class NabbrSetterAction extends BaseAction{
 			return SUCCESS;
 		}
 		try{
-			df.exSql("INSERT INTO Nabbr(building,floor,room_id,boro)VALUES('"+building+"','"+floor+"','"+room_id+"','"+boro+"');");
+			df.exSql("INSERT INTO Nabbr(dept,unit,building,floor,room_id,boro)VALUES('"+dept+"','"+unit+"','"+building+"','"+floor+"','"+room_id+"','"+boro+"');");
 		}catch(Exception e){
 			msg.setError("新增失敗: "+e.getLocalizedMessage());
 			this.savMessage(msg);

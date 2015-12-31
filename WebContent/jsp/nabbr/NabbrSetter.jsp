@@ -93,9 +93,9 @@ $(document).ready(function() {
 		
 		
 		<select name="boro" class="selectpicker show-tick" data-width="auto">
-				
+			<option <c:if test="${boro eq 'N'}">selected</c:if> value="N">不納入統計</option>	
 			<option <c:if test="${boro eq 'Y'}">selected</c:if> value="Y">納入統計</option>
-			<option <c:if test="${boro eq 'N'}">selected</c:if> value="N">不納入統計</option>
+	
 		</select>
 		</td>
 	</tr>
@@ -133,7 +133,7 @@ $(document).ready(function() {
 	  	
 	  	<display:column style="white-space: nowrap">
 	  		<button name="method:del" id="${row.room_id}" class="btn btn-default btn-sm del">刪除</button>
-	  		<button name="method:dele" id="${row.room_id}" class="btn btn-default btn-sm del">刪除</button>
+	  		<!-- button name="method:save" id="${row.room_id}" class="btn btn-danger">修改</button -->
 		</display:column>	  	
 	  	
 	  	<display:column title="大樓" style="white-space: nowrap" sortable="true">
