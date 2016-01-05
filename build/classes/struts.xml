@@ -20,7 +20,7 @@
 			<interceptor-stack name="loginDefaultStack">
 			    <interceptor-ref name="defaultStack"></interceptor-ref><!-- struts標準攔截器 -->
 				<interceptor-ref name="loginInterceptor"></interceptor-ref><!-- 登入驗證攔截器 -->			
-				<interceptor-ref name="unitmoduleInterceptor"></interceptor-ref><!-- 登入驗證攔截器 -->
+				<!--interceptor-ref name="unitmoduleInterceptor"></interceptor-ref><TODO 動作驗證攔截器 -->
 			</interceptor-stack>
 		</interceptors>
 		
