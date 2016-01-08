@@ -162,7 +162,7 @@ $(document).ready(function() {
 		<td>
 		<div class="input-group">
 			<div class="input-group-addon">所屬單位</div>
-			<input type="text" class="form-control" value="${room.unit}" />
+			<input disabled type="text" class="form-control" value="${room.unit}" />
 		</div>
 		</td>
 	</tr>
@@ -177,17 +177,17 @@ $(document).ready(function() {
 	</tr>
 	<tr>
 		<td>
-		<div class="input-group has-success">
+		<div class="input-group">
 			<div class="input-group-addon">教室名稱</div>
-			<input class="form-control" type="text" name="name2" value="${room.name2}" />
+			<input disabled class="form-control" type="text" name="name2" value="${room.name2}" />
 		</div>
 		</td>
 	</tr>
 	<tr>
 		<td>
-		<div class="input-group has-success">
+		<div class="input-group">
 			<div class="input-group-addon">納入統計</div>
-			<select class="form-control" name="boro">
+			<select disabled class="form-control" name="boro">
 				<option value="Y" <c:if test="${room.boro eq 'Y'}">selected</c:if>>是</option>
 				<option value="N" <c:if test="${room.boro eq 'N'}">selected</c:if>>否</option>
 			</select>

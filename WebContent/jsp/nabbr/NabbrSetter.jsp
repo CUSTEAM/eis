@@ -71,6 +71,9 @@ $(document).ready(function() {
 		</select>
 		<input type="text" name="room_id" value="${room_id}" class="form-control" autocomplete="off" 
 		placeholder="教室編號" data-provide="typeahead"/>
+		<input type="text" name="name2" value="${name2}" class="form-control" autocomplete="off" 
+		placeholder="教室名稱" data-provide="typeahead"/>
+		
 		</td>
 	</tr>
 	<tr>
@@ -155,7 +158,10 @@ $(document).ready(function() {
 		<display:column title="教室編號" style="white-space: nowrap" sortable="true">
 		<input type="text" class="form-control" name="r" value="${row.room_id}" onKeyDown="check('${row.Oid}')"/>
 		</display:column>
-	  	<display:column style="width:10%; white-space:nowrap;" title="教室名稱" property="name2" sortable="true"/>
+		<display:column title="教室名稱" style="white-space: nowrap" sortable="true">
+		<input type="text" class="form-control" name="n" value="${row.name2}" onKeyDown="check('${row.Oid}')"/>
+		</display:column>
+	  	<!-- display:column style="width:10%; white-space:nowrap;" title="教室名稱" property="name2" sortable="true"/ -->
 	  	<display:column style="width:10%; white-space:nowrap;" title="座位" property="seat" sortable="true"/>
 	  	
 	  	

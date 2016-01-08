@@ -15,19 +15,21 @@ public class NabbrSetterAction extends BaseAction{
 	public String boro;
 	public String seat;
 	public String delRoom;
-	public String d[], u[], b[], f[], r[], bo[];
+	public String d[], u[], b[], f[], n[], r[], bo[];
 	
 	public String execute(){
 		
 		return SUCCESS;
 	}
 	
-	public String search(){		
+	public String search(){	
+		System.out.println("name2:"+name2);
 		StringBuilder sb=new StringBuilder("SELECT * FROM Nabbr n WHERE n.boro='"+boro+"'");
 		if(!building.equals(""))sb.append("AND n.building='"+building+"'");
 		if(!dept.equals(""))sb.append("AND n.dept='"+dept+"'");
 		if(!room_id.equals(""))sb.append("AND n.room_id LIKE'"+room_id+"%'");
 		if(!floor.equals(""))sb.append("AND n.floor='"+floor+"'");
+		if(!name2.equals(""))sb.append("AND n.name2 LIKE'"+name2+"%'");
 		if(!unit.equals(""))sb.append("AND n.unit='"+unit+"'");		
 		request.setAttribute("rooms", df.sqlGet(sb.toString()));
 		
@@ -59,7 +61,7 @@ public class NabbrSetterAction extends BaseAction{
 			
 			if(!Oid[i].equals("")){
 				df.exSql("UPDATE Nabbr SET building='"+b[i]+"', dept='"
-				+d[i]+"', unit='"+u[i]+"',floor='"+f[i]
+				+d[i]+"', unit='"+u[i]+"',floor='"+f[i]+"',name2='"+n[i]
 				+"',boro='"+bo[i]+"',room_id='"+r[i]+"'WHERE Oid="+Oid[i]);
 			}
 			
@@ -71,13 +73,13 @@ public class NabbrSetterAction extends BaseAction{
 	
 	public String create(){
 		Message msg=new Message();
-		if(building.equals("")||room_id.equals("")||floor.equals("")||boro.equals("")){
+		if(building.equals("")||room_id.equals("")||floor.equals("")||boro.equals("")||name2.equals("")){
 			msg.setError("資料不完整");
 			this.savMessage(msg);
 			return SUCCESS;
 		}
 		try{
-			df.exSql("INSERT INTO Nabbr(dept,unit,building,floor,room_id,boro)VALUES('"+dept+"','"+unit+"','"+building+"','"+floor+"','"+room_id+"','"+boro+"');");
+			df.exSql("INSERT INTO Nabbr(dept,unit,building,floor,name2,room_id,boro)VALUES('"+dept+"','"+unit+"','"+building+"','"+floor+"','"+name2+"','"+room_id+"','"+boro+"');");
 		}catch(Exception e){
 			msg.setError("新增失敗: "+e.getLocalizedMessage());
 			this.savMessage(msg);

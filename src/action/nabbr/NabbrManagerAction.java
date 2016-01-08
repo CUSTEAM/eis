@@ -70,7 +70,7 @@ public class NabbrManagerAction extends BaseAction{
 	public String save(){
 		Message msg=new Message();
 		try{
-			df.exSql("UPDATE Nabbr SET name2='"+name2+"', boro='"+boro+"', remark='"+remark+"', seat='"+seat+"' WHERE Oid="+Oid);
+			df.exSql("UPDATE Nabbr SET remark='"+remark+"', seat='"+seat+"' WHERE Oid="+Oid);
 		}catch(Exception e){
 			msg.addError("教室資料有誤");
 		}
