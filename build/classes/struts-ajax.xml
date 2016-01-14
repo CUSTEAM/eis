@@ -89,6 +89,15 @@
 			<result type="json"/>
 		</action>
 		
+		<!-- 取教室財產 -->
+		<action name="getPropByNabbr" class="ajax.getPropByNabbr">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
+		
 		<!-- 隨機檢查(初步為問卷) -->
 		<action name="initCheck" class="ajax.empl.initCheck">
 			<result type="json"/>

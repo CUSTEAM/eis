@@ -21,7 +21,7 @@ import model.NabbrBoro;
  */
 public class NabbrBoroRegisterAction extends BaseAction{
 	
-	public String holiday, cls[], Oid, date, beginDate, endDate, beginCls, endCls, users, RcTableCode, room_id;
+	public String workday[], cls[], propname[], Oid, date, beginDate, endDate, users, RcTableCode, room_id;
 	
 	public String execute(){		
 		List<Map>list=(List)getContext().getAttribute("CODE_BORROW");
@@ -44,16 +44,7 @@ public class NabbrBoroRegisterAction extends BaseAction{
 	public String create(){		
 		Message msg=new Message();
 		String code[], room[];
-		Date db, de;
-		
-		/*try{
-			code=rcConvert(RcTableCode);			
-		}catch(Exception e){
-			Message msg=new Message();
-			msg.setError("未指定專案");
-			this.savMessage(msg);
-			return execute();
-		}*/
+		//Date db, de;		
 		if(RcTableCode.equals("")){
 			msg.setError("未指定專案");
 			this.savMessage(msg);
@@ -66,7 +57,6 @@ public class NabbrBoroRegisterAction extends BaseAction{
 			this.savMessage(msg);
 			return execute();
 		}
-		//room_id=room_id.substring(0, room_id.indexOf(","));
 		
 		List<Map>range;
 		try {
@@ -82,19 +72,7 @@ public class NabbrBoroRegisterAction extends BaseAction{
 			return execute();
 		}
 		
-		if(beginCls.equals("")){
-			msg.setError("請指定開始節次");
-			this.savMessage(msg);
-			return execute();
-		}
 		
-		if(!endCls.equals("")){
-			if(Integer.parseInt(beginCls)>Integer.parseInt(endCls)){				
-				msg.setError("節次矛盾");
-				this.savMessage(msg);
-				return execute();
-			}
-		}
 		
 		int u=0;
 		try{
@@ -114,36 +92,56 @@ public class NabbrBoroRegisterAction extends BaseAction{
 		app.setUsers(u);
 		df.update(app);
 		
-		NabbrBoro bor;	
-		int g=0, h=Integer.parseInt(beginCls), k;
-		if(!endCls.equals("")){
-			k=Integer.parseInt(endCls);
-		}else{
-			k=h;
-		}		
+		//設備
+		//List<Map>props=new ArrayList();
+		for(int i=0; i<propname.length; i++){
+			//props.addAll(df.sqlGet("SELECT propid FROM propmid WHERE labid='"+
+			//room_id.substring(0, room_id.indexOf(","))+"' AND propname='"+propname[i]+"'"));
+			
+			df.exSql("INSERT INTO NabbrBorPro(NabbrBorAppOid, propname)VALUES("+app.getOid()+",'"+propname[i]+"');");
+			
+			
+		}
 		
-		int w;
+		
+		
+		
+		
+		
+		NabbrBoro bor;	
+		int g=0;
+		
+		String day[];
+		//int w;
 		for(int i=0; i<range.size(); i++){			
-			for(int j=h; j<=k; j++){
-				bor=new NabbrBoro();
-				bor.setBorAppOid(app.getOid());
-				bor.setBoro_date((Date)range.get(i).get("date"));
-				bor.setCls(j);
-				w=Integer.parseInt(range.get(i).get("week").toString());
-				bor.setWeek((w==0)?7:w);
-				if(holiday.equals("")){
-					df.update(bor);
-				}else{
-					if(bor.getWeek()<6)df.update(bor);
-				}
+			for(int j=0; j<workday.length; j++){
 				
-				g++;
+				day=workday[j].split("-");
+				if(range.get(i).get("week").toString().equals(day[0])){					
+					bor=new NabbrBoro();
+					bor.setBorAppOid(app.getOid());
+					bor.setBoro_date((Date)range.get(i).get("date"));
+					bor.setCls(Integer.parseInt(day[1]));					
+					df.update(bor);
+					
+					
+					g++;
+				}
 			}
 		}
 		
-		msg.setSuccess("已登記 "+range.size()+"日, 總計"+g+"時數");
+		msg.setSuccess("時間範圍 "+range.size()+"日, 總計"+g+"時數");
 		this.savMessage(msg);
 		return search();
+	}
+	
+	private boolean checkDay(int w){
+		
+		
+		
+		
+		
+		return true;
 	}
 	
 	public String search(){		
@@ -246,11 +244,7 @@ public class NabbrBoroRegisterAction extends BaseAction{
 				map.put("week", bg.get(Calendar.DAY_OF_WEEK)-1);
 				list.add(map);
 				bg.add(Calendar.DAY_OF_YEAR, 1);
-			}			
-			
-			for(int i=0; i<list.size(); i++){
-				System.out.println(list);
-			}
+			}				
 			return list;
 		}		
 	}	

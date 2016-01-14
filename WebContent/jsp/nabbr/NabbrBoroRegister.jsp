@@ -61,6 +61,7 @@ $(document).ready(function() {
 <ul class="nav nav-pills nav-wizard">
     <li class="active"><a href="#" data-toggle="tab">選擇研究計畫</a><div class="nav-arrow"></div></li>
     <li><div class="nav-wedge"></div><a href="" data-toggle="tab">選擇教室</a><div class="nav-arrow"></div></li>
+    <li><div class="nav-wedge"></div><a href="" data-toggle="tab">指定設備</a><div class="nav-arrow"></div></li>
     <li><div class="nav-wedge"></div><a href="" data-toggle="tab">日期範圍</a><div class="nav-arrow"></div></li>
     <li><div class="nav-wedge"></div><a href="" data-toggle="tab">節次範圍</a><div class="nav-arrow"></div></li>
     <li><div class="nav-wedge"></div><a href="" data-toggle="tab">申請完成</a></li>
@@ -89,15 +90,14 @@ $(document).ready(function() {
 	
 	<tr>
 		<td>
-		
 		<div class="input-group">
-			<div class="input-group-addon">選擇教室</div>
-			<input type="text" name="room_id" value="${room_id}" class="place form-control" autocomplete="off" onClick="this.value='';" data-provide="typeahead"/>
-			</div>
-		
+			<div class="input-group-addon">使用人數</div>
+			<input type="text" value="${users}" name="users" class="form-control" autocomplete="off" placeholder="人數"/>
+		</div>
 		</td>
 	</tr>
-
+	
+	
 	<tr>
 		<td>		
 		<div class="input-group">
@@ -114,91 +114,89 @@ $(document).ready(function() {
 		</div>
 		</td>
 	</tr>
+	
+	
 	<tr>
 		<td>
+		
 		<div class="input-group">
-			<div class="input-group-addon">排除假日</div>
-			<select name="holiday" class="form-control">
-				<option value="*">排除周六、周日</option>
-				<option value="">不排除</option>				
-			</select>
-		</div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<div class="input-group">
-			<div class="input-group-addon">開始節次</div>
-			<select class="selectpicker show-tick form-control" name="beginCls">
-				<option value="">請選擇開始節次</option>					
-				<optgroup label="上午">
-				<c:forEach begin="1" end="4" varStatus="i">
-				<option <c:if test="${i.index==beginCls}">selected</c:if> value="${i.index}">第${i.index}節</option>						
-				</c:forEach>
-				</optgroup>
-				<optgroup label="下午">
-				<c:forEach begin="5" end="10" varStatus="i">
-				<option <c:if test="${i.index==beginCls}">selected</c:if> value="${i.index}">第${i.index}節</option>						
-				</c:forEach>
-				</optgroup>
-				<optgroup label="晚上">
-				<c:forEach begin="11" end="14" varStatus="i">
-				<option <c:if test="${i.index==beginCls}">selected</c:if> value="${i.index}">第${i.index}節</option>						
-				</c:forEach>
-				</optgroup>				
-			</select>
-			</div>		
-		</td>
-	</tr>
-	<tr>
-		<td>	
-			<div class="input-group">
-			<div class="input-group-addon">結束節次</div>
-			<select class="selectpicker show-tick form-control" name="endCls">
-				<option value="">1節內借用無需輸入</option>					
-				<optgroup label="上午">
-				<c:forEach begin="1" end="4" varStatus="i">
-				<option <c:if test="${i.index==endCls}">selected</c:if> value="${i.index}">第${i.index}節</option>						
-				</c:forEach>
-				</optgroup>
-				<optgroup label="下午">
-				<c:forEach begin="5" end="10" varStatus="i">
-				<option <c:if test="${i.index==endCls}">selected</c:if> value="${i.index}">第${i.index}節</option>						
-				</c:forEach>
-				</optgroup>
-				<optgroup label="晚上">
-				<c:forEach begin="11" end="14" varStatus="i">
-				<option <c:if test="${i.index==endCls}">selected</c:if> value="${i.index}">第${i.index}節</option>						
-				</c:forEach>
-				</optgroup>				
-			</select>
-			</div>		
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<div class="input-group">
-			<div class="input-group-addon">使用人數</div>
-			<input type="text" value="${users}" name="users" class="form-control" autocomplete="off" placeholder="人數"/>
-		</div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<div class="btn-group" role="group" aria-label="...">
-		<button name="method:create" class="btn btn-danger">建立使用記錄</button>
-		<button name="method:search" class="btn btn-default">查詢使用記錄</button>
-		</div>
+			<div class="input-group-addon">選擇教室</div>
+			<input type="text" id="room_id" name="room_id" value="${room_id}" class="place form-control" autocomplete="off" onClick="this.value='';" data-provide="typeahead"/>
+			</div>
+		
 		</td>
 	</tr>
 </table>
+
+
+
+
+<div id="prop" style="display:none;" onClick="check('prop')">
+	
+</div>
+
+<div id="clsTable" style="display:none;">
+<div class="panel panel-primary">
+  	<!-- Default panel contents -->
+	<div class="panel-heading">每週使用頻率</div>
+	<div class="panel-body">
+	  <p>根據時間範圍條件，比對下表中勾選的星期節次建立使用記錄</p>
+	</div>
+
+	<table class="table table-bordered" onClick="check('cls')">
+		<tr>
+			<c:forEach begin="0" end="7" varStatus="w">
+			<c:if test="${w.index==0}">
+			<td width="100">節次/週</td>
+			</c:if>
+			<c:if test="${w.index!=0}">
+			<td><input type="checkbox" class="week" value="${w.index}"/> 星期${w.index} </td>
+			</c:if>
+			</c:forEach>
+		</tr>
+		<c:forEach begin="1" end="14" varStatus="c">
+		
+		<tr>
+			<c:forEach begin="0" end="7" varStatus="w">
+			<c:if test="${w.index==0}">
+			<td>
+			<input type="checkbox" class="cls" value="${c.index}"/>
+			第${c.index}節
+			</td>
+			</c:if>
+			<c:if test="${w.index!=0}">
+			<td>
+			<input type="checkbox" class="w${w.index} c${c.index}" name="workday" value="${w.index}-${c.index}"/>
+			</td>
+			</c:if>
+			</c:forEach>
+		</tr>
+		</c:forEach>			
+	</table>
+  
+</div>
+
+
+
+
+</div>
+
+
+
+<p>
+<div class="btn-group" role="group" aria-label="...">
+<button name="method:create" id="create" disabled class="btn btn-danger">建立使用記錄</button>
+<button name="method:search" class="btn btn-default">查詢使用記錄</button>
+</div>
+</p>		
+
 </c:if>
 		
 <input type="hidden" name="Oid" id="Oid" value="${Oid}"/>
 <c:if test="${!empty boros}">
 <div class = "panel panel-primary">
    <div class = "panel-heading"><h3 class = "panel-title">使用記錄</h3></div>
-	<display:table name="${boros}" id="row" class="table table-condensed" sort="list"  requestURI="NabbrBoroRegister?method=search">
+	<display:table export="false" name="${boros}" id="row" class="table table-condensed" sort="list"  requestURI="NabbrBoroRegister?method=search">
 	  	<display:column style="white-space: nowrap">
 	  	
 	  		<button name="method:edit" id="${row.Oid}" class="btn btn-default btn-sm edit">修改</button>
@@ -258,6 +256,73 @@ $(document).ready(function() {
 
 <script>
 $(".timepick" ).datepicker();
+
+var chProp=false;
+var chCls=false;
+function check(type){
+	if(type=="prop"){
+		chProp=true;
+		$("#clsTable").show("slow");
+	}
+	if(type=="cls")chCls=true;
+	if(chCls && chProp)$("#create").prop("disabled", false );
+}
+
+$(".week").click(function(){	
+	if(this.checked){
+		$(".w"+this.value).prop("checked",true);
+		
+	}else{
+		$(".w"+this.value).prop("checked",false);
+	}	
+})
+
+$(".cls").click(function(){	
+	if(this.checked){
+		$(".c"+this.value).prop("checked",true);
+		
+	}else{
+		$(".c"+this.value).prop("checked",false);
+	}	
+})
+
+
+$("#room_id").change(function(){
+	if(this.value.indexOf(",")>0){
+		
+		$.ajax({
+			url:"/eis/getPropByNabbr",
+		    dataType: 'jsonp',
+		    jsonp:'back',          //jsonp請求方法
+		    data:{roomid:this.value.substr(0, this.value.indexOf(","))},
+		    cache:false,
+		    type:'POST',
+		    success: function(d) {    			    	
+		    	createProps(d.list);
+		    	//alert(d.list.length)
+		    }
+		});
+		
+	}
+		
+	
+	//alert();
+})
+
+
+function createProps(d){
+	$("#prop").hide("slow");
+	$("#prop").html("");	
+	
+	
+	str="<div class='list-group'><a class='list-group-item active'>設備列表</a>";
+	for(i=0; i<d.length; i++){		
+		str+="<a class='list-group-item'><input type='checkbox' name='propname' value='"+d[i].propname+"' name='prop'/> "+d[i].propname+"</a>";
+	}
+	str+="</div>";
+	$("#prop").html(str);
+	$("#prop").show("slow");
+}
 </script>
 
 
