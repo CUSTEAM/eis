@@ -153,7 +153,7 @@ public class NabbrBoroRegisterAction extends BaseAction{
 		+ "FROM NabbrBorApp a LEFT OUTER JOIN empl e ON a.lender=e.idno WHERE a.borrower='"
 		+getSession().getAttribute("userid")+"'ORDER BY a.date DESC");
 		//List list=df.sqlGet(sb.toString());
-		//System.out.println(sb);
+		System.out.println(sb);
 		request.setAttribute("boros", df.sqlGet(sb.toString()));
 		
 		return execute();

@@ -71,6 +71,9 @@ $(document).ready(function() {
 		</select>
 		<input type="text" name="room_id" value="${room_id}" class="form-control" autocomplete="off" 
 		placeholder="教室編號" data-provide="typeahead"/>
+		<input type="text" name="name2" value="${name2}" class="form-control" autocomplete="off" 
+		placeholder="教室名稱" data-provide="typeahead"/>
+		
 		</td>
 	</tr>
 	<tr>
@@ -93,9 +96,9 @@ $(document).ready(function() {
 		
 		
 		<select name="boro" class="selectpicker show-tick" data-width="auto">
-				
+			<option <c:if test="${boro eq 'N'}">selected</c:if> value="N">不納入統計</option>	
 			<option <c:if test="${boro eq 'Y'}">selected</c:if> value="Y">納入統計</option>
-			<option <c:if test="${boro eq 'N'}">selected</c:if> value="N">不納入統計</option>
+	
 		</select>
 		</td>
 	</tr>
@@ -133,7 +136,7 @@ $(document).ready(function() {
 	  	
 	  	<display:column style="white-space: nowrap">
 	  		<button name="method:del" id="${row.room_id}" class="btn btn-default btn-sm del">刪除</button>
-	  		<button name="method:dele" id="${row.room_id}" class="btn btn-default btn-sm del">刪除</button>
+	  		<!-- button name="method:save" id="${row.room_id}" class="btn btn-danger">修改</button -->
 		</display:column>	  	
 	  	
 	  	<display:column title="大樓" style="white-space: nowrap" sortable="true">
@@ -155,7 +158,10 @@ $(document).ready(function() {
 		<display:column title="教室編號" style="white-space: nowrap" sortable="true">
 		<input type="text" class="form-control" name="r" value="${row.room_id}" onKeyDown="check('${row.Oid}')"/>
 		</display:column>
-	  	<display:column style="width:10%; white-space:nowrap;" title="教室名稱" property="name2" sortable="true"/>
+		<display:column title="教室名稱" style="white-space: nowrap" sortable="true">
+		<input type="text" class="form-control" name="n" value="${row.name2}" onKeyDown="check('${row.Oid}')"/>
+		</display:column>
+	  	<!-- display:column style="width:10%; white-space:nowrap;" title="教室名稱" property="name2" sortable="true"/ -->
 	  	<display:column style="width:10%; white-space:nowrap;" title="座位" property="seat" sortable="true"/>
 	  	
 	  	
