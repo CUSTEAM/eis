@@ -94,13 +94,9 @@ public class NabbrBoroRegisterAction extends BaseAction{
 		
 		//設備
 		//List<Map>props=new ArrayList();
-		for(int i=0; i<propname.length; i++){
-			//props.addAll(df.sqlGet("SELECT propid FROM propmid WHERE labid='"+
-			//room_id.substring(0, room_id.indexOf(","))+"' AND propname='"+propname[i]+"'"));
-			
+		if(propname!=null)
+		for(int i=0; i<propname.length; i++){			
 			df.exSql("INSERT INTO NabbrBorPro(NabbrBorAppOid, propname)VALUES("+app.getOid()+",'"+propname[i]+"');");
-			
-			
 		}
 		
 		
@@ -152,10 +148,7 @@ public class NabbrBoroRegisterAction extends BaseAction{
 		+ "(SELECT boro_date FROM NabbrBoro WHERE BorAppOid=a.Oid ORDER BY boro_date DESC LIMIT 1)as end "
 		+ "FROM NabbrBorApp a LEFT OUTER JOIN empl e ON a.lender=e.idno WHERE a.borrower='"
 		+getSession().getAttribute("userid")+"'ORDER BY a.date DESC");
-		//List list=df.sqlGet(sb.toString());
-		System.out.println(sb);
 		request.setAttribute("boros", df.sqlGet(sb.toString()));
-		
 		return execute();
 	}
 	

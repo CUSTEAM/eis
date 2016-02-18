@@ -62,7 +62,7 @@ public class ChangeTermAction extends BaseAction{
 		msg.setMsg("學期轉換工作報告<br>");
 	
 		//期間測試
-		if(!checkNow(Integer.parseInt(year))){
+		if(!checkNow(Integer.parseInt(term))){
 			msg.setError("非轉換期間");
 			this.savMessage(msg);
 			return execute();
