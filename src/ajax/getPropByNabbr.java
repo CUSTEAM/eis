@@ -31,7 +31,7 @@ public class getPropByNabbr extends BaseAction{
 		
 		String roomid=request.getParameter("roomid");
 		
-		this.setList(df.sqlGet("SELECT propid, propname FROM propmid WHERE labid='"+roomid+"'GROUP BY propname"));
+		this.setList(df.sqlGet("SELECT COUNT(*)as cnt, propid, propname FROM propmid WHERE labid='"+roomid+"'GROUP BY propname"));
 		
 		//System.out.println("SELECT propid, propname FROM propmid WHERE labid='"+roomid+"'");
 				

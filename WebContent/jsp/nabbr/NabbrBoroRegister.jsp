@@ -92,7 +92,7 @@ $(document).ready(function() {
 		<td>
 		<div class="input-group">
 			<div class="input-group-addon">使用人數</div>
-			<input type="text" value="${users}" name="users" class="form-control" autocomplete="off" placeholder="人數"/>
+			<input type="text" value="${users}" name="users" id="users" class="form-control" autocomplete="off" placeholder="人數"/>
 		</div>
 		</td>
 	</tr>
@@ -299,14 +299,10 @@ $("#room_id").change(function(){
 		    type:'POST',
 		    success: function(d) {    			    	
 		    	createProps(d.list);
-		    	//alert(d.list.length)
 		    }
 		});
 		
 	}
-		
-	
-	//alert();
 })
 
 
@@ -316,8 +312,17 @@ function createProps(d){
 	
 	
 	str="<div class='list-group'><a class='list-group-item active'>設備列表</a>";
-	for(i=0; i<d.length; i++){		
-		str+="<a class='list-group-item'><input type='checkbox' name='propname' value='"+d[i].propname+"' name='prop'/> "+d[i].propname+"</a>";
+	for(i=0; i<d.length; i++){
+		try{
+			p=($("#users").val()/d[i].cnt)*100;
+			if(p>100)p=100;
+			str+="<a class='list-group-item'><input type='checkbox' name='propname' value='"+
+			d[i].propname+"' name='prop'/> "+d[i].propname+", 數量: "+d[i].cnt+"<div style='float:right; width:20%;' class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='"+p+"'aria-valuemin='0'aria-valuemax='100'style='width:"+p+"%;'>"+p+"%</div></div></a>";
+		}catch(e){
+			alert(e);
+			str+="<a class='list-group-item'><input type='checkbox' name='propname' value='"+d[i].propname+"' name='prop'/> "+d[i].propname+", 數量 : "+d[i].cnt+"</a>";
+		}
+		
 	}
 	str+="</div>";
 	$("#prop").html(str);
