@@ -289,7 +289,6 @@ $(".cls").click(function(){
 
 $("#room_id").change(function(){
 	if(this.value.indexOf(",")>0){
-		
 		$.ajax({
 			url:"/eis/getPropByNabbr",
 		    dataType: 'jsonp',
@@ -300,8 +299,7 @@ $("#room_id").change(function(){
 		    success: function(d) {    			    	
 		    	createProps(d.list);
 		    }
-		});
-		
+		});		
 	}
 })
 
@@ -309,21 +307,22 @@ $("#room_id").change(function(){
 function createProps(d){
 	$("#prop").hide("slow");
 	$("#prop").html("");	
-	
-	
 	str="<div class='list-group'><a class='list-group-item active'>設備列表</a>";
-	for(i=0; i<d.length; i++){
-		try{
-			p=($("#users").val()/d[i].cnt)*100;
-			if(p>100)p=100;
-			str+="<a class='list-group-item'><input type='checkbox' name='propname' value='"+
-			d[i].propname+"' name='prop'/> "+d[i].propname+", 數量: "+d[i].cnt+"<div style='float:right; width:20%;' class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='"+p+"'aria-valuemin='0'aria-valuemax='100'style='width:"+p+"%;'>"+p+"%</div></div></a>";
-		}catch(e){
-			alert(e);
-			str+="<a class='list-group-item'><input type='checkbox' name='propname' value='"+d[i].propname+"' name='prop'/> "+d[i].propname+", 數量 : "+d[i].cnt+"</a>";
+	if(d.length<1){
+		str+="<a class='list-group-item'>無設備建置於此空間, 可直接 <button type='button' class='btn btn-sm btn-primary'>選選擇節次</button> 或洽設備電子化建檔單位</a>";
+	}else{
+		for(i=0; i<d.length; i++){
+			try{
+				p=($("#users").val()/d[i].cnt)*100;
+				if(p>100)p=100;
+				str+="<a class='list-group-item'><input type='checkbox' name='propname' value='"+
+				d[i].propname+"' /> "+d[i].propname+", 數量: "+d[i].cnt+"<div style='float:right; width:20%;' class='progress'><div class='progress-bar progress-bar-striped active'role='progressbar' aria-valuenow='"+p+"'aria-valuemin='0'aria-valuemax='100'style='width:"+p+"%;'>"+p+"%</div></div></a>";
+			}catch(e){
+				str+="<a class='list-group-item'><input type='checkbox' name='propname' value='"+d[i].propname+"' /> "+d[i].propname+", 數量 : "+d[i].cnt+"</a>";
+			}
 		}
-		
 	}
+	
 	str+="</div>";
 	$("#prop").html(str);
 	$("#prop").show("slow");
