@@ -25,7 +25,7 @@ function getStudentTime(student_no, name){
 }
 
 function draw(d, name, type, val){
-	$(".modal").css({"width": "90%", "margin-left": "-45%"}); 
+	//$(".modal").css({"width": "90%"}); 
 	$("#info").empty();
 	if(type=='class'){$("#title").html(name+" <div class='btn-group'><a class='btn btn-danger' href='/csis/TimeTable?ClassNo="+val+"'>下載課表</a><a class='btn' data-dismiss='modal' aria-hidden='true'>關閉</a></div>");}
 	if(type=='teacher'){$("#title").html(name+" <div class='btn-group'><a class='btn btn-danger' href='/csis/TimeTable?emplOid="+val+"'>下載課表</a><a class='btn' data-dismiss='modal' aria-hidden='true'>關閉</a></div>");}

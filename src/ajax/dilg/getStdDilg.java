@@ -34,14 +34,16 @@ public class getStdDilg extends BaseAction{
 			return SUCCESS;
 		}
 		
+		info+="<table class='table table-striped'><thead><tr><th>假別</th><th>日期</th></tr>";
 		for(int i=0; i<tmp.size(); i++){
 			if(info!=null){
-				info=info+"<span class='label label-important'>"+
-				((Map)tmp.get(i)).get("name")+"</span>"+((Map)tmp.get(i)).get("date")+" 第 "+((Map)tmp.get(i)).get("cls")+
-				"節, "+((Map)tmp.get(i)).get("chi_name")+"<br>";
+				info=info+"<tr><td><span class='label label-danger'>"+
+				((Map)tmp.get(i)).get("name")+"</span></td><td>"+((Map)tmp.get(i)).get("date")+" 第 "+((Map)tmp.get(i)).get("cls")+
+				"節, "+((Map)tmp.get(i)).get("chi_name")+"</td></tr>";
 			}
 			
-		}		
+		}	
+		info+="</table>";
 		return SUCCESS;
                
 	} 

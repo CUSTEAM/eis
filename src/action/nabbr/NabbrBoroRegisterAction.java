@@ -99,24 +99,25 @@ public class NabbrBoroRegisterAction extends BaseAction{
 			df.exSql("INSERT INTO NabbrBorPro(NabbrBorAppOid, propname)VALUES("+app.getOid()+",'"+propname[i]+"');");
 		}
 		
-		
-		
-		
-		
-		
 		NabbrBoro bor;	
 		int g=0;
 		
 		String day[];
-		//int w;
-		for(int i=0; i<range.size(); i++){			
+		int w;
+		//System.out.println(range.size());
+		for(int i=0; i<range.size(); i++){		
+			//System.out.println(workday.length);
 			for(int j=0; j<workday.length; j++){
 				
 				day=workday[j].split("-");
-				if(range.get(i).get("week").toString().equals(day[0])){					
+				w=Integer.parseInt(day[0])-1;
+				
+				if(range.get(i).get("week").toString().equals(String.valueOf(w))){					
 					bor=new NabbrBoro();
 					bor.setBorAppOid(app.getOid());
 					bor.setBoro_date((Date)range.get(i).get("date"));
+					if(w==0)w=7;
+					bor.setWeek(w);
 					bor.setCls(Integer.parseInt(day[1]));					
 					df.update(bor);
 					
@@ -234,6 +235,7 @@ public class NabbrBoroRegisterAction extends BaseAction{
 			while(bg.getTimeInMillis()<=ed.getTimeInMillis()){
 				map=new HashMap();
 				map.put("date", bg.getTime());
+				//System.out.println(bg);
 				map.put("week", bg.get(Calendar.DAY_OF_WEEK)-1);
 				list.add(map);
 				bg.add(Calendar.DAY_OF_YEAR, 1);

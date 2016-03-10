@@ -28,7 +28,9 @@
 	
 	<package name="nabbr.print" extends="abstract_struts" namespace="/">
 		<action name="UseDetail" class="action.nabbr.print.UseDetail"/>
-		
+		<action name="PubNabbrSearch" class="action.nabbr.print.PubNabbrSearchAction">
+			<result>/jsp/nabbr/PubNabbrSearch.jsp</result>
+		</action>
 	</package>
 	
 	<!-- 行事曆 -->
