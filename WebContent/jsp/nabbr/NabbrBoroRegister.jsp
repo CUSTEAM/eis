@@ -164,6 +164,7 @@ $(document).ready(function() {
 			第${c.index}節
 			</td>
 			</c:if>
+			
 			<c:if test="${w.index!=0}">
 			<td>
 			<input type="checkbox" class="w${w.index} c${c.index}" name="workday" value="${w.index}-${c.index}"/>

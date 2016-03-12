@@ -106,12 +106,12 @@ public class NabbrBoroRegisterAction extends BaseAction{
 		int w;
 		//System.out.println(range.size());
 		for(int i=0; i<range.size(); i++){		
-			//System.out.println(workday.length);
-			for(int j=0; j<workday.length; j++){
-				
+			
+			for(int j=0; j<workday.length; j++){				
 				day=workday[j].split("-");
-				w=Integer.parseInt(day[0])-1;
-				
+				w=Integer.parseInt(day[0]);
+				if(w==7)w=0;
+				System.out.println(range.get(i).get("week")+", "+String.valueOf(w));
 				if(range.get(i).get("week").toString().equals(String.valueOf(w))){					
 					bor=new NabbrBoro();
 					bor.setBorAppOid(app.getOid());
@@ -235,11 +235,11 @@ public class NabbrBoroRegisterAction extends BaseAction{
 			while(bg.getTimeInMillis()<=ed.getTimeInMillis()){
 				map=new HashMap();
 				map.put("date", bg.getTime());
-				//System.out.println(bg);
 				map.put("week", bg.get(Calendar.DAY_OF_WEEK)-1);
 				list.add(map);
 				bg.add(Calendar.DAY_OF_YEAR, 1);
 			}				
+			//System.out.println(list.size());
 			return list;
 		}		
 	}	

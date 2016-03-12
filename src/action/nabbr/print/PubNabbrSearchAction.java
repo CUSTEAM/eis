@@ -193,7 +193,14 @@ public class PubNabbrSearchAction extends BaseAction{
 			}			
 		}
 		
-		tp=tp/eff;		
+		
+		if(eff>0&&tp>0){
+			System.out.println(tp+"/"+eff+"="+tp/eff);
+			tp=tp/eff;
+		}else{
+			tp=0f;
+		}
+				
 		return list;
 	}	
 	
@@ -339,7 +346,11 @@ public class PubNabbrSearchAction extends BaseAction{
 			
 			ap=Float.parseFloat(list.get(i).get("ap").toString());
 			
-			out.println ("    <Cell><Data ss:Type='Number'>"+(ap/tp)+"</Data></Cell>");			
+			if(tp>0){
+				out.println ("    <Cell><Data ss:Type='Number'>"+(ap/tp)+"</Data></Cell>");		
+			}else{
+				out.println ("    <Cell><Data ss:Type='Number'>0</Data></Cell>");		
+			}	
 			out.println ("   </Row>");
 		}
 		
@@ -615,7 +626,11 @@ public class PubNabbrSearchAction extends BaseAction{
 			
 			ap=Float.parseFloat(list.get(i).get("ap").toString());
 			
-			out.println ("    <Cell><Data ss:Type='Number'>"+(ap/tp)+"</Data></Cell>");			
+			if(tp>0){
+				out.println ("    <Cell><Data ss:Type='Number'>"+(ap/tp)+"</Data></Cell>");		
+			}else{
+				out.println ("    <Cell><Data ss:Type='Number'>0</Data></Cell>");		
+			}
 			out.println ("   </Row>");
 		}
 		
@@ -782,8 +797,12 @@ public class PubNabbrSearchAction extends BaseAction{
 			out.println ("<Cell><Data ss:Type='Number'>"+list.get(i).get("ap")+"</Data></Cell>");
 			
 			ap=Float.parseFloat(list.get(i).get("ap").toString());
-			
-			out.println ("    <Cell><Data ss:Type='Number'>"+(ap/tp)+"</Data></Cell>");			
+			if(tp>0){
+				out.println ("    <Cell><Data ss:Type='Number'>"+(ap/tp)+"</Data></Cell>");		
+			}else{
+				out.println ("    <Cell><Data ss:Type='Number'>0</Data></Cell>");		
+			}
+				
 			out.println ("   </Row>");
 		}
 		
