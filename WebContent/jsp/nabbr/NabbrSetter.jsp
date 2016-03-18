@@ -64,9 +64,11 @@ $(document).ready(function() {
 		</select>
 		
 		<select name="floor" class="selectpicker show-tick" data-width="auto">
-			<option value="">選擇樓層</option>
+			<option <c:if test="${c.index eq ''}">selected</c:if> value="">選擇樓層</option>
+			<option <c:if test="${c.index eq '-2'}">selected</c:if> value="-2">地下2樓</option>
+			<option <c:if test="${c.index eq '-1'}">selected</c:if> value="-1">地下1樓</option>
 			<c:forEach begin="1" end="12" varStatus="c">
-			<option <c:if test="${c.index eq floor}">selected</c:if> value="${c.index}">${c.index}</option>
+			<option <c:if test="${c.index eq floor}">selected</c:if> value="${c.index}">${c.index}樓</option>
 			</c:forEach>
 		</select>
 		<input type="text" name="room_id" value="${room_id}" class="form-control" autocomplete="off" 
@@ -150,8 +152,10 @@ $(document).ready(function() {
 	  	  	
 	  	<display:column title="樓層" style="white-space: nowrap" sortable="true">
 	  	<select name="f" class="form-control" onChange="check('${row.Oid}')">
+			<option <c:if test="${row.floor eq '-2'}">selected</c:if> value="-2">地下2樓</option>
+			<option <c:if test="${row.floor eq '-1'}">selected</c:if> value="-1">地下1樓</option>
 			<c:forEach begin="1" end="12" varStatus="c">
-			<option <c:if test="${c.index eq row.floor}">selected</c:if> value="${c.index}">${c.index}</option>
+			<option <c:if test="${c.index eq row.floor}">selected</c:if> value="${c.index}">${c.index}樓</option>
 			</c:forEach>
 		</select>
 		</display:column>

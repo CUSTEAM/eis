@@ -73,6 +73,8 @@ public class PubNabbrSearchAction extends BaseAction{
 			}
 		}
 		
+		
+		
 		sql.append("AND dc1.place=n.room_id) as dc,SUM((SELECT COUNT(*) "
 		+ "FROM Seld WHERE Dtime_oid=d.Oid))as du,SUM( ((dc.end-dc.begin)+1))as dt FROM "
 		+ "Nabbr n, Dtime_class dc, Dtime d, Class c WHERE d.depart_class=c.ClassNo ");
@@ -329,7 +331,7 @@ public class PubNabbrSearchAction extends BaseAction{
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("room_id")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("bname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='Number'>"+list.get(i).get("floor")+"</Data></Cell>");
-			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("uname")+"</Data></Cell>");
+			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("dname")+list.get(i).get("uname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("nname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("cname")+"</Data></Cell>");			
 			out.println ("<Cell><Data ss:Type='Number'>"+list.get(i).get("dc")+"</Data></Cell>");
@@ -471,7 +473,7 @@ public class PubNabbrSearchAction extends BaseAction{
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("room_id")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("bname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='Number'>"+list.get(i).get("floor")+"</Data></Cell>");
-			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("uname")+"</Data></Cell>");
+			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("dname")+list.get(i).get("uname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("nname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("cname")+"</Data></Cell>");			
 			out.println ("<Cell><Data ss:Type='Number'>"+list.get(i).get("dc")+"</Data></Cell>");			
@@ -609,7 +611,7 @@ public class PubNabbrSearchAction extends BaseAction{
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("room_id")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("bname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='Number'>"+list.get(i).get("floor")+"</Data></Cell>");
-			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("uname")+"</Data></Cell>");
+			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("dname")+list.get(i).get("uname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("nname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("cname")+"</Data></Cell>");			
 			out.println ("<Cell><Data ss:Type='Number'>"+list.get(i).get("dc")+"</Data></Cell>");			
@@ -633,10 +635,6 @@ public class PubNabbrSearchAction extends BaseAction{
 			}
 			out.println ("   </Row>");
 		}
-		
-		
-		
-		
 		
 		out.println ("  </Table>");
 		out.println ("  <WorksheetOptions xmlns='urn:schemas-microsoft-com:office:excel'>");
@@ -781,7 +779,7 @@ public class PubNabbrSearchAction extends BaseAction{
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("room_id")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("bname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='Number'>"+list.get(i).get("floor")+"</Data></Cell>");
-			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("uname")+"</Data></Cell>");
+			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("dname")+list.get(i).get("uname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("nname")+"</Data></Cell>");
 			out.println ("    <Cell><Data ss:Type='String'>"+list.get(i).get("cname")+"</Data></Cell>");			
 			out.println ("<Cell><Data ss:Type='Number'>"+list.get(i).get("dc")+"</Data></Cell>");			
