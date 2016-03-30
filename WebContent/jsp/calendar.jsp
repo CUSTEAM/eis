@@ -134,19 +134,19 @@
 	</script>
 </head>
 <body onload="init();">
-<div id="myCalendar" class="dhx_cal_container" style='width:100%; height:100%;'>
+<div id="myCalendar" class="dhx_cal_container" style='width:100%; height:100%; top:70px;'>
 	<div class="dhx_cal_navline">
-		<div class="dhx_cal_prev_button">&nbsp;</div>
-		<div class="dhx_cal_next_button">&nbsp;</div>
-		<div class="dhx_cal_today_button"></div>
-		<div class="dhx_cal_date"></div>
-		
-		<div class="dhx_cal_tab dhx_cal_tab_first" name="day_tab" style="left:14px;"></div>
-		<div class="dhx_cal_tab" name="week_tab" style="left:75px;"></div>
-		<div class="dhx_cal_tab dhx_cal_tab_last" name="month_tab" style="left:136px;"></div>
-		<div class="dhx_cal_tab" style="border-radius:5px; left:210px;"><a href="/csis/TimeTable?nonStay=1&emplOid=${emplOid}" style="color:#777777;">課表</a></div>
-		<div class="dhx_cal_tab" style="border-radius:5px; left:280px;"><a href="/csis/TimeTable?emplOid=${emplOid}" style="color:#777777;">留校時間</a></div>
-		<div class="dhx_cal_tab" style="left:350px; border-style:none;">週次 <span class="badge">${sweek}</span></div>
+	<div class="dhx_cal_prev_button">&nbsp;</div>
+	<div class="dhx_cal_next_button">&nbsp;</div>
+	<div class="dhx_cal_today_button"></div>
+	<div class="dhx_cal_date"></div>
+	
+	<div class="dhx_cal_tab dhx_cal_tab_first" name="day_tab" style="left:14px;"></div>
+	<div class="dhx_cal_tab" name="week_tab" style="left:75px;"></div>
+	<div class="dhx_cal_tab dhx_cal_tab_last" name="month_tab" style="left:136px;"></div>
+	<div class="dhx_cal_tab" style="border-radius:5px; left:210px;"><a href="/csis/TimeTable?nonStay=1&emplOid=${emplOid}" style="color:#777777;">課表</a></div>
+	<div class="dhx_cal_tab" style="border-radius:5px; left:280px;"><a href="/csis/TimeTable?emplOid=${emplOid}" style="color:#777777;">留校時間</a></div>
+	<div class="dhx_cal_tab" style="left:350px; border-style:none;">週次 <span class="badge">${sweek}</span></div>
 			
 	</div>	
 	<div class="dhx_cal_header"></div>
