@@ -7,7 +7,7 @@
 		$('[data-submenu]').submenupicker();
 	});
 </script>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button class="navbar-toggle" type="button" data-toggle="collapse"
@@ -16,7 +16,6 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-
 			<a class="navbar-brand" href="/eis/Calendar">中華科技大學</a>
 		</div>
 

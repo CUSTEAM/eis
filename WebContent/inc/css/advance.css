@@ -8,6 +8,19 @@
 	margin-right: 10px;
 }
 
+.panel-custom-horrible-red {
+    border-color: #DA4453;
+}
+.panel-custom-horrible-red > .panel-heading {
+    background: #DA4453; 
+    color: #ffffff;
+    border-color: #DA4453;
+}
+
+.label-as-badge {
+    border-radius: 1em;
+}
+
 .ui-datepicker-year{
 	color:#555555 !important;
 }
