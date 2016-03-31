@@ -8,6 +8,10 @@
 	margin-right: 10px;
 }
 
+.row{
+	width:100%;
+}
+
 .panel-custom-horrible-red {
     border-color: #DA4453;
 }
