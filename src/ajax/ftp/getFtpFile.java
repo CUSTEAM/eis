@@ -21,6 +21,7 @@ public class getFtpFile extends BaseAction {
 
 	@Override
 	public String execute() throws Exception {
+		setFilename(request.getParameter("file"));
 		mimeType = getContext().getMimeType(filename);		
 		return SUCCESS;
 	}

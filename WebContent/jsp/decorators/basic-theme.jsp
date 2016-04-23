@@ -17,6 +17,7 @@
 <meta name="ROBOTS" content="none">
 <title><decorator:title default="Welcome!" /> - 中華科大教職員資訊系統</title>
 <link rel="stylesheet" href="inc/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="/eis/inc/bootstrap/css/bootstrap-theme.css" />
 <link rel="stylesheet" href="inc/css/advance.css" />
 <link href="/eis/inc/bootstrap/css/docs.min.css" rel="stylesheet"/>
 <script src="inc/js/jquery.js"></script>
@@ -35,7 +36,10 @@ window.onbeforeunload = function() {
 <decorator:head />
 </head>
 <body <decorator:getProperty property="body.onload" writeEntireProperty="true" />>
-	<%@ include file="/jsp/decorators/menu_3.jsp"%>		
+	<div id="mainmenu" style="height:40px;"></div>
+	<script>
+	$("#mainmenu").load("/eis/jsp/decorators/menu_3.jsp?r="+Math.floor(Math.random()*11));
+	</script>
 	<div class="content-page-3">
 		<decorator:body />
 	</div>

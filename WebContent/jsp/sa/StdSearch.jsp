@@ -54,7 +54,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div class="alert alert alert-warning" role="alert">
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 學生查詢
 </div>
 <form action="StdSearch" method="post" class="form-inline" enctype="multipart/form-data">

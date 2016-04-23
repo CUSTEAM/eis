@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,66 @@ public class PubNabbrSearchAction extends BaseAction{
 		return SUCCESS;
 	}
 	
+	public String printMap(){
+		
+		
+		StringBuilder sb=new StringBuilder("SELECT(SELECT COUNT(DISTINCT rc_oid)FROM NabbrBorApp nba, Nabbr n, NabbrBoro nb WHERE nb.BorAppOid=nba.Oid AND ");
+		
+		if(!type.equals(""))sb.append("n.boro='"+type+"'AND ");		
+		if(!dept.equals(""))sb.append("n.dept='"+dept+"' AND ");
+		if(!begin.equals("")&&!end.equals(""))sb.append("(nb.boro_date>='2016-01-22 00:00' AND nb.boro_date<='2016-07-31 00:00')AND ");
+		
+		sb.append("n.room_id=nba.room_id AND n.dept=cd.id)as pro,(SELECT COUNT(*)FROM Nabbr WHERE dept=cd.id ");
+		if(!building.equals(""))sb.append("AND building='"+building+"' ");
+		if(!type.equals(""))sb.append("AND boro='"+type+"' ");
+		
+		sb.append(")as rom,cd.sname, cd.id FROM CODE_DEPT cd");
+		if(!dept.equals(""))sb.append("WHERE cd.id='"+dept+"'");
+		sb.append(" HAVING rom>0 ORDER BY cd.id");
+		
+		request.setAttribute("rooMap", df.sqlGet(sb.toString()));
+		
+		
+		return SUCCESS;
+	}
 	
+	public String printMapOpt(){
+		//TODO 慢的要死
+		StringBuilder sb=new StringBuilder("SELECT cd.id, cd.sname FROM CODE_DEPT cd, Nabbr n WHERE n.dept=cd.id ");
+		if(!dept.equals(""))sb.append("AND n.dept='"+dept+"'");
+		sb.append("GROUP BY cd.id ORDER BY cd.id");
+		List<Map>list=df.sqlGet(sb.toString());
+		List<Map>code=df.sqlGet("SELECT id, name FROM CODE_BORROW ORDER BY id");		
+		request.setAttribute("code", code);
+		List<Map>ncode;
+		StringBuilder ssb;
+		for(int i=0; i<list.size(); i++){	
+			ncode=new ArrayList();
+			//ncode.addAll(code);
+			for(int j=0; j<code.size(); j++){
+				ssb=new StringBuilder("SELECT COUNT(DISTINCT nba.rc_oid)as pro,'"+code.get(j).get("id")+"'as rcode, '"+list.get(i).get("id")+"'as dept FROM "
+				+ "Nabbr n, NabbrBorApp nba, NabbrBoro nb WHERE "
+				+ "n.dept='"+list.get(i).get("id")+"'AND nba.rc_code='"+code.get(j).get("id")+"' AND n.room_id=nba.room_id ");
+				if(!building.equals(""))ssb.append("AND n.building='"+building+"'");
+				if(!begin.equals("")&&!end.equals(""))ssb.append("AND(nb.boro_date>='2016-01-22 00:00' AND nb.boro_date<='2016-07-31 00:00')");
+				if(!type.equals(""))sb.append("AND n.boro='"+type+"' ");
+				
+				//list.get(i).put(code.get(j).get("id"), df.sqlGetMap(ssb.toString()));
+				
+				//System.out.println(ssb);
+				//ncode.get(j).put("pro", df.sqlGetMap(ssb.toString()));
+				ncode.addAll(df.sqlGet(ssb.toString()));
+			}
+			
+			list.get(i).put("codes", ncode);
+			//list.get(i).put("ncode", ncode);
+			
+		}
+		
+		request.setAttribute("optMap", list);
+		
+		return SUCCESS;
+	}
 	
 	
 	
@@ -197,7 +257,7 @@ public class PubNabbrSearchAction extends BaseAction{
 		
 		
 		if(eff>0&&tp>0){
-			System.out.println(tp+"/"+eff+"="+tp/eff);
+			//System.out.println(tp+"/"+eff+"="+tp/eff);
 			tp=tp/eff;
 		}else{
 			tp=0f;

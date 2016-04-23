@@ -181,9 +181,11 @@
 	<package name="ftp" extends="abstract_struts, struts-default, json-default" namespace="/">
 	    <action name="getFtpFile" class="ajax.ftp.getFtpFile">
 		    <result type="stream">  
-		        <param name="contentType">${mimeType}</param>  
+		        <!--param name="contentType">${mimeType}</param-->
+		        <param name="contentType">application/octet-stream</param>
 		        <param name="inputName">inStream</param>  
-		        <param name="contentDisposition">attachment;filename="${filename}"</param>  
+		        <param name="contentDisposition">attachment;filename="${filename}"</param> 
+		        <param name="bufferSize">1024</param> 
 	    	</result>		    
 		</action>
 		
@@ -195,8 +197,9 @@
         
        	<!-- 將工作單文件附檔FTP -->
 		<action name ="putTaskFile" class ="ajax.ftp.putTaskFile" > 
-            <!-- interceptor-ref name ="fileUploadStack" /--> 
-            <result type="json"/>
+            <result type="json" name="success">   
+            	<param name="contentType">text/html</param>   
+            </result>
         </action>
         
         
@@ -218,6 +221,7 @@
 		<action name="getTaskInfo" class="ajax.task.getTaskInfo">
 			<result type="json">
 			    <param name="list">list</param>
+			    <param name="uintName">unitName</param>
 			    <param name="callbackParameter">back</param>
 		   	</result>
 		</action>

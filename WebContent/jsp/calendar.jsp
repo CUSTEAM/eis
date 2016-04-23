@@ -134,7 +134,7 @@
 	</script>
 </head>
 <body onload="init();">
-<div id="myCalendar" class="dhx_cal_container" style='width:100%; height:100%; top:70px;'>
+<div id="myCalendar" class="dhx_cal_container" style='width:100%; height:100%; top:15px;'>
 	<div class="dhx_cal_navline">
 	<div class="dhx_cal_prev_button">&nbsp;</div>
 	<div class="dhx_cal_next_button">&nbsp;</div>

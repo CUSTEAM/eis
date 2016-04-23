@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="model.Task" table="Task" catalog="CIS">
+        <id name="Oid" type="java.lang.Integer">
+            <column name="Oid" />
+            <generator class="identity" />
+        </id>        
+        
+        <property name="unit" type="java.lang.String">
+            <column name="unit" />
+        </property>
+        
+        <property name="type" type="java.lang.String">
+            <column name="type" />
+        </property>
+        
+        <property name="title" type="java.lang.String">
+            <column name="title" />
+        </property>
+        
+        <property name="template" type="java.lang.String">
+            <column name="template" />
+        </property>
+        
+        <property name="target" type="java.lang.String">
+            <column name="target" />
+        </property>
+        
+        
+    </class>
+</hibernate-mapping>
