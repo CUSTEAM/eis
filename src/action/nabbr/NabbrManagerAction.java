@@ -34,24 +34,26 @@ public class NabbrManagerAction extends BaseAction{
 	public String execute(){
 		
 		
-		Cookie c[]=request.getCookies();
-		String unit=null;
-		for(int i=0; i<c.length; i++){
-			if(c[i].getName().equals("unit")){
-				unit=parseUnit(c[i].getValue().split(","));
-			}
-		}
+		//String idno=getSession().getAttribute("userid").toString();
+		
+		List<Map>dept=df.sqlGet("SELECT id FROM CODE_DEPT WHERE assistant='"+getSession().getAttribute("userid")+"'");
 		
 		StringBuilder sb=new StringBuilder("SELECT * FROM Nabbr n WHERE n.dept IN(");
-		sb.append(unit);
-		sb.append(")OR n.unit IN(");
-		sb.append(unit);
+		for(int i=0; i<dept.size(); i++){
+			sb.append("'"+dept.get(i).get("id")+"',");
+		}
+		sb.delete(sb.length()-1, sb.length());
+		
+		
 		sb.append(")");
+		//sb.append(")OR n.unit IN(");
+		//sb.append(unit);
+		//sb.append(")");
 		
 		List list=df.sqlGet(sb.toString());
 		if(list.size()<1){
 			Message msg=new Message();
-			msg.setError("沒有分配教室給您的單位, "+unit);
+			msg.setError("沒有分配教室給您的單位");
 			this.savMessage(msg);		
 			return SUCCESS;
 		}
