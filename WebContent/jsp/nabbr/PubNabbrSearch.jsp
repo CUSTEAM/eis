@@ -69,11 +69,7 @@
 		
 </div>
 <div class="panel panel-primary" id="unitList">
-			<div class="panel-heading">建立新工作單</div>
-			<div class="panel-body">
-		    <p>點選校區開啟行政單位與 <button class="btn btn-warning btn-xs" type="button">申請項目</button> 列表</p>
-		    <p>或點選多個單位 <button type="button" onClick="$('.batch').show('slow')" class="btn btn-primary btn-xs">批次建立</button> 工作</p>
-		  	</div>
+			<div class="panel-heading">教室/實驗室統計列表查詢</div>
 <table class="table">
 	<tr>
 		<td>

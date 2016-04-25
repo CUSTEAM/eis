@@ -43,9 +43,9 @@ public class PubNabbrSearchAction extends BaseAction{
 		if(!building.equals(""))sb.append("AND building='"+building+"' ");
 		if(!type.equals(""))sb.append("AND boro='"+type+"' ");
 		
-		sb.append(")as rom,cd.sname, cd.id FROM CODE_DEPT cd");
-		if(!dept.equals(""))sb.append("WHERE cd.id='"+dept+"'");
-		sb.append(" HAVING rom>0 ORDER BY cd.id");
+		sb.append(")as rom,cd.sname, cd.id FROM CODE_DEPT cd ");
+		if(!dept.equals(""))sb.append("WHERE cd.id='"+dept+"' ");
+		sb.append("HAVING rom>0 ORDER BY cd.id");
 		
 		request.setAttribute("rooMap", df.sqlGet(sb.toString()));
 		
