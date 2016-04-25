@@ -2,6 +2,7 @@ package action.nabbr;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,18 +38,34 @@ public class NabbrManagerAction extends BaseAction{
 		//String idno=getSession().getAttribute("userid").toString();
 		
 		List<Map>dept=df.sqlGet("SELECT id FROM CODE_DEPT WHERE assistant='"+getSession().getAttribute("userid")+"'");
-		
-		StringBuilder sb=new StringBuilder("SELECT * FROM Nabbr n WHERE n.dept IN(");
-		for(int i=0; i<dept.size(); i++){
-			sb.append("'"+dept.get(i).get("id")+"',");
+		Cookie c[]=request.getCookies();
+		String unit=null;
+		for(int i=0; i<c.length; i++){
+			if(c[i].getName().equals("unit")){
+				unit=parseUnit(c[i].getValue().split(","));
+			}
 		}
-		sb.delete(sb.length()-1, sb.length());
 		
 		
-		sb.append(")");
-		//sb.append(")OR n.unit IN(");
-		//sb.append(unit);
-		//sb.append(")");
+		StringBuilder sb=new StringBuilder("SELECT * FROM Nabbr n WHERE ");
+		if(dept.size()>0){
+			sb.append("dept IN(");
+			for(int i=0; i<dept.size(); i++){
+				sb.append("'"+dept.get(i).get("id")+"',");
+			}
+			sb.delete(sb.length()-1, sb.length());
+			sb.append(")");
+		}
+		if(dept.size()>0)sb.append("OR ");
+		if(unit.length()>0){
+			String units[]=unit.split(",");
+			sb.append("unit IN(");
+			for(int i=0; i<units.length; i++){
+				sb.append(units[i]+",");
+			}
+			sb.delete(sb.length()-1, sb.length());
+			sb.append(")");
+		}
 		
 		List list=df.sqlGet(sb.toString());
 		if(list.size()<1){
