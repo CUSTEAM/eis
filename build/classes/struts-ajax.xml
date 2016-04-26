@@ -46,6 +46,11 @@
 			<result type="json"/>
 		</action>
 		
+		<!-- 重大集會點名 -->
+		<action name="editImpDilg" class="ajax.dilg.editImpDilg">
+			<result type="json"/>
+		</action>
+		
 		<!-- 學生缺曠JSON -->
 		<action name="getStdDilgJson" class="ajax.student.getStdDilgJson">
 			<result type="json">
