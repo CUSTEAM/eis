@@ -78,7 +78,7 @@ $(document).ready(function() {
 						<optgroup label="${r.name}">
 						<c:forEach items="${r.rc}" var="c">
 						<c:set var="x" value="${r.rc_table},${c.Oid}" />				
-						<option <c:if test="${x eq RcTableCode}">selected</c:if> value="${r.id},${c.Oid}">${c.school_year}學年, ${c.title}</option>						
+						<option <c:if test="${x eq RcTableCode}">selected</c:if> value="${r.id},${c.Oid}">${c.school_year}學年, ${c.title}, 已建立${c.cnt}時數</option>						
 						</c:forEach>
 						</optgroup>
 					</c:forEach>    
@@ -205,10 +205,11 @@ $(document).ready(function() {
 		
 	  	</display:column>
 	  	<display:column style="width:5%; white-space:nowrap;" title="編號" property="Oid" sortable="true" />
+	  	<display:column style="width:10%; white-space:nowrap;" title="名稱" property="name" sortable="true"/>
 	  	<display:column style="width:10%; white-space:nowrap;" title="申請日期" property="date" sortable="true"/>
 	  	<display:column style="width:5%; white-space:nowrap;" title="教室" property="room_id" sortable="true"/>
-	  	<display:column style="width:10%; white-space:nowrap;" title="開始日期" property="begin" sortable="true"/>
-	  	<display:column style="width:10%; white-space:nowrap;" title="結束日期" property="end" sortable="true"/>
+	  	
+	  	
 	  	<display:column style="width:5%; white-space:nowrap;" title="時數" property="cnt" sortable="true"/>
 	  	<display:column style="width:5%; white-space:nowrap;" title="人數" property="users" sortable="true"/>
 	  	<display:column style="width:5%; white-space:nowrap;" title="狀態" property="lender" sortable="true"/>

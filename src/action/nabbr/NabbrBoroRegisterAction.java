@@ -26,11 +26,14 @@ public class NabbrBoroRegisterAction extends BaseAction{
 	public String execute(){		
 		List<Map>list=(List)getContext().getAttribute("CODE_BORROW");
 		for(int i=0; i<list.size(); i++){
+			
 			list.get(i).put("rc", 
-					df.sqlGet("SELECT school_year, Oid, "+list.get(i).get("name_field")
-					+" as title FROM "+list.get(i).get("rc_table")
-					//+" WHERE idno='"+getSession().getAttribute("userid")+"' AND school_year="+getContext().getAttribute("school_year")));
-					+" WHERE idno='"+getSession().getAttribute("userid")+"'ORDER BY school_year DESC"));
+					df.sqlGet("SELECT school_year, Oid, "+list.get(i).get("name_field")+" as title,"
+					+ "(SELECT COUNT(*) FROM NabbrBorApp nba1, NabbrBoro nb1 WHERE "
+					+ "nba1.rc_code='"+list.get(i).get("id")+"' AND nba1.rc_oid="+list.get(i).get("rc_table")+".Oid AND nba1.Oid=nb1.BorAppOid)as cnt "
+					+ "FROM "+list.get(i).get("rc_table")+" WHERE idno='"+getSession().getAttribute("userid")+"'ORDER BY school_year DESC"));
+			
+			
 		}
 		
 		request.setAttribute("rclist", list);	
@@ -143,13 +146,27 @@ public class NabbrBoroRegisterAction extends BaseAction{
 	
 	public String search(){		
 		request.removeAttribute("cls");
-		StringBuilder sb=new StringBuilder("SELECT a.*, e.cname,"
+		/*StringBuilder sb=new StringBuilder("SELECT a.*, e.cname,"
 		+ "(SELECT COUNT(*)FROM NabbrBoro WHERE BorAppOid=a.Oid)as cnt,"
 		+ "(SELECT boro_date FROM NabbrBoro WHERE BorAppOid=a.Oid ORDER BY boro_date LIMIT 1)as begin,"
 		+ "(SELECT boro_date FROM NabbrBoro WHERE BorAppOid=a.Oid ORDER BY boro_date DESC LIMIT 1)as end "
 		+ "FROM NabbrBorApp a LEFT OUTER JOIN empl e ON a.lender=e.idno WHERE a.borrower='"
-		+getSession().getAttribute("userid")+"'ORDER BY a.date DESC");
-		request.setAttribute("boros", df.sqlGet(sb.toString()));
+		+getSession().getAttribute("userid")+"'ORDER BY a.date DESC");*/
+		StringBuilder sb=new StringBuilder("SELECT cb.name_field, cb.rc_table, a.*, e.cname,(SELECT COUNT(*)FROM NabbrBoro WHERE "
+		+ "BorAppOid=a.Oid)as cnt FROM CODE_BORROW cb, NabbrBorApp a LEFT OUTER JOIN empl e ON a.lender=e.idno "
+		+ "WHERE cb.id=a.rc_code AND a.borrower='"+getSession().getAttribute("userid")+"'ORDER BY a.date DESC");
+		
+		
+		
+		List<Map>list=df.sqlGet(sb.toString());
+		for(int i=0; i<list.size(); i++){
+			list.get(i).put("name", df.sqlGetStr("SELECT "+list.get(i).get("name_field")+" FROM "+list.get(i).get("rc_table")+" WHERE Oid="+list.get(i).get("rc_oid")));
+		}
+		
+		
+		
+		
+		request.setAttribute("boros", list);
 		return execute();
 	}
 	
