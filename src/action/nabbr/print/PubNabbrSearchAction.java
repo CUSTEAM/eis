@@ -118,8 +118,7 @@ public class PubNabbrSearchAction extends BaseAction{
 		sql=new StringBuilder("SELECT n.room_id,(SELECT COUNT(*)FROM Dtime_class dc1, "
 		+ "Class c1, Dtime d1 WHERE dc1.Dtime_oid=d1.Oid AND d1.depart_class=c1.ClassNo ");
 		
-		if(SchoolType!=null){
-			//sql.append("AND c1.SchoolType='"+SchoolType+"' ");			
+		if(SchoolType!=null){		
 			if(SchoolType.equals("D")){
 				sql.append("AND dc1.week<=5 AND dc1.end<=10 ");
 			}
@@ -280,17 +279,19 @@ public class PubNabbrSearchAction extends BaseAction{
 		int nDay=(int) ((end.getTime()-begin.getTime())/(24*60*60*1000)); 
 		
 		//計算排課		
-		if(begin.getTime()<school_term_begin.getTime()){
+		if(begin.getTime()<school_term_begin.getTime()||begin.getTime()>school_term_end.getTime()){
 			realBegin=school_term_begin;
 		}else{
 			realBegin=begin;
 		}
 		
-		if(end.getTime()>school_term_end.getTime()){
+		if(end.getTime()>school_term_end.getTime()||end.getTime()<school_term_begin.getTime()){
 			realEnd=school_term_end;
 		}else{
 			realEnd=end;
 		}
+		
+		System.out.println(sf.format(realBegin)+","+sf.format(realBegin));
 		
 		int day=(int)((realEnd.getTime()-realBegin.getTime())/(24*60*60*1000)); 
 		

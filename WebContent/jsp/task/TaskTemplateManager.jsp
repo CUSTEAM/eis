@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>工作單項目管理</title>
 <script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
 <script src="/eis/inc/js/plugin/bootstrap-tooltip.js"></script>
@@ -20,7 +20,7 @@
 <body>
 	<div id="dialog"></div>
 	<div class="bs-callout bs-callout-info" id="callout-helper-pull-navbar">
-		<strong>單位工作管理</strong>
+		<strong>工作單項目管理</strong><input type="hidden" name="upOid" id="upOid" value="100" />
 	</div>
 	<form action="TaskTemplateManager" method="post" class="form-horizontal" enctype="multipart/form-data">
 
@@ -34,11 +34,13 @@
 							aria-controls="collapseOne"> 建立新服務 </a>
 					</h4>
 				</div>
+				
 				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 					<div class="panel-body">
 					
 					<div class="accordion-inner">
-						<input type="hidden" name="Oid" /> <input type="hidden" name="unit" value="${unit}" />
+						<input type="hidden" name="Oid" id="Oid" /> 
+						<input type="hidden" name="unit" value="${unit}" />
 						<div class="input-group">
       						<div class="input-group-addon">工作名稱</div>
     						<input type="text" class="form-control" name="title" placeholder="例如：維修單申請、資料申請" />
@@ -52,7 +54,7 @@
 							</select>
 						</div>
 						<br>
-						<label>申請<small><abbr title="Ctrl+滑鼠點選">(按住Ctrl鍵可選擇多個檔案)</abbr></small></label>
+						<label>申請書範本 <small><abbr title="Ctrl+滑鼠點選">(按住Ctrl鍵可選擇多個檔案)</abbr></small></label>
 			  			<input id="upload" name="fileUpload" multiple type="file" class="file-loading">
 						<br>
 						<label>申請說明</label>
@@ -75,13 +77,13 @@
 						</a>
 					</h4>
 				</div>
-				<div id="collapse${o.Oid}" class="panel-collapse collapse"
+				<div id="collapse${o.Oid}" class="panel-collapse collapse <c:if test="${param.Oid eq o.Oid}">in</c:if>"
 					role="tabpanel" aria-labelledby="headingTwo">
 					<div class="panel-body">
 					<input type="hidden" name="Oid" id="Oid${o.Oid}" value="" /> 
 					<input type="hidden" name="unit" value="${unit}" />							
 					<div class="input-group">
-     						<div class="input-group-addon">工作名稱</div>
+     						<div class="input-group-addon"><A name="${o.Oid}"></A>工作名稱</div>
    						<input type="text" class="form-control" name="title" value="${o.title}" />
 					</div>
 					<br>
@@ -97,7 +99,7 @@
 					<div id="files${o.Oid}">
 					<c:forEach items="${o.files}" var="f" varStatus="i">					
 					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">附件 ${i.index+1}</button>
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">範本 ${i.index+1}</button>
 					  
 						<ul class="dropdown-menu">
 					    <li><a href="/eis/getFtpFile?file=${f.file_name}&path=${f.path}"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> 下載</a>
@@ -107,7 +109,7 @@
 					  	</ul>
 					</div>
 					</c:forEach>
-					<div class="btn-group">
+					<div class="btn-group" onMouseOver="$('#upOid').val(${o.Oid})">
 					<input type="file" name="file" class="file-loading fs">
 					</div>
 					</div>
@@ -133,18 +135,41 @@
 
 		
 <script>
+function callback(d){	
+	alert(d.info.path)
+}
+
+var Oid;	
 $(".fs").fileinput({
     uploadUrl: "putTaskFile", 
-    uploadAsync: false,
+    uploadExtraData: function () {
+    	Oid=$("#upOid").val();
+        return {
+        	Oid:$("#upOid").val()
+        }
+    },
     language: "zh-TW",
-    //showUpload :false,
     showPreview: false,
-    showCaption: false
+    showCaption: false,
+    showUploadedThumbs:true
     //maxFileCount: 5
-}).on('filebatchuploadsuccess', function(event, data) {
-    alert(d);
+	})
+	
+	.on('filebatchpreupload', function(event, data) {
+		window.location.href = "TaskTemplateManager?Oid="+Oid;
+		//window.location.replace("TaskTemplateManager?Oid="+Oid+"#"+Oid);
 });
-CKEDITOR.replaceAll(function(textarea, config) { //uiColor: '#14B8C4',
+
+
+/*CKEDITOR.on('instanceReady', function (e) {
+	  $('.cke_top').css('background','#428bca');
+	  $('.cke_inner').css('background','transparent');
+});*/
+
+CKEDITOR.replaceAll(function(textarea, config) { 
+	//config.uiColor = "#428bca",
+	//config.uiColor = "#428b00",
+	//config.skin = 'office2013',
 	config.toolbar = [
 			[ 'Bold', 'Italic', '-', 'NumberedList','BulletedList', '-', 'Link', 'Unlink' ],
 			[ 'FontSize', 'TextColor', 'BGColor' ] ]
@@ -170,6 +195,11 @@ $("#upload").fileinput({
 	}
 	//allowedFileExtensions: ["csv", "txt"]
 });
+
+$( document ).ready(function() {
+	$('#collapseOne').collapse();
+});
+
 
 </script>
 	</form>

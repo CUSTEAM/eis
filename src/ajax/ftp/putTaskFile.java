@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,8 +22,20 @@ public class putTaskFile extends BaseAction {
     private String fileFileName;  //文件名   
     private String filePath;      //文件路径  
     private InputStream inputStream;
+    
+    private Map info;
 
 	
+	public Map getInfo() {
+		return info;
+	}
+
+
+	public void setInfo(Map info) {
+		this.info = info;
+	}
+
+
 	public File getFile() {
 		return file;
 	}
@@ -77,16 +90,22 @@ public class putTaskFile extends BaseAction {
 		
 		//String fullpath=getContext().getRealPath("/tmp" )+"/";
 		
-		String path = getContext().getRealPath("/tmp" )+"/";
 		
-        File file = new File(path);
-        if (!file.exists()) {  
-            file.mkdir();  
-        }  
+		
+        
+        Map m=new HashMap();
         try {  
+        	String path = getContext().getRealPath("/tmp" )+"/";
+        	File file = new File(path);
+            if (!file.exists()) {  
+                file.mkdir();  
+            }  
+        	
           if (this.file != null) {  
+        	  
+        	/*Map ftpinfo=df.sqlGetMap("SELECT "+target+" as host, username, password, path FROM SYS_HOST WHERE useid='TaskFile'");
             File f = this.getFile();  
-            String fileName = java.util.UUID.randomUUID().toString();   
+            String fileName = String.valueOf(new Date().getTime());   
             String name = fileName+ fileFileName.substring(fileFileName.lastIndexOf(".")); 
   
             FileInputStream inputStream = new FileInputStream(f);  
@@ -100,10 +119,41 @@ public class putTaskFile extends BaseAction {
             outputStream.flush();  
             
             filePath = path+"\\"+name;  
-            System.out.println(filePath);
-  
+            System.out.println(filePath);*/
+        	  
+        	Date now=new Date();	
+  			String fileName;		
+  			String filePath;
+  			String tmp_path=getContext().getRealPath("/tmp");//本機目錄
+  			String target="host_runtime";
+  			File dst;
+  			Map<String, String>ftpinfo;
+  			File uploadedFile;
+  			
+            uploadedFile = this.getFile();  
+            fileName=now.getTime()+bio.getExtention(getFileFileName());//置換檔名            
+            filePath=getContext().getRealPath("/tmp" )+"/"+fileName;            
+            if(!df.testOnlineServer()){//測試的情況
+    			target="host_debug";
+    			filePath=filePath.replace("\\", "/");
+    			tmp_path=tmp_path.replace("\\", "/");
+    		}
+            dst=new File(tmp_path);//暫存資料夾			
+			if(!dst.exists())dst.mkdir();
+			bio.copyFile(uploadedFile, new File(filePath));
+			ftpinfo=df.sqlGetMap("SELECT "+target+" as host, username, password, path FROM SYS_HOST WHERE useid='TaskFile'");
+			bio.putFTPFile(ftpinfo.get("host"), ftpinfo.get("username"), ftpinfo.get("password"), tmp_path+"/", ftpinfo.get("path")+"/", fileName);
+			df.exSql("INSERT INTO Task_file(Task_oid, path, file_name)VALUES("+request.getParameter("Oid")+", 'task/', '"+fileName+"');");		            
+  	        
+			
+			m.put("file", fileName);
+			m.put("path", "task/");
+			this.setInfo(m);
           }  
-        } catch (Exception e) {  
+        } catch (Exception e) { 
+        	m.put("file", "");
+			m.put("path", "task/");
+			this.setInfo(m);
             e.printStackTrace();  
         }  
         return SUCCESS;
