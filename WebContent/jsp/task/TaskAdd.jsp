@@ -308,11 +308,14 @@ function getTaskApp(Oid){
 		
 		
 		str+="<tr><td nowrap>申請單說明</td><td colspan='2'>"+d.app.note+"</td></tr>";
-		str+="<tr><td colspan='3'><b>處理過程</b></td></tr>";
-		for(i=0; i<d.app.hist.length; i++){
-			str+="<tr><td colspan='3'>"+d.app.hist[i].edate+" - "+d.app.hist[i].cname+"</td></tr>";
-			str+="<tr><td colspan='3'>"+d.app.hist[i].reply+"</td></tr>";
+		if(d.app.hist.length>0){
+			str+="<tr><td colspan='3'><b>已經過"+d.app.hist.length+"次處理</b></td></tr>";
+			for(i=0; i<d.app.hist.length; i++){
+				str+="<tr><td colspan='3'>"+d.app.hist[i].edate+" - "+d.app.hist[i].cname+"</td></tr>";
+				str+="<tr><td colspan='3'>"+d.app.hist[i].reply+"</td></tr>";
+			}			
 		}
+		
 		
 		str+="</table>";
 		$("#appInfo").append(str);

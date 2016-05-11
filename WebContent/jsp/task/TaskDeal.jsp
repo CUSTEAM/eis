@@ -10,15 +10,19 @@
 	<title>工作單處理</title>
 </head>
 <body>
-<div class="alert alert alert-warning" role="alert">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>工作單處理</strong>    
+<div class="bs-callout bs-callout-info" id="callout-helper-pull-navbar">
+    <strong>工作單處理??</strong>    
 </div>
 <form action="TaskDeal" method="post">
 <input type="hidden" id="Oid" name="Oid" />
 <c:if test="${!empty que}">  
-<div class="tree well">  
-<display:table name="${que}" id="row" class="table" sort="list" excludedParams="*" pagesize="10" requestURI="TaskDeal">
+<div class="panel panel-primary">
+	<div class="panel-heading">處理中工作單</div>
+	<div class="panel-body">
+		<p>...</p>
+	</div>
+	<div class="table"></div>
+<display:table name="${que}" id="row" class="table" sort="list" excludedParams="*" pagesize="30" requestURI="TaskDeal">
 	<display:column title="工作單編號" property="Oid" sortable="true"/>
   	<display:column title="工作名稱" sortable="true"><a href="TaskDeal?Oid=${row.Oid}">${row.title}</a></display:column>
   	<display:column title="申請人" property="cname" sortable="true"/>  	
@@ -32,8 +36,13 @@
 
 
 <c:if test="${!empty fin}">
-<div class="tree well">
-<display:table name="${fin}" id="row" class="table" sort="list" excludedParams="*" pagesize="10" requestURI="TaskDeal">
+<div class="panel panel-primary">
+	<div class="panel-heading">已完成工作單</div>
+	<div class="panel-body">
+		<p>...</p>
+	</div>
+	<div class="table"></div>
+<display:table name="${fin}" id="row" class="table" sort="list" excludedParams="*" pagesize="30" requestURI="TaskDeal">
 	<display:column title="工作單編號" property="Oid" sortable="true"/>
   	<display:column title="工作名稱" sortable="true"><a href="TaskDeal?Oid=${row.Oid}">${row.title}</a></display:column>
   	<display:column title="申請人" property="cname" sortable="true"/>  	

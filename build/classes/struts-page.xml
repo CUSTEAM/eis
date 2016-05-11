@@ -11,6 +11,10 @@
 		</action>
 	</package>
 	
+	<package name="aq" extends="abstract_struts" namespace="/">				
+		<action name="AqPrint" class="action.aq.AqPrint"></action>
+	</package>
+	
 	<!-- 實驗室 -->
 	<package name="nabbr" extends="abstract_struts" namespace="/">
 		<action name="NabbrBoroRegister" class="action.nabbr.NabbrBoroRegisterAction">

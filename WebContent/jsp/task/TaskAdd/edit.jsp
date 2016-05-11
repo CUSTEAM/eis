@@ -35,9 +35,9 @@
 </script>
 </head>
 <body>
-<div class="alert alert alert-warning" role="alert">
+<div class="bs-callout bs-callout-info" id="callout-helper-pull-navbar">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>工作單處理</strong>    
+    <strong>工作單處理???</strong>    
 </div>
 
 <form action="TaskDeal" method="post">

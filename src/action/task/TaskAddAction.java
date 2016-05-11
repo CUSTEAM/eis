@@ -81,7 +81,7 @@ public class TaskAddAction extends BaseAction{
 		df.update(t);
 		
 		//處理附加檔案
-		if(fileUpload.length>0){
+		if(fileUpload!=null){
 			Date now=new Date();	
 			String fileName;		
 			String filePath;

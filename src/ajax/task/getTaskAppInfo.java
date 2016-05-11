@@ -30,6 +30,9 @@ public class getTaskAppInfo extends BaseAction{
 		app.put("taskFile", df.sqlGet("SELECT path, file_name FROM Task_file WHERE Task_app_oid="+request.getParameter("Oid")));
 		
 		
+		System.out.println("SELECT tf.path, th.*, e.cname FROM Task_hist th LEFT OUTER JOIN Task_file tf ON th.Oid=tf.Task_hist_oid, empl e WHERE "
+				+ "th.empl=e.idno AND th.Task_apply_oid="+request.getParameter("Oid")+" ORDER BY th.edate DESC");;
+		
 		app.put("hist", df.sqlGet("SELECT tf.path, th.*, e.cname FROM Task_hist th LEFT OUTER JOIN Task_file tf ON th.Oid=tf.Task_hist_oid, empl e WHERE "
 		+ "th.empl=e.idno AND th.Task_apply_oid="+request.getParameter("Oid")+" ORDER BY th.edate DESC"));				
         

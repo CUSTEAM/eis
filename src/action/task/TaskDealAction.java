@@ -24,26 +24,39 @@ public class TaskDealAction extends BaseAction{
 		
 		String unit=df.sqlGetStr("SELECT unit_module FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'");
 		
+		
+		
+		
 		//單位未分派
 		List que=df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM CODE_TASK_STATUS cts,"
-		+ "Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.Oid, empl e, Task t WHERE ta.from_empl=e.Oid AND cts.id=ta.status AND t.Oid=ta.Task AND t.unit='"+
-		unit+"' AND ta.status='N' ORDER BY edate DESC");		
+		+ "Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND t.unit='"+
+		unit+"' AND ta.status='N' ORDER BY ta.Oid DESC");
+		
+		
 		
 		//個人未處理
 		que.addAll(df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM "
-				+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.Oid, empl e, Task t WHERE "
-				+ "ta.from_empl=e.Oid AND cts.id=ta.status AND t.Oid=ta.Task AND "
-				+ "ta.next_empl="+am.getEmplOid(getSession().getAttribute("userid").toString())+" AND ta.status !='C' AND ta.status !='R'  ORDER BY edate DESC"));
+				+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE "
+				+ "ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND "
+				+ "ta.next_empl='"+getSession().getAttribute("userid")+"' AND ta.status !='C' AND ta.status !='R'ORDER BY ta.Oid DESC"));
+		
+		
+		que.addAll(df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM "
+				+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE "
+				+ "ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND "
+				+ "ta.next_empl='"+getSession().getAttribute("userid")+"' AND ta.status !='P'  ORDER BY ta.Oid DESC"));
+		
 		
 		request.setAttribute("que", que);
 		
+		
 		//已完成
-		request.setAttribute("fin", df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM "
-				+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.Oid, empl e, Task t WHERE "
-				+ "ta.from_empl=e.Oid AND cts.id=ta.status AND t.Oid=ta.Task AND "
-				+ "ta.next_empl="+am.getEmplOid(getSession().getAttribute("userid").toString())+" AND ta.status !='P'  ORDER BY edate DESC"));
+		/*request.setAttribute("fin", df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM "
+				+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE "
+				+ "ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND "
+				+ "ta.next_empl='"+getSession().getAttribute("userid")+"' AND ta.status !='P'  ORDER BY edate DESC"));
 		
-		
+		*/
 		return SUCCESS;
 	}
 	
@@ -51,14 +64,14 @@ public class TaskDealAction extends BaseAction{
 		
 		String s=df.sqlGetStr("SELECT status FROM Task_apply WHERE Oid="+Oid);
 		if(s.equals("N")||s.equals("T")){//未有人處理或移轉中
-			df.exSql("UPDATE Task_apply SET status='P', next_empl="+am.getEmplOid(getSession().getAttribute("userid").toString())+" WHERE Oid="+Oid);
+			df.exSql("UPDATE Task_apply SET status='P', next_empl='"+getSession().getAttribute("userid")+"' WHERE Oid="+Oid);
 		}
 		
 		request.setAttribute("status", df.sqlGet("SELECT * FROM CODE_TASK_STATUS"));//狀態
 		
 		request.setAttribute("task", df.sqlGetMap("SELECT ta.Oid, t.title, ta.sdate, e.cname, cts.name as sname, "
 		+ "ta.status, e1.Oid as emplOid, e1.cname as emplName, ta.note FROM CODE_TASK_STATUS cts, Task_apply ta "
-		+ "LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.Oid, empl e, Task t WHERE ta.from_empl=e.Oid AND cts.id=ta.status "
+		+ "LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE ta.from_empl=e.idno AND cts.id=ta.status "
 		+ "AND t.Oid=ta.Task AND ta.Oid="+Oid));
 		
 		request.setAttribute("hist", df.sqlGet("SELECT th.*, e.cname FROM Task_hist th, empl e WHERE th.empl=e.Oid AND th.Task_apply_oid="+Oid+" ORDER BY th.edate DESC"));
@@ -76,7 +89,7 @@ public class TaskDealAction extends BaseAction{
 		
 		SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm");		
 		
-		df.exSql("INSERT INTO Task_hist(Task_apply_oid,empl,reply,edate)VALUES("+Oid+","+am.getEmplOid(getSession().getAttribute("userid").toString())+",'"+reply+"','"+sf.format(new Date())+"');");
+		df.exSql("INSERT INTO Task_hist(Task_apply_oid,empl,reply,edate)VALUES("+Oid+",'"+getSession().getAttribute("userid")+"','"+reply+"','"+sf.format(new Date())+"');");
 		
 		if(status.equals("T")){
 			df.exSql("UPDATE Task_apply SET status='T', next_empl='"+next_empl.substring(0, next_empl.indexOf(","))+"' WHERE Oid="+Oid);
@@ -92,7 +105,8 @@ public class TaskDealAction extends BaseAction{
 			return execute();
 		}		
 		
-		StringBuilder sb=new StringBuilder("UPDATE Task_apply SET status='"+status+"', next_empl='"+next_empl.substring(0, next_empl.indexOf(","))+"'");
+		//System.out.println(x);
+		StringBuilder sb=new StringBuilder("UPDATE Task_apply SET status='"+status+"', next_empl='"+df.sqlGetStr("SELECT idno FROM empl WHERE Oid="+next_empl.substring(0, next_empl.indexOf(",")))+"'");
 		if(status.equals("C")){
 			sb.append(",edate='"+sf.format(new Date())+"'");
 		}

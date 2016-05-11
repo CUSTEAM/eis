@@ -35,7 +35,7 @@
 </script>
 </head>
 <body>
-<div class="alert alert alert-warning" role="alert">
+<div class="bs-callout bs-callout-info" id="callout-helper-pull-navbar">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>工作單處理</strong>    
 </div>
@@ -44,44 +44,58 @@
 <table class="table control-group info">
 	<tr>
 		<td class="">
-		<div class="input-prepend" >
-		<span class="add-on">工單編號</span>
-		<input class="span2" id="sign_end" readonly name="Oid" type="text" value="${task.Oid}"/>
+		<div class="input-group">
+      	<span class="input-group-addon">工作單編號</span>
+		<input class="form-control" id="sign_end" readonly name="Oid" type="text" value="${task.Oid}"/>
 		</div>
+		</td>
+	</tr>
+		<td>
 		
-		<div class="input-prepend" >
-		<span class="add-on">工單名稱</span>
-		<input class="span6" readonly type="text" value="${task.title}"/>
+		<div class="input-group">
+      	<span class="input-group-addon">工作單名稱</span>
+		<input class="form-control" readonly type="text" value="${task.title}"/>
 		
 		</td>
 	</tr>
 	<tr>
-		<td nowrap>
-		<div class="input-prepend" >
-			<span class="add-on">申請人員</span>
-			<input class="span2" id="sign_end" readonly type="text" value="${task.cname}"/>
-		</div>
-		<div class="input-prepend" >
-			<span class="add-on">申請時間</span>
-			<input class="span2" readonly type="text" value="${task.sdate}"/>
-		</div>
-		<div class="input-prepend" >
-			<span class="add-on">完成時間</span>
-			<input class="span2" readonly type="text" value="${task.edate}"/>
+		<td>
+		<div class="input-group">
+      	<span class="input-group-addon">申請者</span>
+			<input class="form-control" id="sign_end" readonly type="text" value="${task.cname}"/>
 		</div>
 		</td>
 	</tr>
 	<tr>
-		<td nowrap>
-		<div class="input-prepend" >
-			<span class="add-on">處理人員</span>
-			<input type="text" placeholder="教師完整姓名" class="span2" id="next_empl" name="next_empl" value="${task.emplOid}, ${task.emplName}" onClick="this.value='',$('#status').val('T')" autocomplete="off" data-provide="typeahead"/>
+		<td>
+		<div class="input-group">
+      	<span class="input-group-addon">申請時間</span>
+			<input class="form-control" readonly type="text" value="${task.sdate}"/>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="input-group">
+      	<span class="input-group-addon">完成時間</span>
+			<input class="form-control" readonly type="text" value="${task.edate}"/>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="input-group">
+      	<span class="input-group-addon">處理人員</span>
+			<input class="form-control" type="text" placeholder="教師完整姓名" class="span2" id="next_empl" name="next_empl" value="${task.emplOid}, ${task.emplName}" onClick="this.value='',$('#status').val('T')" autocomplete="off" data-provide="typeahead"/>
 			
 		</div>
-		
-		<div class="input-prepend" >
-			<span class="add-on">處理狀態</span>
-			<select name="status" id="status">
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div class="input-group">
+      		<span class="input-group-addon">處理狀態</span>
+			<select class="form-control" name="status" id="status">
 				<c:forEach items="${status}" var="s">
 				<option <c:if test="${task.status eq s.id}">selected</c:if> value="${s.id}">${s.name}</option>
 				</c:forEach>
@@ -100,11 +114,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td nowrap>
-		
-		
-		<button class="btn btn-danger" name="method:deal">立即處理</button>
-		
+		<td nowrap>		
+		<button class="btn btn-danger" name="method:deal">立即處理</button>		
 		<a href="TaskDeal" class="btn">返回</a>
 		</td>
 	</tr>
@@ -123,18 +134,9 @@
 			</c:forEach>			
 		</div>		
 		</td>
-	</tr>
-	
-	
-		
+	</tr>		
 </table>
-
 </form>
-
-
-
-
-
 
 <script>
 CKEDITOR.replaceAll( function( textarea, config )
