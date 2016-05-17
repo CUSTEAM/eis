@@ -2,3 +2,7 @@
 /ajax/
 /model/
 /service/
+/struts-ajax-dtime.xml
+/struts-ajax.xml
+/struts-page.xml
+/struts.xml

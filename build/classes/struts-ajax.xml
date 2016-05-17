@@ -6,6 +6,11 @@
 		<action name="getMySchedule" class="ajax.getMySchedule"/>
 		<action name="editMySchedule" class="ajax.editMySchedule"/>
 		
+		<!-- 居住地 -->
+		<action name="getStdsgeo" class="ajax.eis.getStdsgeo">
+			<result type="json"/>
+		</action>
+		
 		<!-- 操行評語 -->
 		<action name="autoCompleteCode1" class="ajax.autoCompleteCode1">
 			<result type="json"/>

@@ -74,8 +74,7 @@ public class OutlookAction extends BaseAction{
 		List<Map>tmp;
 		JSONObject json;
 		List<Map>col=df.sqlGet("SELECT id, name FROM CODE_COLLEGE");
-		for(int i=0; i<col.size(); i++){
-			
+		/*for(int i=0; i<col.size(); i++){
 			tmp=df.sqlGet("SELECT s.geocode FROM stmd s, Class c WHERE s.depart_class=c.ClassNo AND s.geocode LIKE '%lat%' AND c.InstNo='"+col.get(i).get("id")+"'");
 			for(int j=0; j<tmp.size(); j++){
 				json=new JSONObject(tmp.get(j).get("geocode").toString());
@@ -88,11 +87,10 @@ public class OutlookAction extends BaseAction{
 				}
 			}			
 			col.get(i).put("stds", tmp);			
-		}
-		
-		
-		List<Map>dep=df.sqlGet("SELECT id, name FROM stmd s, Class c, CODE_DEPT cd WHERE s.depart_class=c.ClassNo AND c.DeptNo=cd.id AND s.geocode LIKE '%lat%' GROUP BY cd.id");
-		for(int i=0; i<dep.size(); i++){
+		}*/
+		List<Map>dep=df.sqlGet("SELECT cd.id, cd.name FROM CODE_DEPT cd ORDER BY cd.id");
+		//List<Map>dep=df.sqlGet("SELECT cd.id, name FROM stmd s, Class c, CODE_DEPT cd WHERE s.depart_class=c.ClassNo AND c.DeptNo=cd.id AND s.geocode LIKE '%lat%' GROUP BY cd.id");
+		/*for(int i=0; i<dep.size(); i++){
 			tmp=df.sqlGet("SELECT s.geocode FROM stmd s, Class c WHERE s.depart_class=c.ClassNo AND s.geocode LIKE '%lat%' AND c.DeptNo='"+dep.get(i).get("id")+"'");
 			for(int j=0; j<tmp.size(); j++){
 				json=new JSONObject(tmp.get(j).get("geocode").toString());
@@ -105,42 +103,23 @@ public class OutlookAction extends BaseAction{
 				}
 			}			
 			dep.get(i).put("stds", tmp);
-		}
-		
-		
+		}*/		
 		request.setAttribute("stdscol", col);
-		request.setAttribute("stdsdep", dep);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		request.setAttribute("stdsdep", dep);	
 		
 		request.setAttribute("stdsall", df.sqlGetInt("SELECT COUNT(*)FROM stmd"));
-		request.setAttribute("stdsnoschl", df.sqlGetInt("SELECT COUNT(*) FROM stmd s WHERE geocode IS NULL"));
-		
-		List<Map>stdsgeo=df.sqlGet("SELECT geocode FROM stmd s WHERE geocode IS NOT NULL AND geocode LIKE'%lat%'");
-		
-		for(int i=0; i<stdsgeo.size(); i++){
-			
+		request.setAttribute("stdsnoschl", df.sqlGetInt("SELECT COUNT(*) FROM stmd s WHERE geocode IS NULL"));		
+		List<Map>stdsgeo=df.sqlGet("SELECT geocode FROM stmd WHERE geocode IS NOT NULL AND geocode LIKE'%lat%'");		
+		for(int i=0; i<stdsgeo.size(); i++){			
 			json=new JSONObject(stdsgeo.get(i).get("geocode").toString());
 			try{
 				stdsgeo.get(i).put("lat", json.get("lat"));
 				stdsgeo.get(i).put("lng", json.get("lng"));
-				//System.out.println(json.get("lat")+", "+json.get("lng"));
 			}catch(Exception e){
 				//System.out.println(json);
 			}
-			
 		}
-		request.setAttribute("stdsgeo", stdsgeo);
-		
-		
+		request.setAttribute("stdsgeo", stdsgeo);		
 	}
 	
 	//來源學校
