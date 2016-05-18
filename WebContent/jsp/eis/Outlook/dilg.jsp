@@ -12,76 +12,11 @@
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">  
 
-/*$(document).ready(function() {	
-    $(".collapse").collapse();
-});*/
-
-google.load("visualization", "1.1", {packages:["calendar"]});
-google.setOnLoadCallback(drawDateChart);
-var date, options, chart;
-function drawDateChart() {
-	  
-    //校
-   	data = new google.visualization.DataTable()
-   	data.addColumn({ type: 'date', id: '日期' });
-   	data.addColumn({ type: 'number', id: '缺曠數' });
-   	data.addRows([
-	<c:forEach items="${days}" var="c">
-      [ new Date(${c.y}, ${c.m-1}, ${c.d}), ${c.cnt} ],
-   	</c:forEach>  
-   	]);
-   	options = {
-		title: "每日缺曠統計",
-		height: 350,
-   	};
-
-	//chart = new google.visualization.Calendar(document.getElementById('calendar_sch'));	
-	//chart.draw(data, options);
-	 
-	//院
-	<c:forEach items="${col}" var="c">	
-	data = new google.visualization.DataTable()
-   	data.addColumn({ type: 'date', id: 'Date' });
-   	data.addColumn({ type: 'number', id: '缺曠數' });
-   	data.addRows([
-	<c:forEach items="${c.days}" var="d">
-      [ new Date(${d.y}, ${d.m-1}, ${d.d}), ${d.cnt} ],
-   	</c:forEach>  
-   	]);
-   	options = {
-		//title: "${c.name}",
-		title: "每日缺曠統計",
-		height: 350,
-   	};
-/*
-	chart = new google.visualization.Calendar(document.getElementById('calendar_col${c.id}'));	
-	chart.draw(data, options);	
-	</c:forEach>
-	
-	//系
-	<c:forEach items="${dep}" var="d">	
-	data = new google.visualization.DataTable()
-   	data.addColumn({ type: 'date', id: 'Date' });
-   	data.addColumn({ type: 'number', id: '缺曠數' });
-   	data.addRows([
-	<c:forEach items="${d.days}" var="dd">
-      [ new Date(${dd.y}, ${dd.m-1}, ${dd.d}), ${dd.cnt} ],
-   	</c:forEach>  
-   	]);
-   	options = {
-		//title: "${c.name}",
-		title: "每日缺曠統計",
-		height: 350,
-   	};
-	chart = new google.visualization.Calendar(document.getElementById('calendar_dep${d.id}'));	
-	chart.draw(data, options);	
-	</c:forEach>
-	*/
-}
 </script>
 </head>
 <body>
-
+<div class="bs-callout bs-callout-info" id="callout-helper-pull-navbar">
+<b>缺曠趨勢</b> 請點選院或系的名稱檢視細部資訊</div>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   
   
@@ -125,7 +60,7 @@ function drawDateChart() {
   
 	<c:forEach items="${col}" var="c" varStatus="i">
 	<div class="panel panel panel-primary">
-		<div class="panel-heading" role="tab" id="Eheading${c.id}">
+		<div class="panel-heading" role="tab" id="Eheading${c.id}" onClick="getChart${c.id}${c.id}()">
 	    <h4 class="panel-title">
 	        <a class="collapsed" 
 	        role="button" 
@@ -148,7 +83,7 @@ function drawDateChart() {
 	<c:forEach items="${dep}" var="d">					
 	<c:if test="${d.college eq c.id }">					
 	<div class="panel panel-default">
-	<div class="panel-heading" role="tab" id="heading${d.id}">
+	<div class="panel-heading" role="tab" id="heading${d.id}" onClick="getChart${d.id}()">
     <h4 class="panel-title">
 	    <a class="collapsed" 
 	    role="button" 
@@ -174,50 +109,13 @@ function drawDateChart() {
 <canvas style="display:none;" id="linechart_depx" width="1000" height="300"></canvas>
 
 <script>
+
+
+
 var op={
 		
 	inGraphDataShow : true,
-	datasetFill : true,
-	/*
-	scaleLabel: "smart",
-	scaleTickSizeRight : 5,
-	scaleTickSizeLeft : 5,
-	scaleTickSizeBottom : 5,
-	scaleTickSizeTop : 5,
-	scaleFontSize : 16,
-	canvasBorders : true,
-	canvasBordersWidth : 3,
-	canvasBordersColor : "black",
-		
-	footNote : "Footnote for the graph",
-	footNoteFontFamily : "'Microsoft JhengHei'",
-	footNoteFontSize : 10,
-	footNoteFontStyle : "bold",
-	footNoteFontColor : "#666",
-	legendBordersWidth : 0,
-    legendBordersColors : "#666",
-    yAxisLeft : true,
-    yAxisRight : false,
-    xAxisBottom : true,
-    xAxisTop : false,
-    yAxisLabel : "Y Axis Label",
-    yAxisFontFamily : "'Arial'",
-    yAxisFontSize : 16,
-    yAxisFontStyle : "normal",
-    yAxisFontColor : "#666",
-    xAxisLabel : "pX Axis Label",
-    xAxisFontFamily : "'Arial'",
-    xAxisFontSize : 16,
-    xAxisFontStyle : "normal",
-    xAxisFontColor : "#666",
-    yAxisUnit : "Y Unit",
-    yAxisUnitFontFamily : "'Arial'",
-    yAxisUnitFontSize : 8,
-    yAxisUnitFontStyle : "normal",
-    yAxisUnitFontColor : "#666",
-    showYAxisMin : false,
-	*/	
-	//graphTitle : "全校18週缺曠趨勢",
+	datasetFill : true,	
 	graphTitleFontFamily : "'Microsoft JhengHei'",
 	graphTitleFontSize : 24,
 	graphTitleFontStyle : "bold",
@@ -291,75 +189,91 @@ dt = {
 	</c:forEach>
 	]
 };
-
-
 ctx = document.getElementById("linechart_col").getContext("2d");
 myLineChart = new Chart(ctx).Line(dt, op);
 
+//院
 <c:forEach items="${col}" var="c" varStatus="a">
-op.graphTitle="${c.name}18週缺曠趨勢";
-op.graphSubTitle="平均每人每週缺曠節次";
-dt = {
-	labels: [<c:forEach begin="1" end="18" varStatus="i">"第${i.index}週",</c:forEach>],
-	datasets: [
-	
-	
-	<c:forEach items="${dep}" var="d" varStatus="dd">
-	<c:if test="${d.college eq c.id}">
-	{
-		label: "${d.name}",
-		fillColor: ChartColors[${dd.index}].fillColor,
-		strokeColor: ChartColors[${dd.index}].strokeColor,
-		pointColor: ChartColors[${dd.index}].pointColor,
-	    data: [<c:forEach items="${d.cnt}" var="cc"><fmt:formatNumber type="number" maxFractionDigits="2" value="${cc/d.stds}" />,</c:forEach>],
-	    title : "${d.name}"
-	},
-	</c:if>
-	</c:forEach>
-	
-	
-	]
-};
-ctx = document.getElementById("linechart_col${a.index}").getContext("2d");
-myLineChart = new Chart(ctx).Line(dt, op);
+function getChart${c.id}${c.id}(){
+	op.graphTitle="${c.name}18週缺曠趨勢";
+	op.graphSubTitle="平均每人每週缺曠節次";
+	dt = {
+		labels: [<c:forEach begin="1" end="18" varStatus="i">"第${i.index}週",</c:forEach>],
+		datasets: [		
+		<c:forEach items="${dep}" var="d" varStatus="dd">
+		<c:if test="${d.college eq c.id}">
+		{
+			label: "${d.name}",
+			fillColor: ChartColors[${dd.index}].fillColor,
+			strokeColor: ChartColors[${dd.index}].strokeColor,
+			pointColor: ChartColors[${dd.index}].pointColor,
+		    data: [<c:forEach items="${d.cnt}" var="cc"><fmt:formatNumber type="number" maxFractionDigits="2" value="${cc/d.stds}" />,</c:forEach>],
+		    title : "${d.name}"
+		},
+		</c:if>
+		</c:forEach>		
+		]
+	};
+	ctx = document.getElementById("linechart_col${a.index}").getContext("2d");
+	myLineChart = new Chart(ctx).Line(dt, op);
+}
 </c:forEach>
+
+
 
 
 
 <c:forEach items="${dep}" var="d" varStatus="a">
 <c:if test="${d.stds>0}">
-op.graphTitle="${d.name}18週缺曠趨勢";
-op.graphSubTitle="每週缺曠加總";
-dt = {
-	labels: [<c:forEach begin="1" end="18" varStatus="i">"第${i.index}週",</c:forEach>],
-	datasets: [	
-	{
-		label: "${d.name}",
-		fillColor: ChartColors[${a.index}].fillColor,
-		strokeColor: ChartColors[${a.index}].strokeColor,
-		pointColor: ChartColors[${a.index}].pointColor,
-		pointHighlightStroke: "#fff",
-	    //pointStrokeColor: "#fff",
-	    // pointHighlightFill: "#fff",
-	    // pointHighlightStroke: "rgba(220,220,220,1)",
-	    data: [<c:forEach items="${d.cnt}" var="dc">${dc},</c:forEach>],
-	    title : "${d.name}"
-	},
-	
-	
-	
-	
-	]
-};
-try{
-	ctx = document.getElementById("linechart_dep${d.id}").getContext("2d");
-}catch(e){
-	ctx = document.getElementById("linechart_depx").getContext("2d");
-}
+function getChart${d.id}(){
+	op.graphTitle="${d.name}18週缺曠趨勢";
+	op.graphSubTitle="每週缺曠加總";
+	dt = {
+		labels: [<c:forEach begin="1" end="18" varStatus="i">"第${i.index}週",</c:forEach>],
+		datasets: [	
+		{
+			label: "${d.name}",
+			fillColor: ChartColors[${a.index}].fillColor,
+			strokeColor: ChartColors[${a.index}].strokeColor,
+			pointColor: ChartColors[${a.index}].pointColor,
+			pointHighlightStroke: "#fff",
+		    //pointStrokeColor: "#fff",
+		    // pointHighlightFill: "#fff",
+		    // pointHighlightStroke: "rgba(220,220,220,1)",
+		    data: [<c:forEach items="${d.cnt}" var="dc">${dc},</c:forEach>],
+		    title : "${d.name}"
+		},
+		
+		
+		
+		
+		]
+	};
+	try{
+		ctx = document.getElementById("linechart_dep${d.id}").getContext("2d");
+	}catch(e){
+		ctx = document.getElementById("linechart_depx").getContext("2d");
+	}
 
-myLineChart = new Chart(ctx).Line(dt, op);
+	myLineChart = new Chart(ctx).Line(dt, op);
+}
 </c:if>
 </c:forEach>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

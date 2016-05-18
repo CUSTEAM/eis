@@ -154,8 +154,8 @@ public class OutlookAction extends BaseAction{
 		
 		int cnt[];		
 		//校日曆圖
-		request.setAttribute("days", df.sqlGet("SELECT COUNT(*)as cnt, "
-		+ "DATE_FORMAT(date,'%Y')as y, DATE_FORMAT(date,'%c')as m, DATE_FORMAT(date,'%e')as d FROM Dilg WHERE abs<5 GROUP BY date"));
+		//request.setAttribute("days", df.sqlGet("SELECT COUNT(*)as cnt, "
+		//+ "DATE_FORMAT(date,'%Y')as y, DATE_FORMAT(date,'%c')as m, DATE_FORMAT(date,'%e')as d FROM Dilg WHERE abs<5 GROUP BY date"));
 		//校18週線圖
 		tmp=new ArrayList();
 		
@@ -175,22 +175,22 @@ public class OutlookAction extends BaseAction{
 		request.setAttribute("schcnt", tmp);		
 		List<Map>col=df.sqlGet("SELECT id, name, (SELECT COUNT(*)FROM stmd s, Class c WHERE s.depart_class=c.ClassNo AND c.InstNo=CODE_COLLEGE.id)as stds FROM CODE_COLLEGE");
 		
+		
+		
+		
 		//院18週日圖
-		for(int i=0; i<col.size(); i++){
+		/*for(int i=0; i<col.size(); i++){
 			col.get(i).put("days", df.sqlGet("SELECT COUNT(*)as cnt,DATE_FORMAT(d.date,'%Y')as y, "
 					+ "DATE_FORMAT(d.date,'%c')as m,DATE_FORMAT(d.date,'%e')as d "
 					+ "FROM Dilg d, Class c, stmd s WHERE d.abs<5 AND d.student_no=s.student_no "
 					+ "AND s.depart_class=c.ClassNo AND c.InstNo='"+col.get(i).get("id")+"'GROUP BY date"));
-		}
+		}*/
 			
 		//院18週線圖		
-		for(int i=0; i<col.size(); i++){
-			
+		for(int i=0; i<col.size(); i++){			
 			cnt=new int[18];
-			for(int j=0; j<18; j++){
-				
-				for(int k=0; k<all.size(); k++){
-					
+			for(int j=0; j<18; j++){				
+				for(int k=0; k<all.size(); k++){					
 					if(  
 						all.get(k).get("InstNo").toString().equals(col.get(i).get("id").toString()) &&
 						all.get(k).get("week").toString().equals(String.valueOf(j+1))
@@ -229,7 +229,8 @@ public class OutlookAction extends BaseAction{
 					+ "FROM Dilg d, Class c, stmd s WHERE d.abs<5 AND d.student_no=s.student_no "
 					+ "AND s.depart_class=c.ClassNo AND c.DeptNo='"+dep.get(i).get("id")+"'GROUP BY date"));
 		}		
-		request.setAttribute("dep", dep);		
+		request.setAttribute("dep", dep);	
+		
 	}
 
 }
