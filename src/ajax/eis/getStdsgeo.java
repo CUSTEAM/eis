@@ -17,6 +17,7 @@ public class getStdsgeo extends BaseAction{
 	}
 
 	public String execute(){
+		//院
 		if(request.getParameter("cid")!=null){
 			if(request.getParameter("cid").length()>0){
 				this.setList(df.sqlGet("SELECT s.geocode FROM stmd s, Class c WHERE s.depart_class=c.ClassNo AND s.geocode LIKE '%lat%' AND c.InstNo='"+request.getParameter("cid")+"'"));
@@ -24,12 +25,22 @@ public class getStdsgeo extends BaseAction{
 			}
 			
 		}
+		//系
 		if(request.getParameter("did")!=null){
 			if(request.getParameter("did").length()>0){	
 				this.setList(df.sqlGet("SELECT s.geocode FROM stmd s, Class c WHERE s.depart_class=c.ClassNo AND s.geocode LIKE '%lat%' AND c.DeptNo='"+request.getParameter("did")+"'"));
 				return SUCCESS;
 			}
 		}	
+		//學生
+		if(request.getParameter("stdNo")!=null){
+			if(request.getParameter("stdNo").length()>0){	
+				this.setList(df.sqlGet("SELECT s.geocode FROM stmd s WHERE s.geocode LIKE '%lat%' AND s.student_no='"+request.getParameter("stdNo")+"'"));
+				return SUCCESS;
+			}
+		}
+		
+		
 		return SUCCESS;
 	}
 

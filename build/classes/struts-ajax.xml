@@ -11,6 +11,11 @@
 			<result type="json"/>
 		</action>
 		
+		<!-- 來源學校 -->
+		<action name="getStdsFromgeo" class="ajax.eis.getStdsFromgeo">
+			<result type="json"/>
+		</action>
+		
 		<!-- 操行評語 -->
 		<action name="autoCompleteCode1" class="ajax.autoCompleteCode1">
 			<result type="json"/>

@@ -125,8 +125,8 @@ public class OutlookAction extends BaseAction{
 	//來源學校
 	private void stdfrom(){		
 		
-		List<Map>schools=df.sqlGet("SELECT r.* FROM stmd s, Recruit_school r WHERE r.lat IS NOT NULL AND s.schl_code=r.no");
-		List<Map>col=df.sqlGet("SELECT id, name FROM CODE_COLLEGE");
+		//List<Map>schools=df.sqlGet("SELECT r.* FROM stmd s, Recruit_school r WHERE r.lat IS NOT NULL AND s.schl_code=r.no");
+		/*List<Map>col=df.sqlGet("SELECT id, name FROM CODE_COLLEGE");
 		for(int i=0; i<col.size(); i++){
 			col.get(i).put("stds", df.sqlGet("SELECT r.* FROM stmd s, Recruit_school r, Class c, CODE_COLLEGE cs WHERE "
 			+ "r.lat IS NOT NULL AND s.schl_code=r.no AND s.depart_class=c.ClassNo AND c.InstNo=cs.id AND cs.id='"+col.get(i).get("id")+"'"));
@@ -138,11 +138,13 @@ public class OutlookAction extends BaseAction{
 			+ "r.lat IS NOT NULL AND s.schl_code=r.no AND s.depart_class=c.ClassNo AND c.DeptNo=cs.id AND cs.id='"+dep.get(i).get("id")+"'"));
 		}
 		request.setAttribute("stdscol", col);
-		request.setAttribute("stdsdep", dep);		
+		request.setAttribute("stdsdep", dep);	*/	
 		
+		request.setAttribute("stdsdep", df.sqlGet("SELECT id, name FROM CODE_DEPT ORDER BY id"));
 		request.setAttribute("stdsall", df.sqlGetInt("SELECT COUNT(*)FROM stmd"));
 		request.setAttribute("stdsnoschl", df.sqlGetInt("SELECT COUNT(*)FROM stmd s, Recruit_school r WHERE s.schl_code=r.no"));
 		
+		request.setAttribute("stdscol", df.sqlGet("SELECT id, name FROM CODE_COLLEGE"));
 		request.setAttribute("schools", df.sqlGet("SELECT r.* FROM stmd s, Recruit_school r WHERE r.lat IS NOT NULL AND s.schl_code=r.no"));
 	}
 	
