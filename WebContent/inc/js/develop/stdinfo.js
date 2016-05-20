@@ -45,7 +45,7 @@ function getStdContectInfo(no, name){
 						});
 					}else{
 						obj = jQuery.parseJSON(d.list[0].geocode);
-						$("#").tinyMap('clear');
+						$("#stdMap").tinyMap('clear');
 						$("#stdMap").tinyMap('modify',{
 							direction: [{
 							                id: no,
