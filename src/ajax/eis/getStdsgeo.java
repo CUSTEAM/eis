@@ -35,6 +35,7 @@ public class getStdsgeo extends BaseAction{
 		//學生
 		if(request.getParameter("stdNo")!=null){
 			if(request.getParameter("stdNo").length()>0){	
+				String geocode=df.sqlGetStr("SELECT s.geocode FROM stmd s WHERE s.geocode LIKE '%lat%' AND s.student_no='"+request.getParameter("stdNo")+"'");
 				this.setList(df.sqlGet("SELECT s.geocode FROM stmd s WHERE s.geocode LIKE '%lat%' AND s.student_no='"+request.getParameter("stdNo")+"'"));
 				return SUCCESS;
 			}

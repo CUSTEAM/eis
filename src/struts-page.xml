@@ -121,20 +121,38 @@
 	
 	</package>
 	
+	<!-- 工作單 -->
 	<package name="task" extends="abstract_struts" namespace="/">		
+		
+		
+		
 		<action name="TaskTemplateManager" class="action.task.TaskTemplateManagerAction">
 			<result>/jsp/task/TaskTemplateManager.jsp</result>
-		</action>	
+		</action>
+		
+		
+		
+			
 		
 		<action name="TaskAdd" class="action.task.TaskAddAction">
 			<result>/jsp/task/TaskAdd.jsp</result>
 			<result name="edit">/jsp/task/TaskAdd/edit.jsp</result>
 		</action>
 		
+		<!-- action name="TaskAddInPending" class="action.task.TaskAddAction">
+			<result>/jsp/task/TaskAdd.jsp</result>
+			<result name="edit">/jsp/task/TaskAdd/edit.jsp</result>
+		</action-->
+		
+		
+		
 		<action name="TaskDeal" class="action.task.TaskDealAction">
 			<result>/jsp/task/TaskDeal.jsp</result>
 			<result name="edit">/jsp/task/TaskDeal/edit.jsp</result>
 		</action>
+		
+		
+		
 			
 	</package>
 	
