@@ -53,7 +53,7 @@ $(document).ready(function() {
 <body>
 <form action="ExcuseManager" method="post" class="form-inline">
 
-<div class="alert alert alert-warning" role="alert">
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 <button type="button" class="close" onClick="window.parent.$.unblockUI()">&times;</button>
 <strong>加班補休申請</strong> 
 </div>
@@ -163,24 +163,10 @@ $(document).ready(function() {
 		</div>	
 	</div>
 </div>
-
-
-
-
-	
-			
-		
-		
-			
-			
-		
-		
-		
-			
 	
 <div class="row">
 	<div class="col-md-6">
-		<div class="alert alert-success">加班申請列表</div>
+		<div class="bs-callout bs-callout-info" id="callout-helper-pull-navbar">加班申請列表</div>
 		<display:table name="${docs2}" id="row" class="table table-condensed" sort="list" excludedParams="*" >
 		  	<display:column title="開始" property="startDate" sortable="true" />
 		  	<display:column title="結束" property="endDate" sortable="true"/>
@@ -202,7 +188,7 @@ $(document).ready(function() {
 	</div>
 		
 	<div class="col-md-6">
-		<div class="alert alert-danger">補休申請列表</div>
+		<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">補休申請列表</div>
 		<display:table name="${docs09}" id="row" class="table table-condensed" sort="list" excludedParams="*" >
 		  	<display:column title="開始" property="startDate" sortable="true" />
 		  	<display:column title="結束" property="endDate" sortable="true"/>

@@ -46,9 +46,9 @@ function getStdScoreInfo(no, name){
 </script>
 </head>
 <body>    
-<div class="alert alert alert-warning" role="alert">
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
-<strong>歷年未轉檔查核</strong> 
+<strong>歷年未轉檔查核</strong> 注意!!停用!!
 </div>
 <!-- Modal -->
 <div id="stdInfo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

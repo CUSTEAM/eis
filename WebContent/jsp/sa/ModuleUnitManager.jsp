@@ -15,8 +15,7 @@
 <body>
    
 <div id="dialog"></div>
-<div class="alert alert alert-warning" role="alert">
-<button type="button" class="close" data-dismiss="alert">&times;</button>
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 <strong>選單管理及權限模擬</strong></div>
 
 <form action="ModuleUnitManager" method="post" class="form-horizontal form-inline">    

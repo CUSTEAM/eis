@@ -37,7 +37,7 @@ $(document).ready(function() {
 </script>  
 </head>
 <body>
-<div class="alert alert alert-warning" role="alert">
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
 	<strong>卡片匯入</strong>
 	<div  class="help btn btn-warning" data-toggle="popover" title="說明" data-content="依照格式欄位匯入資料後，學生基本資料及卡號於公用查詢→學生查詢依條件下載，教職員基本資料及卡號請洽人事單位。" data-placement="right">?</div>

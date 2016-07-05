@@ -9,9 +9,9 @@
 
 </head>
 <body>    
-<div class="alert alert alert-warning" role="alert">
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
-<strong>刪除前學期資料</strong> 
+<strong>刪除前學期資料</strong> 注意！停用！
 </div>
 
 <form action="DeLasTermData" method="post" class="form-horizontal" onSubmit="$.blockUI({message:null});">

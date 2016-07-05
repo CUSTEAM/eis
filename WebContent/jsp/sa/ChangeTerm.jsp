@@ -24,7 +24,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div class="alert alert alert-warning" role="alert">
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
 <strong>${school_year}學年第${school_term}學期轉換新學期</strong>
 <div rel="popover" title="說明" 

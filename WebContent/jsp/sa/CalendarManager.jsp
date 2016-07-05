@@ -18,7 +18,7 @@
 <body>
    
 <div id="dialog"></div>
-<div class="alert alert alert-warning" role="alert">
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 <button type="button" class="close" data-dismiss="alert">&times;</button>
 <strong>各項日期管理</strong></div>
 <form action="CalendarManager" method="post" class="form-inline">

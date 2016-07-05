@@ -30,8 +30,7 @@ $(function () {
 <body>
    
 <div id="dialog"></div>
-<div class="alert alert alert-warning" role="alert">
-<button type="button" class="close" data-dismiss="alert">&times;</button>
+<div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 <strong>程式管理</strong></div>
 
 
