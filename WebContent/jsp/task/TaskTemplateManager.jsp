@@ -58,7 +58,7 @@
 			  			<input id="upload" name="fileUpload" multiple type="file" class="file-loading">
 						<br>
 						<label>申請說明</label>
-						<textarea cols="80" name="template" rows="10">自訂申請書欄位例如:<br>狀況描述:<br>發生時間:<br>發生地點:</textarea>
+						<textarea cols="80" name="template" rows="10"></textarea>
 						<br>
 						<button class="btn btn-danger" name="method:add" type="submit">建立</button>
 					</div>

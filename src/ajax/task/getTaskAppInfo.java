@@ -1,6 +1,8 @@
 package ajax.task;
  
 import action.BaseAction;
+
+import java.util.List;
 //import org.apache.struts2.json.annotations.JSON;
 import java.util.Map;
 
@@ -29,12 +31,12 @@ public class getTaskAppInfo extends BaseAction{
 		
 		app.put("taskFile", df.sqlGet("SELECT path, file_name FROM Task_file WHERE Task_app_oid="+request.getParameter("Oid")));
 		
-		
-		System.out.println("SELECT tf.path, th.*, e.cname FROM Task_hist th LEFT OUTER JOIN Task_file tf ON th.Oid=tf.Task_hist_oid, empl e WHERE "
-				+ "th.empl=e.idno AND th.Task_apply_oid="+request.getParameter("Oid")+" ORDER BY th.edate DESC");;
-		
-		app.put("hist", df.sqlGet("SELECT tf.path, th.*, e.cname FROM Task_hist th LEFT OUTER JOIN Task_file tf ON th.Oid=tf.Task_hist_oid, empl e WHERE "
-		+ "th.empl=e.idno AND th.Task_apply_oid="+request.getParameter("Oid")+" ORDER BY th.edate DESC"));				
+		List<Map>hist=df.sqlGet("SELECT tf.path, th.*, e.cname FROM Task_hist th LEFT OUTER JOIN Task_file tf ON th.Oid=tf.Task_hist_oid, empl e WHERE "
+		+ "th.empl=e.idno AND th.Task_apply_oid="+request.getParameter("Oid")+" ORDER BY th.edate DESC");
+		for(int i=0; i<hist.size(); i++){
+			hist.get(i).put("files", df.sqlGet("SELECT f.file_name, f.path FROM Task_file f WHERE f.Task_hist_oid="+hist.get(i).get("Oid")));
+		}		
+		app.put("hist", hist);				
         
 		
 		

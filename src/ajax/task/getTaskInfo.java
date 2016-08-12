@@ -14,6 +14,15 @@ import action.BaseAction;
 public class getTaskInfo extends BaseAction{
 	
 	private List list;
+	private List files;
+	public List getFiles() {
+		return files;
+	}
+
+	public void setFiles(List files) {
+		this.files = files;
+	}
+
 	private String unitName;
 	
 	public String getUnitName() {
@@ -39,11 +48,15 @@ public class getTaskInfo extends BaseAction{
 		if(request.getParameter("unit")!=null){
 			setList(df.sqlGet("SELECT (SELECT COUNT(*)FROM Task_apply WHERE Task=t.Oid AND status!='C')as cnt, t.title, t.Oid FROM Task t WHERE t.unit='"+request.getParameter("unit")+"'"));
 			setUnitName(df.sqlGetStr("SELECT name FROM CODE_UNIT WHERE id='"+request.getParameter("unit")+"'"));
+			setFiles(df.sqlGet("SELECT f.path, f.file_name FROM Task_file f, Task t WHERE f.Task_oid=t.Oid AND t.unit="+request.getParameter("unit")));
 		}
 		
 		if(request.getParameter("Oid")!=null){
 			setList(df.sqlGet("SELECT t.title,t.template FROM Task t WHERE t.Oid="+request.getParameter("Oid")));
+			setFiles(df.sqlGet("SELECT path, file_name FROM Task_file WHERE Task_oid="+request.getParameter("Oid")));
 		}
+		
+		
 				
         return SUCCESS;               
     }

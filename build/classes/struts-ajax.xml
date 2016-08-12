@@ -126,6 +126,14 @@
 		   	</result>
 		</action>
 		
+		<!-- 人員自動完成 -->
+		<action name="autoCompleteSchoolUser" class="ajax.autoCompleteSchoolUser">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
 		<!-- 科目代碼自動完成 -->
 		<action name="autoCompleteCscode" class="ajax.autoCompleteCscode">
 			<result type="json">

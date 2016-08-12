@@ -48,22 +48,28 @@ public class TaskAddAction extends BaseAction{
     
 	
 	public String Oid, addOid;
-	public String appInfo, email;
+	public String appInfo;//, email;
 	public String unitSearch, begin, end;
 	public String execute(){
 		//預載使用者email
-		request.setAttribute("email", df.sqlGetStr("SELECT Email FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'"));
+		//request.setAttribute("email", df.sqlGetStr("SELECT Email FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'"));
 		
 		request.setAttribute("myApps", df.sqlGet("SELECT cts.name as status, e.cname, ta.Oid, cu.name, t.title, ta.sdate, ta.edate FROM "
 				+ "CODE_TASK_STATUS cts,Task t, Task_apply ta LEFT OUTER JOIN empl e ON e.idno=ta.next_empl, CODE_UNIT cu "
-				+ "WHERE cts.id=ta.status AND t.unit=cu.id AND t.Oid=ta.Task AND ta.status!='C'AND ta.from_empl='"+getSession().getAttribute("userid")+"'ORDER BY ta.Oid DESC"));		
+				+ "WHERE cts.id=ta.status AND t.unit=cu.id AND t.Oid=ta.Task AND ta.from_empl='"+getSession().getAttribute("userid")+"'ORDER BY ta.Oid DESC"));		
 		
-		request.setAttribute("myFin", df.sqlGet("SELECT cts.name as status, e.cname, ta.Oid, cu.name, t.title, ta.sdate, ta.edate FROM "
+		/*request.setAttribute("myFin", df.sqlGet("SELECT cts.name as status, e.cname, ta.Oid, cu.name, t.title, ta.sdate, ta.edate FROM "
 				+ "CODE_TASK_STATUS cts,Task t, Task_apply ta LEFT OUTER JOIN empl e ON e.idno=ta.next_empl, CODE_UNIT cu "
 				+ "WHERE cts.id=ta.status AND t.unit=cu.id AND t.Oid=ta.Task AND ta.status='C'AND ta.from_empl='"+getSession().getAttribute("userid")+"'ORDER BY ta.Oid DESC"));
+		*/
 		
-		request.setAttribute("aunit", getUnit());
 		return SUCCESS;
+	}
+	
+	public String add(){
+		request.setAttribute("aunit", getUnit());
+		
+		return "add";
 	}
 
 	public String save(){		
@@ -72,7 +78,7 @@ public class TaskAddAction extends BaseAction{
 		//df.sqlGetStr("SELECT Oid FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'")+", '"+appInfo+"', '"+sf.format(new Date())+"');");
 		
 		TaskApply t=new TaskApply();
-		t.setEmail(email);
+		//t.setEmail(email);
 		t.setFrom_empl(getSession().getAttribute("userid").toString());
 		t.setNote(appInfo);
 		t.setSdate(new Date());
