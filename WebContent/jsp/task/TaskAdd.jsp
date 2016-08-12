@@ -88,6 +88,7 @@ $(function () {
 
 <p><button name="method:add" style="width:100%;" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-cloud-upload"></span> 申請新工作單</button></p>
 
+
 <div class="panel panel-primary">
 	<div class="panel-heading"><span class="glyphicon glyphicon-th-list"></span> 申請單列表</div>
   	<div class="panel-body">
@@ -98,7 +99,6 @@ $(function () {
 				<option>所屬單位</option>
 				<option>電子計算機中心</option>
 			</select>
-		
 		</div>
 		
 		<div class="input-group">
@@ -107,6 +107,8 @@ $(function () {
 		</div>
 		<button class="btn btn-danger" disabled>過濾</button>
   	</div>
+  	<c:if test="${empty myApps}"><p>&nbsp;&nbsp;沒有工作單可顯示, 請改變查詢條件或重新申請工作單</p></c:if>
+  	<c:if test="${!empty myApps}">
 	<display:table name="${myApps}" id="row" class="table" sort="list" excludedParams="*" pagesize="20" requestURI="TaskAdd">
 		<display:column title="編號" property="Oid" sortable="true" style="white-space:nowrap;"/>
 		<display:column title="名稱" property="title" sortable="true" style="white-space:nowrap;"/>
@@ -119,8 +121,9 @@ $(function () {
 		<a href="#taskAppInfo" class="btn btn-info" onClick="getTaskApp(${row.Oid})" data-toggle="modal">查看</a>
 		</display:column>
 	</display:table>
+	</c:if>	
 </div>
-		
+	
 		
 		
 		

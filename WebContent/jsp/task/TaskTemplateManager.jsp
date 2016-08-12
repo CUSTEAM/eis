@@ -35,7 +35,7 @@
 					</h4>
 				</div>
 				
-				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
 					<div class="panel-body">
 					
 					<div class="accordion-inner">
@@ -57,7 +57,7 @@
 						<label>申請書範本 <small><abbr title="Ctrl+滑鼠點選">(按住Ctrl鍵可選擇多個檔案)</abbr></small></label>
 			  			<input id="upload" name="fileUpload" multiple type="file" class="file-loading">
 						<br>
-						<label>申請說明</label>
+						<label>申請說明<small>(請建立說明格式供申請者參考)</small></label>
 						<textarea cols="80" name="template" rows="10"></textarea>
 						<br>
 						<button class="btn btn-danger" name="method:add" type="submit">建立</button>

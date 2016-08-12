@@ -139,10 +139,10 @@ public class TaskAddAction extends BaseAction{
 		List<Map>tmp;		
 		
 		for(int i=0; i<campus.size(); i++){
-			tmp=dm.sqlGet("SELECT (SELECT COUNT(*) FROM Task WHERE open='e' AND unit IN(SELECT id FROM CODE_UNIT WHERE pid=c.id))as tal, (SELECT COUNT(*)FROM Task WHERE unit=c.id)as cnt, c.id, c.name FROM CODE_UNIT c WHERE pid='0' AND campus='"+campus.get(i).get("id")+"'");			
+			tmp=dm.sqlGet("SELECT (SELECT COUNT(*) FROM Task WHERE unit IN(SELECT id FROM CODE_UNIT WHERE pid=c.id))as tal, (SELECT COUNT(*)FROM Task WHERE unit=c.id)as cnt, c.id, c.name FROM CODE_UNIT c WHERE pid='0' AND campus='"+campus.get(i).get("id")+"'");			
 			//tmp=dm.sqlGet("SELECT (SELECT COUNT(*)FROM Task WHERE unit=c.id)as cnt, c.id, c.name FROM CODE_UNIT c WHERE pid='0' AND campus='"+campus.get(i).get("id")+"'");
 			for(int j=0; j<tmp.size(); j++){				
-				tmp.get(j).put("sub_unit", dm.sqlGet("SELECT (SELECT COUNT(*)FROM Task WHERE open='e' AND unit=c.id)as cnt, c.id, c.name FROM CODE_UNIT c WHERE pid='"+tmp.get(j).get("id")+"'"));
+				tmp.get(j).put("sub_unit", dm.sqlGet("SELECT (SELECT COUNT(*)FROM Task WHERE unit=c.id)as cnt, c.id, c.name FROM CODE_UNIT c WHERE pid='"+tmp.get(j).get("id")+"'"));
 			}			
 			campus.get(i).put("unit", tmp);
 		}
