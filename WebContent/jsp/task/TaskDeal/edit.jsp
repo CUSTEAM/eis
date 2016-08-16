@@ -162,7 +162,7 @@ $("#upload").fileinput({
 	    "   {caption}\n" +
 	    "</div>"
 	}
-	//allowedFileExtensions: ["csv", "txt"]
+	,allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "pdf", "jpg", "txt"]
 	});
 </script>
 </body>

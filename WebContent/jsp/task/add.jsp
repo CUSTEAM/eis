@@ -24,7 +24,7 @@
 <link href="/eis/inc/css/jquery-ui.css" rel="stylesheet"/>
 <script>
 
-$(document).ready(function(){	
+$(document).ready(function(){
 	
 	$("#unitSearch").typeahead({
 		//remote:"#agent",
@@ -49,6 +49,29 @@ $(document).ready(function(){
 			    }
 			});
 		}		
+	});
+	
+	$("#upload").fileinput({
+		//uploadUrl: "#",
+		multiple: true,
+		uploadAsync: false,
+		maxFileCount: 10,
+		//previewFileIcon: '<i class="fa fa-file"></i>',
+		allowedPreviewTypes: null,
+		language: "zh-TW",
+		layoutTemplates: {
+		    main1: "{preview}\n" +
+		    "<div class=\'input-group {class}\'>\n" +
+		    "   <div class=\'input-group-btn\'>\n" +
+		    "       {browse}\n" +
+		    //"       {upload}\n" +
+		    "       {remove}\n" +
+		    "   </div>\n" +
+		    "   {caption}\n" +
+		    "</div>"
+		}
+		//,previewFileType: ["doc", "docx", "xls", "xlsx", "pdf", "jpg", "txt"]
+		//,allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "pdf", "jpg", "txt"]
 	});
 	
 });
@@ -252,26 +275,7 @@ function getForm(Oid){
 	
 }
 $(".dtpick" ).datepicker();
-$("#upload").fileinput({
-//uploadUrl: "#",
-multiple: true,
-uploadAsync: false,
-//previewFileIcon: '<i class="fa fa-file"></i>',
-allowedPreviewTypes: null,
-language: "zh-TW",
-layoutTemplates: {
-    main1: "{preview}\n" +
-    "<div class=\'input-group {class}\'>\n" +
-    "   <div class=\'input-group-btn\'>\n" +
-    "       {browse}\n" +
-    //"       {upload}\n" +
-    "       {remove}\n" +
-    "   </div>\n" +
-    "   {caption}\n" +
-    "</div>"
-}
-//allowedFileExtensions: ["csv", "txt"]
-});
+
 
 </script>
 </body>
