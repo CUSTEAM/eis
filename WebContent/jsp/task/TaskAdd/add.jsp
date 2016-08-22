@@ -173,7 +173,8 @@ $(function () {
 		  			<div id="fileInfo"></div>
 		  			<div id="formInfo"></div>
 		  			</td>
-		  		</tr>		  		
+		  		</tr>
+		  			  		
 		  		<tr>
 		  			<td>
 		  			<label>附件</label>
@@ -183,13 +184,17 @@ $(function () {
 		  			<input id="upload" name="fileUpload" multiple type="file" class="file-loading">
 		  			</td>
 		  		</tr>
-		  		<!--tr>
-		  			<td >
-		  			<label>回覆電子信箱</label>
-		  			<input class="form-control" type="text" name="email" value="${email}" /></td>
-		  		</tr-->
 		  		<tr>
-		  			<td ><button name='method:save' class='btn btn-danger'>送出工作單</button></td>
+		  			<td id="checkName" style="display:none;">
+		  			<div id="checkinfo"></div>
+		  			<div class="input-group">
+     					<div class="input-group-addon">申請單位主管確認</div> 
+     					<input type="text" class="form-control" name="ensure" />	
+					</div>
+		  			</td>
+		  		</tr>
+		  		<tr>
+		  			<td ><button name="method:save" class="btn btn-danger" style="width:100%;">送出工作單</button></td>
 		  		</tr>
 		  	</table>
 			
@@ -250,7 +255,7 @@ function getForm(Oid){
     function(d){	
    		$("#formInfo").html("");
    		$("#fileInfo").html("");
-   		str+="<textarea cols='80' name='appInfo' id='appInfo' rows='10'>"+d.list[0].template+"</textarea></td>";
+   		str+="<textarea cols='80' name='appInfo' id='appInfo' rows='5'>"+d.list[0].template+"</textarea></td>";
    		$("#formInfo").html(str); 
    		$("#infoFormTitle").text(d.list[0].title);
    		str="";
@@ -263,8 +268,14 @@ function getForm(Oid){
    		}else{
    			str+="<div class='alert alert-danger'>此項工作無標準格式工作單，請依格式描述工作內容。</div>";
    		}
-   		
    		$("#fileInfo").html(str);
+   		str="";
+   		if(d.list[0].ensure==1){
+   			str+="<div class='alert alert-danger'>此項工作需要申請單位主管確認，請填寫主管姓名。</div>";
+   			$("#checkName").show("slow");
+   		}
+   		$("#checkinfo").html(str);
+   		
    		CKEDITOR.replace('appInfo', {
    			toolbar: [
    				['Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink' ],

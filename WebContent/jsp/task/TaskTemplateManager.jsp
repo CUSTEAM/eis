@@ -47,10 +47,10 @@
 						</div>
 						<br>
 						<div class="input-group">
-      						<div class="input-group-addon">申請對象</div> 
-      						<select name="open" class="form-control">
-								<option value="e">教職員</option>
-								<option value="s">學生</option>
+      						<div class="input-group-addon">申請單位主管確認</div> 
+      						<select name="ensure" class="form-control">
+								<option value="0">不需要</option>
+								<option value="1">需要</option>
 							</select>
 						</div>
 						<br>
@@ -88,13 +88,12 @@
 					</div>
 					<br>
 					<div class="input-group">
-     				<div class="input-group-addon">申請對象</div> 
-     					<select name="open" class="form-control">
-							<option <c:if test="${o.open eq'e'}">selected</c:if> value="e">教職員</option>
-							<option <c:if test="${o.open eq's'}">selected</c:if> value="s">學生</option>
-							<option <c:if test="${o.open eq'n'}">selected</c:if> value="n">暫停申請</option>
-						</select>
-					</div>
+      					<div class="input-group-addon">申請單位主管確認</div> 
+      						<select name="ensure" class="form-control">
+								<option <c:if test="${o.ensure==0}">selected</c:if> value="0">不需要</option>
+								<option <c:if test="${o.ensure==1}">selected</c:if> value="1">需要</option>
+							</select>
+						</div>
 					<br>
 					<div id="files${o.Oid}">
 					<c:forEach items="${o.files}" var="f" varStatus="i">					

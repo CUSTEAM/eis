@@ -52,7 +52,7 @@ public class getTaskInfo extends BaseAction{
 		}
 		
 		if(request.getParameter("Oid")!=null){
-			setList(df.sqlGet("SELECT t.title,t.template FROM Task t WHERE t.Oid="+request.getParameter("Oid")));
+			setList(df.sqlGet("SELECT t.title,t.template, t.ensure FROM Task t WHERE t.Oid="+request.getParameter("Oid")));
 			setFiles(df.sqlGet("SELECT path, file_name FROM Task_file WHERE Task_oid="+request.getParameter("Oid")));
 		}
 		

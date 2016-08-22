@@ -11,6 +11,8 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 
 import action.BaseAction;
+import model.Message;
+import model.Task;
 import model.TaskApply;
 
 /**
@@ -50,6 +52,7 @@ public class TaskAddAction extends BaseAction{
 	public String Oid, addOid;
 	public String appInfo;//, email;
 	public String unitSearch, begin, end;
+	public String ensure;
 	public String execute(){
 		//預載使用者email
 		//request.setAttribute("email", df.sqlGetStr("SELECT Email FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'"));
@@ -76,15 +79,24 @@ public class TaskAddAction extends BaseAction{
 		//SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		//df.exSql("INSERT INTO Task_apply(Task, from_empl, note, sdate)VALUES("+addOid+","+
 		//df.sqlGetStr("SELECT Oid FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'")+", '"+appInfo+"', '"+sf.format(new Date())+"');");
+		Message msg=new Message();
+		Task t=(Task) df.hqlGetListBy("FROM Task WHERE Oid="+addOid).get(0);
+		System.out.println(t.getEnsure());
+		if(t.getEnsure()==1&& ensure.trim().equals("")){
+			msg.setError("此項申請需填寫主管");
+			this.savMessage(msg);
+			return "add";
+		}
 		
-		TaskApply t=new TaskApply();
+		
+		TaskApply a=new TaskApply();
 		//t.setEmail(email);
-		t.setFrom_empl(getSession().getAttribute("userid").toString());
-		t.setNote(appInfo);
-		t.setSdate(new Date());
-		t.setStatus("N");
-		t.setTask(Integer.parseInt(addOid));
-		df.update(t);
+		a.setFrom_empl(getSession().getAttribute("userid").toString());
+		a.setNote(appInfo);
+		a.setSdate(new Date());
+		a.setStatus("N");
+		a.setTask(Integer.parseInt(addOid));
+		df.update(a);
 		
 		//處理附加檔案
 		if(fileUpload!=null){

@@ -14,6 +14,21 @@ public class TaskApply {
 	private String status;
 	private String email;
 	private Date sdate;
+	private String checker;
+	private Integer ensure;
+	
+	public Integer getEnsure() {
+		return ensure;
+	}
+	public void setEnsure(Integer ensure) {
+		this.ensure = ensure;
+	}
+	public String getChecker() {
+		return checker;
+	}
+	public void setChecker(String checker) {
+		this.checker = checker;
+	}
 	public Integer getOid() {
 		return Oid;
 	}

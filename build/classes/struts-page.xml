@@ -137,7 +137,7 @@
 		<action name="TaskAdd" class="action.task.TaskAddAction">
 			<result>/jsp/task/TaskAdd.jsp</result>
 			<result name="edit">/jsp/task/TaskAdd/edit.jsp</result>
-			<result name="add">/jsp/task/add.jsp</result>
+			<result name="add">/jsp/task/TaskAdd/add.jsp</result>
 		</action>
 		
 		

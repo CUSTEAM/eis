@@ -153,8 +153,7 @@ public class StdSearch extends BaseAction{
 	 */
 	private void cls() throws IOException{
 		Date d=new Date();
-		response.setContentType("text/html; charset=UTF-8");
-		response.setContentType("application/vnd.ms-excel");
+		response.setContentType("application/vnd.ms-excel; charset=UTF-8");
 		response.setHeader("Content-disposition", "attachment;filename="+d.getTime()+".xls");
 		
 		String sterm=getContext().getAttribute("school_term").toString();
@@ -284,276 +283,351 @@ public class StdSearch extends BaseAction{
 	 * 
 	 * @throws IOException
 	 */
-	private void print(List<Map>list) throws IOException{
-		Date d=new Date();
-		response.setContentType("text/html; charset=UTF-8");
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition", "attachment;filename="+d.getTime()+".xls");		
-		PrintWriter out = response.getWriter();
-		out.println("<style>td{font-size:18px; font-family:微軟正黑體;}</style>");
-		out.println("<table border='1'>  ");
-
-		out.println("<tr bgcolor='#dddddd'>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>系所名稱</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>班級代碼</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>班級名稱</td>");		
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>姓名</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>學號</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>性別</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>身分證字號</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>出生日期</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>入學年月</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>前學程畢業</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>身份</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>組別</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>出生省縣</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>出生鄉鎮市</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>電話</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>行動電話</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>現居郵編</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>現居地址</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>戶籍郵編</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>戶籍地址</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>戶籍里</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>畢業學校代碼</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>畢業學校名稱</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>畢業科系</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>畢業狀態</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>家長姓名</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>最後變更學年</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>最後變更學期</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>最後變更狀態</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>最後變更原因</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>最後變更日期</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>最後變更文號</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>畢業號</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>輔系/雙主修</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>輔系/雙主修科系</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>電子郵件</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>身份備註</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>英譯姓名</td>");
-		out.println("<td align='center' style='mso-number-format:\\@' nowrap>卡號</td>");
-		out.println("</tr>");			
+	private void print(List<Map>list) throws IOException{		
+		//response.setContentType("application/vnd.ms-excel");
+		response.setContentType("application/vnd.ms-excel; charset=UTF-8");
+		response.setHeader("Content-disposition","attachment;filename="+new Date().getTime()+".xls");		
+		PrintWriter out=response.getWriter();		
+		out.println ("<?xml version='1.0'?>");
+		out.println ("<?mso-application progid='Excel.Sheet'?>");
+		out.println ("<Workbook xmlns='urn:schemas-microsoft-com:office:spreadsheet'");
+		out.println (" xmlns:o='urn:schemas-microsoft-com:office:office'");
+		out.println (" xmlns:x='urn:schemas-microsoft-com:office:excel'");
+		out.println (" xmlns:ss='urn:schemas-microsoft-com:office:spreadsheet'");
+		out.println (" xmlns:html='http://www.w3.org/TR/REC-html40'>");
+		out.println (" <DocumentProperties xmlns='urn:schemas-microsoft-com:office:office'>");
+		out.println ("  <Author>shawn</Author>");
+		out.println ("  <LastAuthor>shawn</LastAuthor>");
+		out.println ("  <Created>2016-08-22T06:46:42Z</Created>");
+		out.println ("  <Version>15.00</Version>");
+		out.println (" </DocumentProperties>");
+		out.println (" <OfficeDocumentSettings xmlns='urn:schemas-microsoft-com:office:office'>");
+		out.println ("  <AllowPNG/>");
+		out.println (" </OfficeDocumentSettings>");
+		out.println (" <ExcelWorkbook xmlns='urn:schemas-microsoft-com:office:excel'>");
+		out.println ("  <WindowHeight>13845</WindowHeight>");
+		out.println ("  <WindowWidth>28800</WindowWidth>");
+		out.println ("  <WindowTopX>0</WindowTopX>");
+		out.println ("  <WindowTopY>0</WindowTopY>");
+		out.println ("  <ProtectStructure>False</ProtectStructure>");
+		out.println ("  <ProtectWindows>False</ProtectWindows>");
+		out.println (" </ExcelWorkbook>");
+		out.println (" <Styles>");
+		out.println ("  <Style ss:ID='Default' ss:Name='Normal'>");
+		out.println ("   <Alignment ss:Vertical='Center'/>");
+		out.println ("   <Borders/>");
+		out.println ("   <Font ss:FontName='新細明體' x:CharSet='136' x:Family='Roman' ss:Size='12'");
+		out.println ("    ss:Color='#000000'/>");
+		out.println ("   <Interior/>");
+		out.println ("   <NumberFormat/>");
+		out.println ("   <Protection/>");
+		out.println ("  </Style>");
+		out.println ("  <Style ss:ID='s62'>");
+		out.println ("   <Alignment ss:Horizontal='Center' ss:Vertical='Center'/>");
+		out.println ("   <Borders>");
+		out.println ("    <Border ss:Position='Bottom' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Left' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Right' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Top' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("   </Borders>");
+		out.println ("   <Font ss:FontName='微軟正黑體' x:CharSet='136' x:Family='Swiss' ss:Size='14'");
+		out.println ("    ss:Color='#000000'/>");
+		out.println ("   <Interior/>");
+		out.println ("   <NumberFormat ss:Format='@'/>");
+		out.println ("  </Style>");
+		out.println ("  <Style ss:ID='s63'>");
+		out.println ("   <Interior/>");
+		out.println ("  </Style>");
+		out.println ("  <Style ss:ID='s64'>");
+		out.println ("   <Borders>");
+		out.println ("    <Border ss:Position='Bottom' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Left' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Right' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Top' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("   </Borders>");
+		out.println ("  </Style>");
+		out.println (" </Styles>");
+		out.println (" <Worksheet ss:Name='工作表1'>");
+		out.println ("  <Table ss:ExpandedColumnCount='39' ss:ExpandedRowCount='"+(list.size()+999)+"' x:FullColumns='1'");
+		out.println ("   x:FullRows='1' ss:DefaultColumnWidth='54' ss:DefaultRowHeight='16.5'>");
+		out.println ("   <Column ss:StyleID='s64' ss:Span='38'/>");
+		out.println ("   <Row ss:Height='18.75' ss:StyleID='s63'>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>系所名稱</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>班級代碼</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>班級名稱</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>姓名</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>學號</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>性別</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身分證字號</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>出生日期</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>入學年月</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>前學程畢業</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身份</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>組別</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>出生省縣</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>出生鄉鎮市</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>電話</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>行動電話</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>現居郵編</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>現居地址</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>戶籍郵編</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>戶籍地址</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>戶籍里</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業學校代碼</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業學校名稱</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業科系</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業狀態</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>家長姓名</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更學年</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更學期</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更狀態</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更原因</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更日期</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更文號</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業號</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>輔系/雙主修</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>輔系/雙主修科系</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>電子郵件</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身份備註</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>英譯姓名</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>卡號</Data></Cell>");
+		out.println ("   </Row>");
+		
 		for(int i=0; i<list.size(); i++){
+			out.println ("   <Row ss:Height='18.75'>");
+			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("DeptName") + "</Data></Cell>");//系所名稱
+			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("depart_class") + "</Data></Cell>");//班級代碼
+			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("ClassName") + "</Data></Cell>");//班級名稱
+			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("student_name") + "</Data></Cell>");//姓名
+			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("student_no") + "</Data></Cell>");//學號
 			
-			if(i%2==0){
-				out.println("<tr>");
-			}else{
-				out.println("<tr bgcolor='#dddddd'>");
+			if (list.get(i).get("sex").equals("1")) {//性別
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>男</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>女</Data></Cell>");
+			}
+						
+			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("idno") + "</Data></Cell>");//身分證字號
+			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("birthday") + "</Data></Cell>");//出生日期
+			
+			if (list.get(i).get("entrance") != null) {//入學年月
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("entrance") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
-			out.println("<td align='center' style='mso-number-format:\\@' nowrap>"+list.get(i).get("DeptName") + "</td>");
-			out.println("<td align='center' style='mso-number-format:\\@' nowrap>"+list.get(i).get("depart_class") + "</td>");
-			out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("ClassName") + "</td>");
-
-			out.println("<td align='center' style='mso-number-format:\\@' nowrap>"+list.get(i).get("student_name") + "</td>");
-			out.println("<td align='center' style='mso-number-format:\\@' nowrap>"+list.get(i).get("student_no") + "</td>");
-
-			// 性別
-			if (list.get(i).get("sex").equals("1")) {
-				out.println("<td align='center' style='mso-number-format:\\@' nowrap>男</td>");
+			if (list.get(i).get("gradyear") != null) {//前學程畢業
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("gradyear") + "</Data></Cell>");
 			} else {
-				out.println("<td align='center' style='mso-number-format:\\@' nowrap>女</td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
-			out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("idno") + "</td>");// 身份證
-			out.println("<td align='center' style='mso-number-format:\\@' nowrap>"+list.get(i).get("birthday") + "</td>"); // 生日
-			if (list.get(i).get("entrance") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("entrance") + "</td>");
+			if (list.get(i).get("name") != null) {//身份
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("name") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("gradyear") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("gradyear") + "</td>");
+			
+			if (list.get(i).get("team") != null) {//組別
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("team") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("name") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("name") + "</td>");
+			
+			if (list.get(i).get("province") != null) {//出生省縣
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("province") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("team") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("team") + "</td>");
+			
+			if (list.get(i).get("county") != null) {//出生鄉鎮市
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("county") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("province") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("province") + "</td>");
+			
+			if (list.get(i).get("telephone") != null) {//電話
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("telephone") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("county") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("county") + "</td>");
+			
+			if (list.get(i).get("CellPhone") != null) {//電話
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("CellPhone") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("telephone") != null) {
-				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("telephone") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("CellPhone") != null) {
-				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("CellPhone") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
+			
 			if (list.get(i).get("curr_post") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("curr_post") + "</td>");
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("curr_post") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
+			
 			if (list.get(i).get("curr_addr") != null) {
-				out.println("<td align='left' style='mso-number-format:\\@' nowrap>"+list.get(i).get("curr_addr") + "</td>");
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("curr_addr") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
+			
 			if (list.get(i).get("perm_post") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("perm_post") + "</td>");
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("perm_post") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 
 			if (list.get(i).get("perm_addr") != null) {
-				out.println("<td align='left' style='mso-number-format:@' nowrap>"+list.get(i).get("perm_addr") + "</td>");
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("perm_addr") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
 			if (list.get(i).get("liner") != null) {
-				out.println("<td align='left' style='mso-number-format:@' nowrap>"+list.get(i).get("liner") + "</td>");
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("liner") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("schl_code") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("schl_code") + "</td>");
+			
+			if (list.get(i).get("schl_code") != null) {//畢業學校代碼
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("schl_code") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("schl_name") != null) {
-				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("schl_name") + "</td>");
+			
+			if (list.get(i).get("schl_name") != null) {//畢業學校名稱
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("schl_name") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("grad_dept") != null) {
-				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("grad_dept") + "</td>");
+			
+			if (list.get(i).get("grad_dept") != null) {//畢業科系
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("grad_dept") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("gradu_status") != null) {
+			
+			if (list.get(i).get("gradu_status") != null) {//畢業狀態
 				if (list.get(i).get("gradu_status").equals("1")) {
-					out.println("<td align='center' style='mso-number-format:\\@'>畢</td>");
+					out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢</Data></Cell>");
 				} else {
-					out.println("<td align='center' style='mso-number-format:\\@'>肆</td>");
+					out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>肆</Data></Cell>");
 				}
 			} else {
-				out.println("<td align='center' style='mso-number-format:\\@'>啥</td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			if (list.get(i).get("parent_name") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("parent_name") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("occur_year") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_year") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("occur_term") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_term") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("status_name") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("status_name") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("caurse_name") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("caurse_name") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("occur_date") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_date") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("occur_docno") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_docno") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("occur_graduate_no") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("occur_graduate_no") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("ExtraStatus") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("ExtraStatus") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("ExtraDept") != null) {
-				out.println("<td align='center' style='mso-number-format:\\@'>"+list.get(i).get("ExtraDept") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			if (list.get(i).get("Email") != null) {
-				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("Email") + "</td>");
-			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			}
-
-			// out.println("<td align='left'
-			// style='mso-number-format:\\@'>"+list.get(i).get("ident_remark")+"</td>");
 			
-			//if (rmark != null) {
-				//out.println("<td align='left' style='mso-number-format:\\@'>"+ rmark.get("remark_name") + rmark.get("military")+ rmark.get("certificate") + "</td>");
-			//} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
-			//}
-
-			if (list.get(i).get("student_ename") != null) {
-				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("student_ename") + "</td>");
+			if (list.get(i).get("parent_name") != null) {//家長姓名
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("parent_name") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("occur_year") != null) {//最後變更學年
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_year") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("occur_term") != null) {//
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_term") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("status_name") != null) {//最後變更狀態
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("status_name") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("caurse_name") != null) {//最後變更原因
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("caurse_name") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("occur_date") != null) {//最後變更日期
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_date") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("occur_docno") != null) {//最後變更文號
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_docno") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("occur_graduate_no") != null) {//畢業號
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_graduate_no") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("ExtraStatus") != null) {//
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("ExtraStatus") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("ExtraDept") != null) {//
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("ExtraDept") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("Email") != null) {//電子郵件
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("Email") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			//身份備註
+			out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			
+			if (list.get(i).get("student_ename") != null) {//
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("student_ename") + "</Data></Cell>");
+			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
 			if (list.get(i).get("inco") != null) {
-				out.println("<td align='left' style='mso-number-format:\\@'>"+list.get(i).get("inco") + "</td>");
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("inco") + "</Data></Cell>");
 			} else {
-				out.println("<td align='left' style='mso-number-format:\\@'></td>");
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
-			out.println("	</tr>");			
+			out.println ("   </Row>");
 		}
-		out.println("</table>");
+		
+		out.println ("  </Table>");
+		out.println ("  <WorksheetOptions xmlns='urn:schemas-microsoft-com:office:excel'>");
+		out.println ("   <PageSetup>");
+		out.println ("    <Header x:Margin='0.3'/>");
+		out.println ("    <Footer x:Margin='0.3'/>");
+		out.println ("    <PageMargins x:Bottom='0.75' x:Left='0.7' x:Right='0.7' x:Top='0.75'/>");
+		out.println ("   </PageSetup>");
+		out.println ("   <Selected/>");
+		out.println ("   <LeftColumnVisible>15</LeftColumnVisible>");
+		out.println ("   <Panes>");
+		out.println ("    <Pane>");
+		out.println ("     <Number>3</Number>");
+		out.println ("     <ActiveRow>19</ActiveRow>");
+		out.println ("     <ActiveCol>36</ActiveCol>");
+		out.println ("    </Pane>");
+		out.println ("   </Panes>");
+		out.println ("   <ProtectObjects>False</ProtectObjects>");
+		out.println ("   <ProtectScenarios>False</ProtectScenarios>");
+		out.println ("  </WorksheetOptions>");
+		out.println (" </Worksheet>");
+		out.println ("</Workbook>");		
 		out.close();
 		
 		

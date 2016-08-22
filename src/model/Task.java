@@ -8,6 +8,15 @@ public class Task {
 	private String template;
 	private String target;
 	private String type;
+	private Integer ensure;
+	
+	
+	public Integer getEnsure() {
+		return ensure;
+	}
+	public void setEnsure(Integer ensure) {
+		this.ensure = ensure;
+	}
 	public String getType() {
 		return type;
 	}

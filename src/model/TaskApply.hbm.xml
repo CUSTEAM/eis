@@ -43,5 +43,13 @@
             <column name="sdate" />
         </property>
         
+        <property name="checker" type="java.lang.String">
+            <column name="checker" />
+        </property>
+        
+        <property name="ensure" type="java.lang.Integer">
+            <column name="ensure" />
+        </property>
+        
     </class>
 </hibernate-mapping>

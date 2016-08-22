@@ -54,37 +54,19 @@ public class TaskDealAction extends BaseAction{
 		
 		String unit=df.sqlGetStr("SELECT unit_module FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'");
 		
-		
-		
-		
 		//單位未分派
 		List que=df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM CODE_TASK_STATUS cts,"
 		+ "Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND t.unit='"+
 		unit+"' AND ta.status='N' ORDER BY ta.Oid DESC");
 		
-		//個人未處理
+		//個人被指定
 		que.addAll(df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM "
-				+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE "
-				+ "ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND "
-				+ "ta.next_empl='"+getSession().getAttribute("userid")+"' AND ta.status !='C' AND ta.status !='R'ORDER BY ta.Oid DESC"));
-		
-		
-		que.addAll(df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM "
-				+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE "
-				+ "ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND "
-				+ "ta.next_empl='"+getSession().getAttribute("userid")+"' AND ta.status !='P'  ORDER BY ta.Oid DESC"));
-		
+		+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE "
+		+ "ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND "
+		+ "ta.next_empl='"+getSession().getAttribute("userid")+"' AND (ta.status !='C' AND ta.status !='R')ORDER BY ta.Oid DESC"));
 		
 		request.setAttribute("que", que);
 		
-		
-		//已完成
-		/*request.setAttribute("fin", df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM "
-				+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE "
-				+ "ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND "
-				+ "ta.next_empl='"+getSession().getAttribute("userid")+"' AND ta.status !='P'  ORDER BY edate DESC"));
-		
-		*/
 		return SUCCESS;
 	}
 	

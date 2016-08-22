@@ -28,6 +28,10 @@
             <column name="target" />
         </property>
         
+        <property name="ensure" type="java.lang.Integer">
+            <column name="ensure" />
+        </property>
+        
         
     </class>
 </hibernate-mapping>

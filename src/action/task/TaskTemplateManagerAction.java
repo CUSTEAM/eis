@@ -20,6 +20,7 @@ public class TaskTemplateManagerAction extends BaseAction{
 	private File[] fileUpload;
     private String[] fileUploadFileName;
     private String[] fileUploadContentType;
+    public String[] ensure;
     public File[] getFileUpload() {
         return fileUpload;
     }
@@ -87,6 +88,7 @@ public class TaskTemplateManagerAction extends BaseAction{
 			task.setTemplate(template[0]);
 			task.setTitle(title[0]);
 			task.setType("R");
+			task.setEnsure(Integer.parseInt(ensure[0]));
 			task.setUnit(unit[0]);
 			df.update(task);
 			//處理附加檔案
@@ -107,26 +109,7 @@ public class TaskTemplateManagerAction extends BaseAction{
 				//String filePath=ftpinfo.get("path")+"/"+t.getOid()+"/", file_name;
 				bio.putFTPFile(ftpinfo.get("host"), ftpinfo.get("username"), ftpinfo.get("password"), tmp_path+"/", ftpinfo.get("path")+"/", fileName);
 				df.exSql("INSERT INTO Task_file(Task_oid, path, file_name)VALUES("+task.getOid()+",'task/', '"+fileName+"');");		            
-	        }
-			
-			
-			
-			
-			//df.exSql("INSERT INTO Task(unit,title,template,open)VALUES('"+unit[0]+"','"+title[0]+"','"+template[0]+"','"+open[0]+"')");
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+	        }			
 			msg.setSuccess("建立完成");
 		}catch(Exception e){
 			e.printStackTrace();
@@ -146,9 +129,16 @@ public class TaskTemplateManagerAction extends BaseAction{
 					return execute();
 				}
 				try{
-					df.exSql("UPDATE Task SET unit='"+unit[i]+"', title='"+title[i]+"', template='"+template[i]+"', open='"+open[i]+"' WHERE Oid="+Oid[i]);
+					//System.out.println("UPDATE Task SET ensure="+ensure[i]+", unit='"+unit[i]+"', title='"+title[i]+"', template='"+template[i]+"' WHERE Oid="+Oid[i]);
+					//df.exSql("UPDATE Task SET ensure="+ensure[i]+", unit='"+unit[i]+"', title='"+title[i]+"', template='"+template[i]+"' WHERE Oid="+Oid[i]);
+					Task task=(Task)df.hqlGetListBy("FROM Task WHERE Oid="+Oid[i]).get(0);
+					task.setEnsure(Integer.parseInt(ensure[i]));
+					task.setTitle(title[i]);
+					task.setTemplate(template[i]);
+					df.update(task);
 					msg.setSuccess("修改完成");
 				}catch(Exception e){
+					e.printStackTrace();
 					msg.setError("修改失敗，請檢查內容");
 				}
 			}
