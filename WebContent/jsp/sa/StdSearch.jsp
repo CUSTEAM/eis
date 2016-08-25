@@ -52,12 +52,65 @@ $(document).ready(function() {
 	});
 });
 </script>
+<style>
+
+.material-switch > input[type="checkbox"] {
+    display: none;   
+}
+
+.material-switch > label {
+    cursor: pointer;
+    height: 0px;
+    position: relative; 
+    width: 40px;  
+}
+
+.material-switch > label::before {
+    background: rgb(0, 0, 0);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    content: '';
+    height: 16px;
+    margin-top: -8px;
+    position:absolute;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    width: 40px;
+}
+.material-switch > label::after {
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 24px;
+    left: -4px;
+    margin-top: -8px;
+    position: absolute;
+    top: -4px;
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+}
+.material-switch > input[type="checkbox"]:checked + label::before {
+    background: inherit;
+    opacity: 0.5;
+}
+.material-switch > input[type="checkbox"]:checked + label::after {
+    background: inherit;
+    left: 20px;
+}
+</style>
 </head>
 <body>
 <div class="bs-callout bs-callout-warning" id="callout-helper-pull-navbar">
 學生查詢
 </div>
 <form action="StdSearch" method="post" class="form-inline" enctype="multipart/form-data">
+
+<div class="panel panel-primary">
+<div class="panel-heading">查詢條件</div>
+<div class="panel-body">
+<p>...</p>
+</div>
 <table class="table">
 	<tr class="gtype">
 		<td>
@@ -188,16 +241,303 @@ $(document).ready(function() {
 
 	<tr>
 		<td>
-		<div class="btn-group">
+		
+		<div class="row">
+		  	
+		  	<div class="col-md-3">
+		  	<ul class="list-group">                    
+	            <li class="list-group-item">系所名稱
+	                <div class="material-switch pull-right">
+	                    <input id="cDeptName" name="cDeptName" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">班級代碼
+	                <div class="material-switch pull-right">
+	                    <input id="cClassNo" name="cClassNo" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">姓名
+	                <div class="material-switch pull-right">
+	                    <input id="cstudent_name" name="cstudent_name" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">學號
+	                <div class="material-switch pull-right">
+	                    <input id="cstudent_no" name="cstudent_no" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">性別
+	                <div class="material-switch pull-right">
+	                    <input id="csex" name="csex" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">身分證號
+	                <div class="material-switch pull-right">
+	                    <input id="cidno" name="cidno" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">出生日期
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">入學年月
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">前學程畢業
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">身份別
+	                <div class="material-switch pull-right">
+	                    <input name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>                    
+            </ul>
+		  	</div>
+		  	<div class="col-md-3">
+		  	<ul class="list-group">                    
+	            <li class="list-group-item">組別
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">出生省縣
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">出生鄉鎮市
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">電話
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">行動電話
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">現居郵編
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">現居地址
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">戶籍郵編
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">戶籍地址
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">戶籍里
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>                    
+            </ul>
+		  	</div>
+		  	<div class="col-md-3">
+		  	<ul class="list-group">                    
+	            <li class="list-group-item">畢業校碼
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">畢業校名
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">畢業科系
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">畢業狀態
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">家長姓名
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">變更學年
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">變更學期
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">變更狀態
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">變更原因
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">變更日期
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>                    
+            </ul>
+            
+            
+            
+		  	</div>
+		  	
+		  	
+		  	<div class="col-md-3">
+		  	
+		  	<ul class="list-group">                    
+	            <li class="list-group-item">變更文號
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">輔/雙主修
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">輔/雙主修系
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">電子郵件
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">身份備註
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">英譯姓名
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">卡號
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">全部選擇
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">反向選擇
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>
+	            <li class="list-group-item">全部清除
+	                <div class="material-switch pull-right">
+	                    <input id="someSwitchOptionPrimary" name="chkCol" value="" type="checkbox"/>
+	                    <label for="someSwitchOptionPrimary" class="label-primary"></label>
+	                </div>
+	            </li>                    
+            </ul>
+		  	
+		  	</div>
+		  	
+		  	
+		  	
+		</div>
+		
+		
+                
+		
+		
+		
+		
+		
+
+
+		
+		
+		
+		
+		
+		</td>
+	</tr>
+</table>
+<div class="panel-body">
+<div class="btn-group">
 		<button class="btn btn-danger" name="method:clSearch">查詢</button>
 		<a href="StdSearch" class="btn btn-default">重新查詢</a>
 		</div>
 		
-      <input style="margin:5px;" type="checkbox" checked disabled><small>遵守各項<a target="_blank" href="http://law.moj.gov.tw/">法律規定</a>並同意記錄查詢過程</small>
-		</td>
-	</tr>
-</table>
-
+      	<input style="margin:5px;" type="checkbox" checked disabled><small>遵守各項<a target="_blank" href="http://law.moj.gov.tw/">法律規定</a>並同意記錄查詢過程</small>
+</div>
+</div>
 
 
 </form>

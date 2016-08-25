@@ -73,9 +73,9 @@ public class putStdimage extends BaseAction {
 	        return SUCCESS;
 		}
 		
-		String fullpath=getContext().getRealPath("/tmp" )+"/";
-		System.out.println(fullpath);
-		
+		//String fullpath=getContext().getRealPath("/tmp" )+"/";
+		//System.out.println(fullpath);
+		//File image=File.createTempFile(filename.substring(0, filename.indexOf(".")), filename.substring(filename.indexOf("."), filename.length()));
 		//來自學生自行上傳
 		if(myStdNo!=null){	
 			imageFileName = myStdNo + extent;
@@ -84,16 +84,19 @@ public class putStdimage extends BaseAction {
 			imageFileName = fileName;
 		}
 		
-        File imageFile = new File(fullpath+imageFileName);
+        //File imageFile = new File(fullpath+imageFileName);
+		File imageFile=File.createTempFile(imageFileName.substring(0, imageFileName.indexOf(".")), imageFileName.substring(imageFileName.indexOf("."), imageFileName.length()));
         bio.copyFile(myFile, imageFile);//copy至server
         
-        ImageHandler img=new ImageHandler(fullpath+imageFile.getName());		
+        //System.out.println(imageFile.getAbsolutePath());
+        
+        ImageHandler img=new ImageHandler(imageFile.getAbsolutePath());		
 		float height=img.getHeight();
 		float width=img.getWidth();
 		
 		if(width>140){
 			float ratio=width/140;
-			img.reduceImg(fullpath+imageFile.getName(), Math.round(width/ratio), Math.round(height/ratio));			
+			img.reduceImg(imageFile.getAbsolutePath(), Math.round(width/ratio), Math.round(height/ratio));			
 		}
 		
 		//FTP
@@ -108,7 +111,7 @@ public class putStdimage extends BaseAction {
 			String target="host_runtime";
 			if(!df.testOnlineServer())target="host_debug";			
 			Map<String, String>ftpinfo=df.sqlGetMap("SELECT "+target+" as host, username, password, path FROM SYS_HOST WHERE useid='StdImage'");
-			fullpath=fullpath.replace("\\", "/");
+			//fullpath=fullpath.replace("\\", "/");
 			
 			/*
 			FtpClient ftp=new FtpClient(ftpinfo.get("host"), ftpinfo.get("username"), ftpinfo.get("password"), null, null);				
@@ -118,10 +121,17 @@ public class putStdimage extends BaseAction {
 			ftp.setBinaryTransfer(true);
 			ftp.put(imageFileName, true);
 			*/
-			
-			bio.putFTPFile(ftpinfo.get("host"), ftpinfo.get("username"), ftpinfo.get("password"), fullpath+"/", 
-					ftpinfo.get("path")+"/"+folder+"/", imageFileName);			
-						
+			//bio.putFTPFile(host, username, password, server_dir, ap_dir, file_name)
+			//System.out.println("path:"+imageFile.getName());
+			bio.putFTPFile(
+					ftpinfo.get("host"), 
+					ftpinfo.get("username"), 
+					ftpinfo.get("password"), 
+					imageFile.getParent()+"/", 
+					//"C:/Users/shawn/AppData/Local/Temp/10414D014679743761325139631.jpg",
+					ftpinfo.get("path")+"/"+folder+"/", 
+					imageFile.getName());			
+				imageFile.delete();		
 		}catch(Exception e){
 			e.printStackTrace();				
 		}
