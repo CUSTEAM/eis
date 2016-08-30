@@ -22,19 +22,14 @@ public class autoCompleteEmplOid extends BaseAction{
 		this.list = list;
 	}
 
-	public String execute(){
-		
-		System.out.println(request.getAttribute("title"));
-		
+	public String execute(){		
 		List<Map>tmp=df.sqlGet("SELECT e.cname, e.Oid as idno, IFNULL(d.name,'')as edunit, IFNULL(u.name,'')as unit FROM " +
 		"(empl e LEFT OUTER JOIN CODE_DEPT d ON e.unit=d.id)LEFT OUTER JOIN CODE_UNIT u ON e.unit_module=u.id " +
 		"WHERE (e.cname LIKE '"+request.getParameter("nameno")+"%')");
-		
 		list=new Object[tmp.size()];
 		for(int i=0; i<tmp.size(); i++){
 			list[i]=tmp.get(i).get("idno")+","+tmp.get(i).get("cname")+" - "+tmp.get(i).get("edunit")+", "+tmp.get(i).get("unit");
-		}	
-		
+		}
 		return SUCCESS;
 	}
 }

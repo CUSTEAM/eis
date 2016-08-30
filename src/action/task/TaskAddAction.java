@@ -51,8 +51,9 @@ public class TaskAddAction extends BaseAction{
 	
 	public String Oid, addOid;
 	public String appInfo;//, email;
-	public String unitSearch, begin, end;
-	public String ensure;
+	//public String unitSearch, begin, end;
+	public String checker;
+	
 	public String execute(){
 		//預載使用者email
 		//request.setAttribute("email", df.sqlGetStr("SELECT Email FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'"));
@@ -81,11 +82,11 @@ public class TaskAddAction extends BaseAction{
 		//df.sqlGetStr("SELECT Oid FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'")+", '"+appInfo+"', '"+sf.format(new Date())+"');");
 		Message msg=new Message();
 		Task t=(Task) df.hqlGetListBy("FROM Task WHERE Oid="+addOid).get(0);
-		System.out.println(t.getEnsure());
-		if(t.getEnsure()==1&& ensure.trim().equals("")){
+		
+		if(t.getEnsure()==1&& checker.trim().equals("")){
 			msg.setError("此項申請需填寫主管");
 			this.savMessage(msg);
-			return "add";
+			return execute();
 		}
 		
 		
@@ -94,7 +95,14 @@ public class TaskAddAction extends BaseAction{
 		a.setFrom_empl(getSession().getAttribute("userid").toString());
 		a.setNote(appInfo);
 		a.setSdate(new Date());
-		a.setStatus("N");
+		
+		
+		if(!checker.trim().equals("")){
+			a.setChecker(df.sqlGetStr("SELECT idno FROM empl WHERE Oid='"+checker.substring(0, checker.indexOf(","))+"'"));
+			a.setStatus("H");
+		}else{
+			a.setStatus("N");
+		}
 		a.setTask(Integer.parseInt(addOid));
 		df.update(a);
 		
@@ -130,7 +138,8 @@ public class TaskAddAction extends BaseAction{
 		return execute();
 	}
 	
-	public String search(){
+	
+	/*public String search(){
 		StringBuilder sb=new StringBuilder("SELECT cts.name as status, e.cname, ta.Oid, cu.name, t.title, ta.edate, ta.sdate FROM "
 		+ "CODE_TASK_STATUS cts,Task t, Task_apply ta LEFT OUTER JOIN empl e ON e.Oid=ta.next_empl, CODE_UNIT cu WHERE "
 		+ "cts.id=ta.status AND t.unit=cu.id AND t.Oid=ta.Task AND cu.id LIKE'"+unitSearch+"%'");
@@ -143,19 +152,36 @@ public class TaskAddAction extends BaseAction{
 		request.setAttribute("myApps", df.sqlGet(sb.toString()));
 		request.setAttribute("aunit", getUnit());
 		return SUCCESS;
+	}*/
+	
+	public String unit,begin,end,stat;
+	
+	public String search(){
+		//SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+		StringBuilder sql=new StringBuilder("SELECT cts.name as status, e.cname, ta.Oid, cu.name, t.title, ta.edate, ta.sdate FROM "
+		+ "CODE_TASK_STATUS cts,Task t, Task_apply ta LEFT OUTER JOIN empl e ON e.Oid=ta.next_empl, CODE_UNIT cu WHERE "
+		+ "cts.id=ta.status AND t.unit=cu.id AND t.Oid=ta.Task ");
+		if(!unit.equals(""))sql.append("AND t.unit='"+unit+"'");
+		if(!begin.equals(""))sql.append("AND ta.sdate>='"+begin+"'");
+		if(!end.equals(""))sql.append("AND ta.sdate<='"+end+"'");
+		if(!stat.equals(""))sql.append("AND ta.status='"+stat+"'");
+		sql.append("ORDER BY ta.Oid DESC");
+		//System.out.println(sql);
+		request.setAttribute("myApps", df.sqlGet(sql.toString()));
+		return SUCCESS;
 	}
 	
 	private List getUnit(){
 		//單位
-		List<Map>campus=dm.sqlGet("SELECT id, name FROM CODE_CAMPUS c");
+		List<Map>campus=dm.sqlGet("SELECT (SELECT COUNT(*)FROM Task WHERE unit=c.id)as cnt,id, name FROM CODE_CAMPUS c");
 		List<Map>tmp;		
 		
 		for(int i=0; i<campus.size(); i++){
-			tmp=dm.sqlGet("SELECT (SELECT COUNT(*) FROM Task WHERE unit IN(SELECT id FROM CODE_UNIT WHERE pid=c.id))as tal, (SELECT COUNT(*)FROM Task WHERE unit=c.id)as cnt, c.id, c.name FROM CODE_UNIT c WHERE pid='0' AND campus='"+campus.get(i).get("id")+"'");			
-			//tmp=dm.sqlGet("SELECT (SELECT COUNT(*)FROM Task WHERE unit=c.id)as cnt, c.id, c.name FROM CODE_UNIT c WHERE pid='0' AND campus='"+campus.get(i).get("id")+"'");
+			tmp=dm.sqlGet("SELECT (SELECT COUNT(*) FROM Task WHERE unit IN(SELECT id FROM CODE_UNIT WHERE pid=c.id))as tal, (SELECT COUNT(*)FROM Task WHERE unit=c.id)as cnt, c.id, c.name "
+			+ "FROM CODE_UNIT c WHERE (pid='0'AND id!='0') AND campus='"+campus.get(i).get("id")+"'");			
 			for(int j=0; j<tmp.size(); j++){				
 				tmp.get(j).put("sub_unit", dm.sqlGet("SELECT (SELECT COUNT(*)FROM Task WHERE unit=c.id)as cnt, c.id, c.name FROM CODE_UNIT c WHERE pid='"+tmp.get(j).get("id")+"'"));
-			}			
+				}			
 			campus.get(i).put("unit", tmp);
 		}
 		return campus;

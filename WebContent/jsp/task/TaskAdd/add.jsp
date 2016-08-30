@@ -11,21 +11,16 @@
 <script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
 <link href="/eis/inc/css/bootstrap-tree.css" rel="stylesheet"/>
 <script src="http://192.192.230.167/CIS/inc/js/plugin/ckeditor/ckeditor.js"></script>
-
 <link href="/eis/inc/bootstrap/plugin/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet">
 <script src="/eis/inc/bootstrap/plugin/bootstrap-fileinput/js/fileinput.min.js"></script>
 <script src="/eis/inc/bootstrap/plugin/bootstrap-fileinput/js/fileinput_locale_zh-TW.js"></script>
-
 <script src="/eis/inc/js/plugin/jquery.chained.min.js"></script>
 <link href="/eis/inc/css/wizard-step.css" rel="stylesheet"/>
-
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
 <link href="/eis/inc/css/jquery-ui.css" rel="stylesheet"/>
 <script>
-
-$(document).ready(function(){
-	
+$(document).ready(function(){	
 	$("#unitSearch").typeahead({
 		//remote:"#agent",
 		source : [],
@@ -72,6 +67,25 @@ $(document).ready(function(){
 		}
 		//,previewFileType: ["doc", "docx", "xls", "xlsx", "pdf", "jpg", "txt"]
 		//,allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "pdf", "jpg", "txt"]
+	});
+	
+	$("#checker").typeahead({
+		source : [],
+		items : 10,
+		updateSource:function(inputVal, callback){			
+			$.ajax({
+				url:"/eis/autoCompleteEmplOid",
+			    dataType: 'jsonp',
+			    jsonp:'back',          //jsonp請求方法
+			    data:{nameno:inputVal},
+			    cache:false,
+			    type:'POST',
+			    success: function(d) {
+			    	
+			    	callback(d.list);
+			    }
+			});
+		}		
 	});
 	
 });
@@ -125,8 +139,8 @@ $(function () {
 			                <c:forEach items="${c.unit}" var="s">
 			                <li class="after">
 				                <span>
-				                	<i class="icon-plus-sign"></i> ${s.id}, ${s.name}
-				                	<c:if test="${s.cnt>0 }"><button onClick="getTasks('${s.id}')" class="btn btn-sm" type="button">申請服務</button></c:if>
+				                	<i class="icon-plus-sign"></i> ${s.id}, ${s.name} 
+				                	<c:if test="${s.cnt>0 }"><a href="javascript:getTasks('${s.id}')">${s.cnt}項申請</a></c:if>
 				                </span> <input onClick="$('.class2').attr('checked');" class="batch class1${c.id}" style="display:none;" type="checkbox"/>
 				                <ul>
 			                    	<c:forEach items="${s.sub_unit}" var="ss">			                    	
@@ -188,8 +202,8 @@ $(function () {
 		  			<td id="checkName" style="display:none;">
 		  			<div id="checkinfo"></div>
 		  			<div class="input-group">
-     					<div class="input-group-addon">申請單位主管確認</div> 
-     					<input type="text" class="form-control" name="ensure" />	
+     					<div class="input-group-addon">${t}申請單位主管確認</div> 
+     					<input type="text" class="form-control" id="checker" name="checker" />	
 					</div>
 		  			</td>
 		  		</tr>
@@ -212,7 +226,6 @@ function selUnit(no1, no2){
 			$('.class1'+no1).attr("checked", true);
 		}
 	}
-	
 }
 
 $(".tree li:has(ul)").find( "li" ).hide('fast');

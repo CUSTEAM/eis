@@ -46,28 +46,75 @@ public class TaskDealAction extends BaseAction{
 	
 	public String Oid;
 	public String next_empl;
-	public String status;
+	public String status, chk;
 	public String reply;
 	
+	
+	public String unit,begin,end,stat;
+	
+	public String search(){
+		//SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+		StringBuilder sql=new StringBuilder("SELECT e1.cname as next, ta.Oid, t.title, "
+		+ "ta.sdate, ta.edate, e.cname, cts.name as statusName, ta.status FROM CODE_TASK_STATUS cts,"
+		+ "Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE "
+		+ "ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task ");
+		if(!unit.equals(""))sql.append("AND t.unit='"+unit+"'");
+		if(!begin.equals(""))sql.append("AND ta.sdate>='"+begin+"'");
+		if(!end.equals(""))sql.append("AND ta.sdate<='"+end+"'");
+		if(!stat.equals(""))sql.append("AND ta.status='"+stat+"'");
+		sql.append("ORDER BY ta.Oid DESC");
+		//System.out.println(sql);
+		request.setAttribute("que", df.sqlGet(sql.toString()));
+		return SUCCESS;
+	}
 	
 	public String execute(){		
 		
 		String unit=df.sqlGetStr("SELECT unit_module FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'");
-		
+		//個人未審核
+		List que=df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, "
+		+ "cts.name as statusName, ta.status FROM CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON "
+		+ "ta.checker=e1.idno, empl e, Task t WHERE ta.from_empl=e.idno AND cts.id=ta.status AND "
+		+ "t.Oid=ta.Task AND ta.checker='"+getSession().getAttribute("userid")+"' AND ta.status='H' ORDER BY ta.Oid DESC");
 		//單位未分派
-		List que=df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM CODE_TASK_STATUS cts,"
+		que.addAll(df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as statusName, ta.status FROM CODE_TASK_STATUS cts,"
 		+ "Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND t.unit='"+
-		unit+"' AND ta.status='N' ORDER BY ta.Oid DESC");
-		
+		unit+"' AND ta.status='N' ORDER BY ta.Oid DESC"));
 		//個人被指定
-		que.addAll(df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as status FROM "
+		que.addAll(df.sqlGet("SELECT e1.cname as next, ta.Oid, t.title, ta.sdate, ta.edate, e.cname, cts.name as statusName, ta.status FROM "
 		+ "CODE_TASK_STATUS cts, Task_apply ta LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE "
 		+ "ta.from_empl=e.idno AND cts.id=ta.status AND t.Oid=ta.Task AND "
 		+ "ta.next_empl='"+getSession().getAttribute("userid")+"' AND (ta.status !='C' AND ta.status !='R')ORDER BY ta.Oid DESC"));
-		
-		request.setAttribute("que", que);
-		
+		request.setAttribute("que", que);		
 		return SUCCESS;
+	}
+	
+	public String check(){
+		Message msg=new Message();
+		SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date now=new Date();
+		
+		TaskHist h=new TaskHist();
+		h.setTask_apply_oid(Integer.parseInt(Oid));
+		h.setEdate(now);
+		h.setEmpl(getSession().getAttribute("userid").toString());
+		h.setReply(reply);
+		df.update(h);
+		
+		//處理附加檔案
+		if(fileUpload!=null){
+			saveFiles(now, h);
+		}
+		
+		if(chk.equals("N")){			
+			df.exSql("UPDATE Task_apply SET status='N', next_empl=null WHERE Oid="+Oid);
+			msg.setSuccess("已審核");			
+		}else{
+			df.exSql("UPDATE Task_apply SET status='R', next_empl='"+getSession().getAttribute("userid")+"' WHERE Oid="+Oid);
+			msg.setSuccess("已退回");
+		}
+		this.savMessage(msg);	
+		return execute();
 	}
 	
 	public String edit(){
@@ -82,9 +129,7 @@ public class TaskDealAction extends BaseAction{
 		request.setAttribute("task", df.sqlGetMap("SELECT ta.Oid, t.title, ta.sdate, e.cname, cts.name as sname, "
 		+ "ta.status, e1.Oid as emplOid, e1.cname as emplName, ta.note FROM CODE_TASK_STATUS cts, Task_apply ta "
 		+ "LEFT OUTER JOIN empl e1 ON ta.next_empl=e1.idno, empl e, Task t WHERE ta.from_empl=e.idno AND cts.id=ta.status "
-		+ "AND t.Oid=ta.Task AND ta.Oid="+Oid));
-		
-		
+		+ "AND t.Oid=ta.Task AND ta.Oid="+Oid));		
 		
 		List<Map>hist=df.sqlGet("SELECT th.*, e.cname FROM Task_hist th, empl e WHERE th.empl=e.idno AND th.Task_apply_oid="+Oid+" ORDER BY th.edate DESC");
 		for(int i=0; i<hist.size(); i++){
@@ -122,34 +167,8 @@ public class TaskDealAction extends BaseAction{
 		df.update(h);
 		
 		//處理附加檔案
-		if(fileUpload!=null){					
-			String fileName;		
-			String filePath;
-			String tmp_path=getContext().getRealPath("/tmp");//本機目錄
-			String target="host_runtime";
-			File dst;
-			Map<String, String>ftpinfo;
-			File uploadedFile;
-			for (int i = 0; i < fileUpload.length; i++) {			
-	            uploadedFile = fileUpload[i];            
-	            fileName=now.getTime()+"-"+i+bio.getExtention(fileUploadFileName[i]);//置換檔名            
-	            filePath=getContext().getRealPath("/tmp" )+"/"+fileName;            
-	            if(!df.testOnlineServer()){//測試的情況
-	    			target="host_debug";
-	    			filePath=filePath.replace("\\", "/");
-	    			tmp_path=tmp_path.replace("\\", "/");
-	    		}
-	            dst=new File(tmp_path);//暫存資料夾			
-				if(!dst.exists())dst.mkdir();
-				bio.copyFile(fileUpload[i], new File(filePath));
-				
-				ftpinfo=df.sqlGetMap("SELECT "+target+" as host, username, password, path FROM SYS_HOST WHERE useid='TaskFile'");
-				
-				
-				bio.putFTPFile(ftpinfo.get("host"), ftpinfo.get("username"), ftpinfo.get("password"), tmp_path+"/", ftpinfo.get("path")+"/"+h.getTask_apply_oid()+"/", fileName);
-				df.exSql("INSERT INTO Task_file(Task_hist_oid, path, file_name)VALUES("+h.getOid()+",'task/"+h.getTask_apply_oid()+"/', '"+fileName+"');");		            
-	        }
-			
+		if(fileUpload!=null){
+			saveFiles(now, h);
 		}
 		
 		if(status.equals("T")){			
@@ -172,20 +191,39 @@ public class TaskDealAction extends BaseAction{
 			sb.append(",edate='"+sf.format(now)+"'");
 		}
 		sb.append("WHERE Oid="+Oid);
-		df.exSql(sb.toString());
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		df.exSql(sb.toString());		
 		
 		msg.setSuccess("已儲存");
 		this.savMessage(msg);		
 		return edit();
 	}
-
+	
+	private void saveFiles(Date now, TaskHist h){							
+		String fileName;		
+		String filePath;
+		String tmp_path=getContext().getRealPath("/tmp");//本機目錄
+		String target="host_runtime";
+		File dst;
+		Map<String, String>ftpinfo;
+		File uploadedFile;
+		for (int i = 0; i < fileUpload.length; i++) {			
+            uploadedFile = fileUpload[i];            
+            fileName=now.getTime()+"-"+i+bio.getExtention(fileUploadFileName[i]);//置換檔名            
+            filePath=getContext().getRealPath("/tmp" )+"/"+fileName;            
+            if(!df.testOnlineServer()){//測試的情況
+    			target="host_debug";
+    			filePath=filePath.replace("\\", "/");
+    			tmp_path=tmp_path.replace("\\", "/");
+    		}
+            dst=new File(tmp_path);//暫存資料夾			
+			if(!dst.exists())dst.mkdir();
+			bio.copyFile(fileUpload[i], new File(filePath));
+			
+			ftpinfo=df.sqlGetMap("SELECT "+target+" as host, username, password, path FROM SYS_HOST WHERE useid='TaskFile'");
+			
+			
+			bio.putFTPFile(ftpinfo.get("host"), ftpinfo.get("username"), ftpinfo.get("password"), tmp_path+"/", ftpinfo.get("path")+"/"+h.getTask_apply_oid()+"/", fileName);
+			df.exSql("INSERT INTO Task_file(Task_hist_oid, path, file_name)VALUES("+h.getOid()+",'task/"+h.getTask_apply_oid()+"/', '"+fileName+"');");		            
+        }
+	}
 }

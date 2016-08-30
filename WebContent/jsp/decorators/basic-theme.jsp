@@ -16,15 +16,18 @@
 <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <meta name="ROBOTS" content="none">
 <title><decorator:title default="Welcome!" /> - 中華科大教職員資訊系統</title>
-<link rel="stylesheet" href="inc/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="/eis/inc/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="/eis/inc/bootstrap/css/bootstrap-theme.css" />
-<link rel="stylesheet" href="inc/css/advance.css" />
+<link rel="stylesheet" href="/eis/inc/css/advance.css" />
 <link href="/eis/inc/bootstrap/css/docs.min.css" rel="stylesheet"/>
-<script src="inc/js/jquery.js"></script>
-<script src="inc/bootstrap/js/bootstrap.js"></script>
-<script src="inc/js/plugin/jquery.blockUI.js"></script>
-<link rel="stylesheet" href="inc/bootstrap/plugin/bootstrap-submenu/css/bootstrap-submenu.min.css">
-<script src="inc/bootstrap/plugin/bootstrap-submenu/js/bootstrap-submenu.min.js" defer></script>
+<link href="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet"/>
+<script src="/eis/inc/js/jquery.js"></script>
+<script src="/eis/inc/bootstrap/js/bootstrap.js"></script>
+<script src="/eis/inc/js/plugin/jquery.blockUI.js"></script>
+<link rel="stylesheet" href="/eis/inc/bootstrap/plugin/bootstrap-submenu/css/bootstrap-submenu.min.css">
+<script src="/eis/inc/bootstrap/plugin/bootstrap-submenu/js/bootstrap-submenu.min.js" defer></script>
+<script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/bootstrap-select.min.js"></script>
+<script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/i18n/defaults-zh_TW.min.js"></script>
 <script>
 $.ajaxSetup ({ 
 	cache: false 

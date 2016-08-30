@@ -92,24 +92,36 @@ $(function () {
 <div class="panel panel-primary">
 	<div class="panel-heading"><span class="glyphicon glyphicon-th-list"></span> 申請單列表</div>
   	<div class="panel-body">
-  	
-    	<div class="input-group">
+		<div class="input-group">
       	<span class="input-group-addon">單位</span>
-			<select class="form-control" disabled>
-				<option>所屬單位</option>
-				<option>電子計算機中心</option>
+			<select class="form-control" name="unit">
+				<option value="">所有單位</option>
+				<c:forEach items="${CODE_UNIT}" var="c">
+				<option <c:if test="${c.id eq unit}">selected</c:if> value="${c.id}">${c.name}</option>
+				</c:forEach>
 			</select>
 		</div>
 		
-		<div class="input-group">
+		<div class="input-group" style="width:20%;">
       	<span class="input-group-addon">期間</span>
-			<input class="form-control" type="text" placeholder="所有時間" value="" disabled autocomplete="off" data-provide="typeahead"/>
+			<input class="form-control date" name="begin" type="text" placeholder="所有時間" value="${begin}" autocomplete="off"/>
 		</div>
-		<button class="btn btn-danger" disabled>過濾</button>
-  	</div>
+		<div class="input-group" style="width:20%;">
+      	<span class="input-group-addon">至</span>
+			<input class="form-control date" type="text" placeholder="所有時間" name="end" value="${end}" autocomplete="off"/>
+		</div>		
+		<select class="form-control" name="stat">
+			<option value="">所有狀態</option>
+			<c:forEach items="${CODE_TASK_STATUS}" var="c">
+				<option <c:if test="${c.id eq stat}">selected</c:if> value="${c.id}">${c.name}</option>
+				</c:forEach>
+		</select>
+		<button class="btn btn-danger" name="method:search">查詢</button> <a href="TaskDeal">清除查詢</a>
+		
+	</div>
   	<c:if test="${empty myApps}"><p>&nbsp;&nbsp;沒有工作單可顯示, 請改變查詢條件或重新申請工作單</p></c:if>
   	<c:if test="${!empty myApps}">
-	<display:table name="${myApps}" id="row" class="table" sort="list" excludedParams="*" pagesize="20" requestURI="TaskAdd">
+	<display:table name="${myApps}" id="row" class="table" sort="list" pagesize="30" requestURI="TaskAdd?method=search">
 		<display:column title="編號" property="Oid" sortable="true" style="white-space:nowrap;"/>
 		<display:column title="名稱" property="title" sortable="true" style="white-space:nowrap;"/>
 		<display:column title="單位" property="name" sortable="true" style="white-space:nowrap;"/>
@@ -123,14 +135,6 @@ $(function () {
 	</display:table>
 	</c:if>	
 </div>
-	
-		
-		
-		
-
-		  	
-		  	
-	
 </form>
 <!-- Modal -->
 <div class="modal fade" id="taskAppInfo">
@@ -160,7 +164,6 @@ function selUnit(no1, no2){
 			$('.class1'+no1).attr("checked", true);
 		}
 	}
-	
 }
 
 $(".tree li:has(ul)").find( "li" ).hide('fast');
@@ -172,21 +175,17 @@ function getTaskApp(Oid){
 		str="";
 		str="<table class='table'>";
 		$("#title").html(d.app.title);
-		$("#appInfo").html("");
-		
+		$("#appInfo").html("");		
 		str+="<tr><td nowrap>申請時間</td><td nowrap>"+d.app.sdate+"</td><td width='100%'></td></tr>";
 		str+="<tr><td nowrap>完成時間</td><td nowrap>"+d.app.edate+"</td><td width='100%'></td></tr>";
 		str+="<tr><td nowrap>申請人</td><td nowrap>"+d.app.cname+"</td><td width='100%'></td></tr>";
-		
 		if(d.app.taskFile.length>0){
 			str+="<tr><td>附件 </td><td colspan='2'><div class='btn-group'>"
 			for(i=0; i<d.app.taskFile.length; i++){
 				str+="<a class='btn btn-default' href='/eis/getFtpFile?file="+d.app.taskFile[i].file_name+"&path="+d.app.taskFile[i].path+"'><span class='glyphicon glyphicon-floppy-save' aria-hidden='true'></span> 附件"+(i+1)+"</a>";
 			}
-			str+="</div></td></tr>"
-			
+			str+="</div></td></tr>"			
 		}
-		
 		var f;
 		str+="<tr><td nowrap>申請單說明</td><td colspan='2'>"+d.app.note+"</td></tr>";
 		if(d.app.hist.length>0){
@@ -201,19 +200,11 @@ function getTaskApp(Oid){
 				str+="</td></tr>";
 			}			
 		}
-		
-		
 		str+="</table>";
-		$("#appInfo").append(str);
-		
-		
-    }, "json");
-	
+		$("#appInfo").append(str);		
+    }, "json");	
 }
-
 $(".dtpick" ).datepicker();
-
-
 </script>
 </body>
 </html>

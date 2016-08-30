@@ -9,9 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>工作單處理</title>
 	<script src="http://192.192.230.167/CIS/inc/js/plugin/ckeditor/ckeditor.js"></script>
-	<script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
-	
-	
+	<script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>	
 	<link href="/eis/inc/bootstrap/plugin/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet">
 	<script src="/eis/inc/bootstrap/plugin/bootstrap-fileinput/js/fileinput.min.js"></script>
 	<script src="/eis/inc/bootstrap/plugin/bootstrap-fileinput/js/fileinput_locale_zh-TW.js"></script>
@@ -48,6 +46,7 @@
 <h2>${task.title}</h2> 
 <p>申請時間: ${task.sdate}</p>
 <p>申請人: ${task.cname}</p> 
+
 </div>
 
 <form action="TaskDeal" method="post" enctype="multipart/form-data">
@@ -92,6 +91,7 @@
 
 
 <table class="table control-group info">
+	<c:if test="${task.status ne'H'}">
 	<tr>
 		<td>
 		<div class="input-group">
@@ -112,25 +112,45 @@
 		</div>
 		</td>
 	</tr>
+	</c:if>
 	<tr>
 		<td nowrap>
 		<textarea id="reply" name="reply"></textarea>
 		</td>
 	</tr>
 	<tr>
-		  			<td>
-		  			<label>附件</label>
-		  			<small>點選「瀏覽檔案」後按住Ctrl鍵可選擇多個檔案</small>
-		  			<input id="upload" name="fileUpload" multiple type="file" class="file-loading">
-		  			</td>
-		  		</tr>
+		<td>
+		<label>附件</label>
+		<small>點選「瀏覽檔案」後按住Ctrl鍵可選擇多個檔案</small>
+		<input id="upload" name="fileUpload" multiple type="file" class="file-loading">
+		</td>
+	</tr>
+	<c:if test="${task.status ne'H'}">
 	<tr>
 		<td nowrap>		
 		<button class="btn btn-danger" name="method:deal">立即處理</button>		
 		<a href="TaskDeal" class="btn">返回</a>
 		</td>
 	</tr>
-			
+	</c:if>
+	<c:if test="${task.status eq'H'}">
+	<tr>
+		<td nowrap>	
+		<select class="selectpicker" name="chk">
+			<option>請選擇審核結果</option>
+		  <optgroup label="確認工作單內容符合程序">
+		    <option value="N">送出工作單</option>
+		  </optgroup>
+		  <optgroup label="工作單內容不符合程序">
+		    <option value="R">退回工作單</option>
+		  </optgroup>
+		</select>
+
+		<button class="btn btn-danger" name="method:check">處理</button>		
+		<a href="TaskDeal" class="btn">返回</a>
+		</td>
+	</tr>
+	</c:if>	
 </table>
 </form>
 
@@ -163,7 +183,7 @@ $("#upload").fileinput({
 	    "</div>"
 	}
 	,allowedFileExtensions: ["doc", "docx", "xls", "xlsx", "pdf", "jpg", "txt"]
-	});
+});
 </script>
 </body>
 </html>
