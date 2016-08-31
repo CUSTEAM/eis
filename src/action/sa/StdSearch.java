@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,10 @@ public class StdSearch extends BaseAction{
 	 * 部制
 	 */
 	public String type;
+	
+	public String filter[];
+	
+	public String occur_status, occur_date_begin, occur_date_end, occur_year_begin, occur_year_end;
 	
 	/**
 	 * 校區 部制 學制 院 科系 年級 班級
@@ -126,6 +131,13 @@ public class StdSearch extends BaseAction{
 		+ "s.occur_cause=c53.idno AND c53.category='Cause')LEFT OUTER JOIN code5 c54 ON "
 		+ "s.ident_basic=c54.idno AND c53.category='Identity', CODE_DEPT d)LEFT OUTER JOIN wwpass w ON s.student_no=w.username WHERE "
 		+ "d.id=c.DeptNo");
+		if(!occur_status.equals(""))sb.append(" AND s.occur_status='"+occur_status+"'");
+		if(!occur_date_begin.equals(""))sb.append(" AND s.occur_date>='"+occur_date_begin+"'");
+		if(!occur_date_end.equals(""))sb.append(" AND s.occur_date<='"+occur_date_end+"'");
+		if(!occur_year_begin.equals(""))sb.append(" AND s.occur_year>='"+occur_year_begin+"'");
+		if(!occur_year_end.equals(""))sb.append(" AND s.occur_year<='"+occur_year_end+"'");
+		
+		
 		if(!cno.equals(""))sb.append(" AND c.CampusNo='"+cno+"'");			
 		if(!stno.equals(""))sb.append(" AND c.SchoolType='"+stno+"'");
 		if(!sno.equals(""))sb.append(" AND c.SchoolNo='"+sno+"'");
@@ -359,161 +371,195 @@ public class StdSearch extends BaseAction{
 		out.println ("  <Table ss:ExpandedColumnCount='39' ss:ExpandedRowCount='"+(list.size()+999)+"' x:FullColumns='1'");
 		out.println ("   x:FullRows='1' ss:DefaultColumnWidth='54' ss:DefaultRowHeight='16.5'>");
 		out.println ("   <Column ss:StyleID='s64' ss:Span='38'/>");
+		
+		
+		boolean col[]=new boolean[40];
+		for(int i=0; i<filter.length; i++){			
+			col[Integer.parseInt(filter[i])]=true;
+		}
+		
+		
 		out.println ("   <Row ss:Height='18.75' ss:StyleID='s63'>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>系所名稱</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>班級代碼</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>班級名稱</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>姓名</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>學號</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>性別</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身分證字號</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>出生日期</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>入學年月</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>前學程畢業</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身份</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>組別</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>出生省縣</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>出生鄉鎮市</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>電話</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>行動電話</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>現居郵編</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>現居地址</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>戶籍郵編</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>戶籍地址</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>戶籍里</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業學校代碼</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業學校名稱</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業科系</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業狀態</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>家長姓名</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更學年</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更學期</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更狀態</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更原因</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更日期</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更文號</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業號</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>輔系/雙主修</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>輔系/雙主修科系</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>電子郵件</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身份備註</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>英譯姓名</Data></Cell>");
-		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>卡號</Data></Cell>");
+		
+		if(col[0]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>系所名稱</Data></Cell>");
+		if(col[1]==true){
+			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>班級代碼</Data></Cell>");
+			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>班級名稱</Data></Cell>");
+		}
+		if(col[2]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>姓名</Data></Cell>");
+		if(col[3]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>學號</Data></Cell>");
+		if(col[4]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>性別</Data></Cell>");
+		if(col[5]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身分證字號</Data></Cell>");
+		if(col[6]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>出生日期</Data></Cell>");
+		if(col[7]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>入學年月</Data></Cell>");
+		if(col[8]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>前學程畢業</Data></Cell>");
+		if(col[9]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身份</Data></Cell>");
+		if(col[10]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>組別</Data></Cell>");
+		if(col[11]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>出生省縣</Data></Cell>");
+		if(col[12]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>出生鄉鎮市</Data></Cell>");
+		if(col[13]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>電話</Data></Cell>");
+		if(col[14]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>行動電話</Data></Cell>");
+		if(col[15]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>現居郵編</Data></Cell>");
+		if(col[16]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>現居地址</Data></Cell>");
+		if(col[17]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>戶籍郵編</Data></Cell>");
+		if(col[18]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>戶籍地址</Data></Cell>");
+		if(col[19]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>戶籍里</Data></Cell>");
+		if(col[20]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業學校代碼</Data></Cell>");
+		if(col[21]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業學校名稱</Data></Cell>");
+		if(col[22]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業科系</Data></Cell>");
+		if(col[23]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業狀態</Data></Cell>");
+		if(col[24]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>家長姓名</Data></Cell>");
+		if(col[25]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更學年</Data></Cell>");
+		if(col[26]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更學期</Data></Cell>");
+		if(col[27]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更狀態</Data></Cell>");
+		if(col[28]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更原因</Data></Cell>");
+		if(col[29]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更日期</Data></Cell>");
+		if(col[30]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>最後變更文號</Data></Cell>");
+		if(col[31]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢業號</Data></Cell>");
+		if(col[32]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>輔系/雙主修</Data></Cell>");
+		//if(col[33]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>輔系/雙主修科系</Data></Cell>");
+		if(col[33]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>電子郵件</Data></Cell>");
+		if(col[34]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身份備註</Data></Cell>");
+		if(col[35]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>英譯姓名</Data></Cell>");
+		if(col[36]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>卡號</Data></Cell>");
+		
 		out.println ("   </Row>");
 		
 		for(int i=0; i<list.size(); i++){
 			out.println ("   <Row ss:Height='18.75'>");
-			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("DeptName") + "</Data></Cell>");//系所名稱
-			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("depart_class") + "</Data></Cell>");//班級代碼
-			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("ClassName") + "</Data></Cell>");//班級名稱
-			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("student_name") + "</Data></Cell>");//姓名
-			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("student_no") + "</Data></Cell>");//學號
+			if(col[0]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("DeptName") + "</Data></Cell>");//系所名稱
+			if(col[1]==true){
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("depart_class") + "</Data></Cell>");//班級代碼
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("ClassName") + "</Data></Cell>");//班級名稱
+			}
 			
+			if(col[2]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("student_name") + "</Data></Cell>");//姓名
+			if(col[3]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("student_no") + "</Data></Cell>");//學號
+			
+			
+			if(col[4]==true)
 			if (list.get(i).get("sex").equals("1")) {//性別
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>男</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>女</Data></Cell>");
 			}
 						
-			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("idno") + "</Data></Cell>");//身分證字號
-			out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("birthday") + "</Data></Cell>");//出生日期
+			if(col[5]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("idno") + "</Data></Cell>");//身分證字號
+			if(col[6]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("birthday") + "</Data></Cell>");//出生日期
 			
+			if(col[7]==true)
 			if (list.get(i).get("entrance") != null) {//入學年月
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("entrance") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[8]==true)
 			if (list.get(i).get("gradyear") != null) {//前學程畢業
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("gradyear") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[9]==true)
 			if (list.get(i).get("name") != null) {//身份
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("name") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[10]==true)
 			if (list.get(i).get("team") != null) {//組別
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("team") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[11]==true)
 			if (list.get(i).get("province") != null) {//出生省縣
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("province") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[12]==true)
 			if (list.get(i).get("county") != null) {//出生鄉鎮市
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("county") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[13]==true)
 			if (list.get(i).get("telephone") != null) {//電話
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("telephone") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[14]==true)
 			if (list.get(i).get("CellPhone") != null) {//電話
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("CellPhone") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[15]==true)
 			if (list.get(i).get("curr_post") != null) {
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("curr_post") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[16]==true)
 			if (list.get(i).get("curr_addr") != null) {
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("curr_addr") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[17]==true)
 			if (list.get(i).get("perm_post") != null) {
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("perm_post") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
-
+			
+			if(col[18]==true)
 			if (list.get(i).get("perm_addr") != null) {
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("perm_addr") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[19]==true)
 			if (list.get(i).get("liner") != null) {
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("liner") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[20]==true)
 			if (list.get(i).get("schl_code") != null) {//畢業學校代碼
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("schl_code") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[21]==true)
 			if (list.get(i).get("schl_name") != null) {//畢業學校名稱
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("schl_name") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[22]==true)
 			if (list.get(i).get("grad_dept") != null) {//畢業科系
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("grad_dept") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[23]==true)
 			if (list.get(i).get("gradu_status") != null) {//畢業狀態
 				if (list.get(i).get("gradu_status").equals("1")) {
 					out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>畢</Data></Cell>");
@@ -524,66 +570,77 @@ public class StdSearch extends BaseAction{
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[24]==true)
 			if (list.get(i).get("parent_name") != null) {//家長姓名
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("parent_name") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[25]==true)
 			if (list.get(i).get("occur_year") != null) {//最後變更學年
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_year") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[26]==true)
 			if (list.get(i).get("occur_term") != null) {//
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_term") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[27]==true)
 			if (list.get(i).get("status_name") != null) {//最後變更狀態
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("status_name") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[28]==true)
 			if (list.get(i).get("caurse_name") != null) {//最後變更原因
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("caurse_name") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[29]==true)
 			if (list.get(i).get("occur_date") != null) {//最後變更日期
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_date") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[30]==true)
 			if (list.get(i).get("occur_docno") != null) {//最後變更文號
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_docno") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[31]==true)
 			if (list.get(i).get("occur_graduate_no") != null) {//畢業號
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("occur_graduate_no") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			/*if(col[32]==true)
 			if (list.get(i).get("ExtraStatus") != null) {//
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("ExtraStatus") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
-			}
+			}*/
 			
+			if(col[32]==true)
 			if (list.get(i).get("ExtraDept") != null) {//
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("ExtraDept") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[33]==true)
 			if (list.get(i).get("Email") != null) {//電子郵件
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("Email") + "</Data></Cell>");
 			} else {
@@ -591,19 +648,22 @@ public class StdSearch extends BaseAction{
 			}
 			
 			//身份備註
-			out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			if(col[34]==true)out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			
+			if(col[35]==true)
 			if (list.get(i).get("student_ename") != null) {//
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("student_ename") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			
+			if(col[36]==true)
 			if (list.get(i).get("inco") != null) {
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("inco") + "</Data></Cell>");
 			} else {
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
+			
 			out.println ("   </Row>");
 		}
 		

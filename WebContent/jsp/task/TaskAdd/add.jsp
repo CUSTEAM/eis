@@ -273,7 +273,7 @@ function getForm(Oid){
    		$("#infoFormTitle").text(d.list[0].title);
    		str="";
    		if(d.files.length>0){
-   			str+="<div class='alert alert-danger'>此項工作需附帶標準格式工作單，請依格式描述工作主旨，並在附件中加入填妥的檔案 ";
+   			str+="<div class='alert alert-danger'>此項工作需附帶標準格式工作單，請在附件中加入填寫完成的檔案 ";
    			for(i=0; i<d.files.length; i++){
    				str+="&nbsp;<a href='/eis/getFtpFile?file="+d.files[i].file_name+"&path="+d.files[i].path+"'>申請文件"+(i+1)+"</a>, ";
    	   		}
