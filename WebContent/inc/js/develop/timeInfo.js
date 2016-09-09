@@ -41,7 +41,7 @@ function draw(d, name, type, val){
 		}
 	}
 	obj+="</tr>";
-	for(i=1; i<=14; i++){
+	for(i=1; i<=16; i++){
 		obj+="<tr height='60'>";
 		obj+="<td>第<br>"+i+"<br>節</td>";
 		for(j=1; j<=7; j++){
