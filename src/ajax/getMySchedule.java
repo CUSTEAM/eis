@@ -34,8 +34,8 @@ public class getMySchedule extends BaseAction{
 		response.setContentType("text/xml; charset=UTF-8");
 		PrintWriter out=response.getWriter();
 		out.println("<data>");				
-		//List<Map>list=new ArrayList();
-		//掛名課程
+		List<Map>list=new ArrayList();
+		//課程
 		/*List<Map>list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
 		"dc.*, cl.ClassName, cs.chi_name FROM Dtime d, Csno cs, Class cl, Dtime_class dc " +
 		"WHERE d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND d.Oid=dc.Dtime_oid AND " +
@@ -45,15 +45,16 @@ public class getMySchedule extends BaseAction{
 		+ "Csno cs, Class cl, Dtime_class dc WHERE dt.Dtime_oid=d.Oid AND d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND "
 		+ "d.Oid=dc.Dtime_oid AND d.Sterm='"+getContext().getAttribute("school_term")+"' AND dt.teach_id='"+getSession().getAttribute("userid")+"'"));
 		*/
-		//掛名課程
-				List<Map>list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
-				"dc.*, cl.ClassName, cs.chi_name FROM Dtime d, Csno cs, Class cl, Dtime_class dc " +
-				"WHERE d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND d.Oid=dc.Dtime_oid AND dc.begin<=10 AND dc.week<=5 AND " +
-				"d.Sterm='"+getContext().getAttribute("school_term")+"' AND d.techid='"+getSession().getAttribute("userid")+"'");
-				//多教師課程
-				list.addAll(df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, dc.*, cl.ClassName, cs.chi_name FROM Dtime_teacher dt, Dtime d, "
-				+ "Csno cs, Class cl, Dtime_class dc WHERE dt.Dtime_oid=d.Oid AND d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND "
-				+ "d.Oid=dc.Dtime_oid AND d.Sterm='"+getContext().getAttribute("school_term")+"' AND dt.teach_id='"+getSession().getAttribute("userid")+"'"));
+		//課程-排除夜間與假日
+		/*List<Map>list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
+		"dc.*, cl.ClassName, cs.chi_name FROM Dtime d, Csno cs, Class cl, Dtime_class dc " +
+		"WHERE d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND d.Oid=dc.Dtime_oid AND dc.begin<=10 AND dc.week<=5 AND " +
+		"d.Sterm='"+getContext().getAttribute("school_term")+"' AND d.techid='"+getSession().getAttribute("userid")+"'");
+		//多教師課程
+		list.addAll(df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, dc.*, cl.ClassName, cs.chi_name FROM Dtime_teacher dt, Dtime d, "
+		+ "Csno cs, Class cl, Dtime_class dc WHERE dt.Dtime_oid=d.Oid AND d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND "
+		+ "d.Oid=dc.Dtime_oid AND d.Sterm='"+getContext().getAttribute("school_term")+"' AND dt.teach_id='"+getSession().getAttribute("userid")+"'"));
+		*/
 		Calendar begin=Calendar.getInstance();
 		Calendar show;
 		begin.setTime(school_term_begin);
