@@ -11,6 +11,8 @@
 <script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
 <script src="inc/js/autoComplete.js"></script>
+<script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/i18n/defaults-zh_TW.min.js"></script>
+
 </head>
 <body>
    
@@ -44,19 +46,7 @@
 				</select>
 			
 			
-				<select data-width="auto" name="module" class="form-control selectpicker " data-size="auto">
-					<c:forEach items="${sysmenu}" var="u">					
-					<option 
-					data-content="${u.name} 
-					<span class='label label-default'>${u.sname}</span> 
-					<span class='label label-danger'>${u.moduleCnt}</span>" 
-					<c:if test="${u.id eq unit}">selected</c:if> value="${u.id}">
-					</option>					
-					</c:forEach>
-				</select>
-			
-				<input type="text" disabled placeholder="教師完整姓名或編號" class="form-control techid" name="emplOid" id="emplOid" value="${emplOid}" onClick="this.value='';" autocomplete="off" data-provide="typeahead"/>
-			    <input type="text" disabled placeholder="學生完整姓名或學號" class="form-control techid" name="emplOid" id="emplOid" value="${emplOid}" onClick="this.value='';" autocomplete="off" data-provide="typeahead"/>
+				
 			    <div class="btn-group" role="group" aria-label="...">
 			    <button class="form-control btn btn-danger" type="submit" name="method:chang">模擬</button>
 			    <button class="form-control btn btn-default" type="submit" name="method:search">查詢</button>

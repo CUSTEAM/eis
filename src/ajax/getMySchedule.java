@@ -2,6 +2,7 @@ package ajax;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,8 @@ import action.BaseAction;
  */
 public class getMySchedule extends BaseAction{
 	
-	public String execute()throws Exception {			
+	public String execute()throws Exception {		
+		
 		//可用變數
 		String week;		
 		String start;
@@ -32,9 +34,9 @@ public class getMySchedule extends BaseAction{
 		response.setContentType("text/xml; charset=UTF-8");
 		PrintWriter out=response.getWriter();
 		out.println("<data>");				
-		
+		//List<Map>list=new ArrayList();
 		//掛名課程
-		List<Map>list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
+		/*List<Map>list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
 		"dc.*, cl.ClassName, cs.chi_name FROM Dtime d, Csno cs, Class cl, Dtime_class dc " +
 		"WHERE d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND d.Oid=dc.Dtime_oid AND " +
 		"d.Sterm='"+getContext().getAttribute("school_term")+"' AND d.techid='"+getSession().getAttribute("userid")+"'");
@@ -42,7 +44,16 @@ public class getMySchedule extends BaseAction{
 		list.addAll(df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, dc.*, cl.ClassName, cs.chi_name FROM Dtime_teacher dt, Dtime d, "
 		+ "Csno cs, Class cl, Dtime_class dc WHERE dt.Dtime_oid=d.Oid AND d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND "
 		+ "d.Oid=dc.Dtime_oid AND d.Sterm='"+getContext().getAttribute("school_term")+"' AND dt.teach_id='"+getSession().getAttribute("userid")+"'"));
-		
+		*/
+		//掛名課程
+				List<Map>list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
+				"dc.*, cl.ClassName, cs.chi_name FROM Dtime d, Csno cs, Class cl, Dtime_class dc " +
+				"WHERE d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND d.Oid=dc.Dtime_oid AND dc.begin<=10 AND dc.week<=5 AND " +
+				"d.Sterm='"+getContext().getAttribute("school_term")+"' AND d.techid='"+getSession().getAttribute("userid")+"'");
+				//多教師課程
+				list.addAll(df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, dc.*, cl.ClassName, cs.chi_name FROM Dtime_teacher dt, Dtime d, "
+				+ "Csno cs, Class cl, Dtime_class dc WHERE dt.Dtime_oid=d.Oid AND d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND "
+				+ "d.Oid=dc.Dtime_oid AND d.Sterm='"+getContext().getAttribute("school_term")+"' AND dt.teach_id='"+getSession().getAttribute("userid")+"'"));
 		Calendar begin=Calendar.getInstance();
 		Calendar show;
 		begin.setTime(school_term_begin);
