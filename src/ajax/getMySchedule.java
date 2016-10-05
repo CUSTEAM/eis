@@ -95,8 +95,9 @@ public class getMySchedule extends BaseAction{
 		}		
 		//留校時間, 一五以64, 六日以72的時間為準
 		list=df.sqlGet("SELECT '1'as CampusNo,  (if(e.week=6||e.week=7,'72','64'))as SchoolNo, e.week, e.period as begin, "
-				+ "e.period as end, e.kind as ClassName, 'Office Hour'as chi_name FROM Empl_stay_info e WHERE e.idno='"+
-				getSession().getAttribute("userid")+"'");
+		+ "e.period as end, e.kind as ClassName, 'Office Hour'as chi_name FROM Empl_stay_info e WHERE e.idno='"+
+		getSession().getAttribute("userid")+"' AND e.school_year='"
+		+getContext().getAttribute("school_year")+"'AND e.school_term='"+getContext().getAttribute("school_term")+"'");
 		
 		for(int i=0; i<list.size(); i++){
 			show=Calendar.getInstance();			
