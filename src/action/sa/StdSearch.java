@@ -366,6 +366,36 @@ public class StdSearch extends BaseAction{
 		out.println ("     ss:Color='#000000'/>");
 		out.println ("   </Borders>");
 		out.println ("  </Style>");
+		out.println ("<Style ss:ID='s68'>");
+		out.println ("   <Alignment ss:Horizontal='Center' ss:Vertical='Center'/>");
+		out.println ("   <Borders>");
+		out.println ("    <Border ss:Position='Bottom' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Left' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Right' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Top' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("   </Borders>");
+		out.println ("   <Font ss:FontName='微軟正黑體' x:CharSet='136' x:Family='Swiss' ss:Size='14'");
+		out.println ("    ss:Color='#000000'/>");
+		out.println ("   <Interior/>");
+		out.println ("   <NumberFormat ss:Format='[TWN][$-404]y/m/d;@'/>");
+		out.println ("  </Style>");
+		out.println ("  <Style ss:ID='s69'>");
+		out.println ("   <Borders>");
+		out.println ("    <Border ss:Position='Bottom' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Left' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Right' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("    <Border ss:Position='Top' ss:LineStyle='Continuous' ss:Weight='1'");
+		out.println ("     ss:Color='#000000'/>");
+		out.println ("   </Borders>");
+		out.println ("   <NumberFormat ss:Format='[TWN][$-404]y/m/d;@'/>");
+		out.println ("  </Style>");
 		out.println (" </Styles>");
 		out.println (" <Worksheet ss:Name='工作表1'>");
 		out.println ("  <Table ss:ExpandedColumnCount='39' ss:ExpandedRowCount='"+(list.size()+999)+"' x:FullColumns='1'");
@@ -445,7 +475,8 @@ public class StdSearch extends BaseAction{
 			}
 						
 			if(col[5]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("idno") + "</Data></Cell>");//身分證字號
-			if(col[6]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("birthday") + "</Data></Cell>");//出生日期
+			//ss68 民國年格式
+			if(col[6]==true)out.println ("    <Cell ss:StyleID='s68'><Data ss:Type='DateTime'>"+list.get(i).get("birthday") + "</Data></Cell>");//出生日期
 			
 			if(col[7]==true)
 			if (list.get(i).get("entrance") != null) {//入學年月
