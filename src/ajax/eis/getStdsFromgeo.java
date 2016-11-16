@@ -17,24 +17,35 @@ public class getStdsFromgeo extends BaseAction{
 	}
 
 	public String execute(){
-		if(request.getParameter("cid")!=null){
-			if(request.getParameter("cid").length()>0){
-				this.setList(
-					df.sqlGet("SELECT r.* FROM stmd s, Recruit_school r, Class c WHERE "
-					+ "r.lat IS NOT NULL AND s.schl_code=r.no AND s.depart_class=c.ClassNo AND c.InstNo='"+request.getParameter("cid")+"'"));
-				return SUCCESS;
-			}
-			
+		StringBuilder sql;
+		if(request.getParameter("cluster")!=null){
+			sql=new StringBuilder("SELECT r.lat, r.lng, r.name FROM stmd s, Recruit_school r, Class c WHERE r.geocode IS NOT NULL AND s.schl_code=r.no AND s.depart_class=c.ClassNo ");
+			if(!request.getParameter("cno").equals(""))sql.append("AND c.CampusNo='"+request.getParameter("cno")+"'");
+			if(!request.getParameter("stno").equals(""))sql.append("AND c.SchoolType='"+request.getParameter("stno")+"'");
+			if(!request.getParameter("sno").equals(""))sql.append("AND c.SchoolNo='"+request.getParameter("sno")+"'");
+			if(!request.getParameter("cono").equals(""))sql.append("AND c.InstNo='"+request.getParameter("cono")+"'");
+			if(!request.getParameter("dno").equals(""))sql.append("AND c.DeptNo='"+request.getParameter("dno")+"'");
+			if(!request.getParameter("gno").equals(""))sql.append("AND c.Grade='"+request.getParameter("gno")+"'");
+			if(!request.getParameter("zno").equals(""))sql.append("AND c.SeqNo='"+request.getParameter("zno")+"'");
+			this.setList(df.sqlGet(sql.toString()));	
+			return SUCCESS;
 		}
-		if(request.getParameter("did")!=null){
-			if(request.getParameter("did").length()>0){	
-				this.setList(
-						df.sqlGet("SELECT r.* FROM stmd s, Recruit_school r, Class c WHERE "
-								+ "r.lat IS NOT NULL AND s.schl_code=r.no AND s.depart_class=c.ClassNo AND c.DeptNo='"+request.getParameter("did")+"'"));	
-				return SUCCESS;
-			}
-		}	
+		
+		
+		
+		sql=new StringBuilder("SELECT COUNT(*)as cnt, r.lat, r.lng, r.name FROM stmd s, Recruit_school r, Class c WHERE r.geocode IS NOT NULL AND s.schl_code=r.no AND s.depart_class=c.ClassNo ");
+		if(!request.getParameter("cno").equals(""))sql.append("AND c.CampusNo='"+request.getParameter("cno")+"'");
+		if(!request.getParameter("stno").equals(""))sql.append("AND c.SchoolType='"+request.getParameter("stno")+"'");
+		if(!request.getParameter("sno").equals(""))sql.append("AND c.SchoolNo='"+request.getParameter("sno")+"'");
+		if(!request.getParameter("cono").equals(""))sql.append("AND c.InstNo='"+request.getParameter("cono")+"'");
+		if(!request.getParameter("dno").equals(""))sql.append("AND c.DeptNo='"+request.getParameter("dno")+"'");
+		if(!request.getParameter("gno").equals(""))sql.append("AND c.Grade='"+request.getParameter("gno")+"'");
+		if(!request.getParameter("zno").equals(""))sql.append("AND c.SeqNo='"+request.getParameter("zno")+"'");
+		sql.append("GROUP BY r.no");		
+		this.setList(df.sqlGet(sql.toString()));		
 		return SUCCESS;
 	}
+	
+	
 
 }

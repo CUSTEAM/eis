@@ -74,7 +74,7 @@ public class putStdimage extends BaseAction {
 		}
 		
 		String fullpath=getContext().getRealPath("/tmp" )+"/";
-		System.out.println(fullpath);
+		//System.out.println(fullpath);
 		
 		//來自學生自行上傳
 		if(myStdNo!=null){	

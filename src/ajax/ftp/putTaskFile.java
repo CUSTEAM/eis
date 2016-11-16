@@ -78,7 +78,7 @@ public class putTaskFile extends BaseAction {
 
 	@Override
 	public String execute() throws IOException {
-		System.out.println("work?");
+		//System.out.println("work?");
 		/*Map m=new HashMap();
         files=new Object[1];
 		String extent=bio.getExtention(fileName);

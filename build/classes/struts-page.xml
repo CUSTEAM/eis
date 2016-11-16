@@ -53,12 +53,7 @@
 			<result name="stdaddr">/jsp/eis/Outlook/stdaddr.jsp</result>
 			<result name="stdlost">/jsp/eis/Outlook/stdlost.jsp</result>
 			<result name="merge">/jsp/eis/Outlook/merge.jsp</result>
-		</action>	
-		
-		
-		
-		
-			
+		</action>			
 	</package>
 	
 	<package name="account" extends="abstract_struts" namespace="/">		
