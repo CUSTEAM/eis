@@ -9,6 +9,13 @@
 		<action name="Aqansw" class="action.calendar.Aqansw">
 			<result>/jsp/Aqansw.jsp</result>
 		</action>
+		
+		<action name="SeminarReg" class="action.calendar.SeminarReg">
+			<result>/jsp/SeminarReg.jsp</result>
+		</action>
+		
+		
+		
 	</package>
 	
 	<package name="aq" extends="abstract_struts" namespace="/">				

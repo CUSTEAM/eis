@@ -67,7 +67,9 @@
 			</ul>
 			<c:if test="${!empty cookie['unit']}">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a href="/eis/Logout">登出 </a></li>
+				<li class="dropdown"><a href="/eis/SeminarReg">活動報名</a></li>
+			
+				<li class="dropdown"><a href="/eis/Logout">登出</a></li>
 			</ul>
 			</c:if>
 		</div>

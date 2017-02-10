@@ -1,6 +1,8 @@
 package service.interceptor;
 
 import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -53,11 +55,11 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
     		//return null; 
 	    	
 	    	 
+	    	System.out.println(request.getServletPath());			
+			//System.out.println("full url:"+request.getRequestURL());
+	    	//System.out.println("server url:"+request.getServletPath());
 	    	
 	    	
-			
-			System.out.println("full url:"+request.getRequestURL());
-	    	System.out.println("server url:"+request.getServletPath());
 			
 			System.out.println("-------session--------");
 			Enumeration<String>enums = request.getSession().getAttributeNames();
@@ -74,6 +76,25 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 			for(int i=0; i<c.length; i++){
 				System.out.println(c[i].getName()+":"+c[i].getValue());
 			}
+			
+			
+			
+			List<Map>m=(List<Map>) request.getServletContext().getAttribute("sysmenu");
+	    	List<Map>f;
+	    	List<Map>r;
+	    	for(int i=0; i<m.size(); i++){
+	    		System.out.println(m.get(i).get("name"));
+	    		//f=(List<Map>) m.get(i).get("menu");
+	    		r=(List<Map>) m.get(i).get("rule");
+	    		/*for(int j=0; j<f.size(); j++){
+	    			System.out.println(f.get(j));
+	    		}*/
+	    		for(int j=0; j<r.size(); j++){
+	    			System.out.println(r.get(j));
+	    		}
+	    	}
+			
+			
 	    	return invocation.invoke();
 	    	
 	    }

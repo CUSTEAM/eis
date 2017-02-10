@@ -19,7 +19,7 @@ public class autoCompleteCode1 extends BaseAction{
 		"(no LIKE '"+request.getParameter("nameno")+"%' || name LIKE '%"+request.getParameter("nameno")+"%') LIMIT 10");
 		list=new Object[tmp.size()];
 		for(int i=0; i<tmp.size(); i++){
-			list[i]=((Map)tmp.get(i)).get("name");
+			list[i]=tmp.get(i).get("name");
 		}
 		
         return SUCCESS;               

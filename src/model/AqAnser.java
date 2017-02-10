@@ -7,25 +7,15 @@ package model;
 public class AqAnser implements java.io.Serializable {
 
 	// Fields
-
 	private Integer oid;
-
 	private String uid;
-
 	private String uid2;
-
 	private String anser;
-
 	private String idno;
-
 	private String category;
-
 	private String unit;
-
 	private String years;
-
 	// Constructors
-
 	/** default constructor */
 	public AqAnser() {
 	}
@@ -43,7 +33,6 @@ public class AqAnser implements java.io.Serializable {
 	}
 
 	// Property accessors
-
 	public Integer getOid() {
 		return this.oid;
 	}

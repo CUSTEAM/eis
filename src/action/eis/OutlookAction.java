@@ -17,8 +17,7 @@ import action.BaseAction;
  * 圖表展示
  * @author shawn
  * @category TODO: 核心能力指標
- * TODO 消耗過多客戶端效能，需修改為單一項目檢視
- * 
+ * ex: data:{cno:$("#").val(), stno:$("#").val(), sno:$("#").val(), cono:$("#").val(), dno:$("#").val(), gno:$("#").val(), zno:$("#").val()},
  */
 public class OutlookAction extends BaseAction{
 	
@@ -130,11 +129,8 @@ public class OutlookAction extends BaseAction{
 		request.setAttribute("stdsall", df.sqlGetInt("SELECT COUNT(*)FROM stmd"));
 		request.setAttribute("stdsnoschl", df.sqlGetInt("SELECT COUNT(*)FROM stmd s, Recruit_school r WHERE s.schl_code=r.no"));
 		request.setAttribute("schools", df.sqlGet("SELECT COUNT(*)as cnt, r.lat, r.lng, r.name FROM stmd s, Recruit_school r WHERE r.lat IS NOT NULL AND s.schl_code=r.no GROUP BY r.no"));
-	
 	}
 	
-	
-	//data:{cno:$("#").val(), stno:$("#").val(), sno:$("#").val(), cono:$("#").val(), dno:$("#").val(), gno:$("#").val(), zno:$("#").val()},
 	public String cno, stno, sno, cono, dno, gno, zno;
 	//來源校表
 	public String stdFromPrint() throws IOException{
