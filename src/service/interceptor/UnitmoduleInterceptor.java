@@ -26,8 +26,10 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 	    public void init() {}
 	    public String intercept(ActionInvocation invocation) throws Exception {  
 	        
-	    	HttpSession session=ServletActionContext.getRequest().getSession();
-	    	HttpServletRequest request=ServletActionContext.getRequest();	    	
+	    	
+	    	
+	    	//HttpSession session=ServletActionContext.getRequest().getSession();
+	    	//HttpServletRequest request=ServletActionContext.getRequest();	    	
 	    	//登入與登出功能不作攔截
 	    	/*if(invocation.getAction().getClass().getName().indexOf("Log")>=0){	    		
 	        	return invocation.invoke();
@@ -55,12 +57,12 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
     		//return null; 
 	    	
 	    	 
-	    	System.out.println(request.getServletPath());			
+	    	//System.out.println(request.getServletPath());			
 			//System.out.println("full url:"+request.getRequestURL());
 	    	//System.out.println("server url:"+request.getServletPath());
 	    	
 	    	
-			
+			/*
 			System.out.println("-------session--------");
 			Enumeration<String>enums = request.getSession().getAttributeNames();
 			String name;
@@ -86,16 +88,16 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 	    		System.out.println(m.get(i).get("name"));
 	    		//f=(List<Map>) m.get(i).get("menu");
 	    		r=(List<Map>) m.get(i).get("rule");
-	    		/*for(int j=0; j<f.size(); j++){
-	    			System.out.println(f.get(j));
-	    		}*/
+	    		
 	    		for(int j=0; j<r.size(); j++){
 	    			System.out.println(r.get(j));
 	    		}
 	    	}
 			
 			
-	    	return invocation.invoke();
 	    	
+	    	*/
+	    	
+	    	return invocation.invoke();
 	    }
 	} 	
