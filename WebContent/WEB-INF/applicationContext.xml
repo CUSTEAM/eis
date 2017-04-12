@@ -21,8 +21,8 @@
             <props>
                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                <prop key="hibernate.show_sql">false</prop>
-			   <prop key="hibernate.cache.provider_class">com.opensymphony.oscache.hibernate.OSCacheProvider</prop>
-			   <prop key="hibernate.cache.use_query_cache">true</prop>
+			   <!-- prop key="hibernate.cache.provider_class">com.opensymphony.oscache.hibernate.OSCacheProvider</prop-->
+			   <!-- prop key="hibernate.cache.use_query_cache">true</prop-->
 	     	</props>
         </property>     
         <property name="mappingResources">

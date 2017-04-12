@@ -164,7 +164,7 @@ public class ChangeTermAction extends BaseAction{
 	 */
 	private String clearColumn(String term){
 		//清除Dtime
-		df.exSql("UPDATE Dtime SET techid=null,samples=0,effsamples=0 WHERE Sterm='"+term+"'");	
+		df.exSql("UPDATE Dtime SET techid=null,samples=0,effsamples=0,pid=0 WHERE Sterm='"+term+"'");	
 		//清除Dtime_class
 		df.exSql("DELETE FROM Dtime_class WHERE Dtime_oid IN(SELECT Oid FROM Dtime WHERE Sterm='"+term+"')");
 		df.exSql("DELETE FROM Seld WHERE Dtime_oid IN(SELECT Oid FROM Dtime WHERE Sterm='"+term+"')");
