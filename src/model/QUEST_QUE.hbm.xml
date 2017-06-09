@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="model.QUEST_QUE" table="QUEST_QUE" catalog="CIS">
+        <id name="Oid" type="java.lang.Integer">
+            <column name="Oid" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="value" type="java.lang.String">
+            <column name="value" />
+        </property>
+        
+        <property name="category" type="java.lang.String">
+            <column name="category" />
+        </property>        
+        
+        <property name="Qid" type="java.lang.Integer">
+            <column name="Qid" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

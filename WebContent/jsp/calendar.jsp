@@ -60,7 +60,7 @@
 			scheduler.config.xml_date = "%Y-%m-%d %H:%i";
 			scheduler.config.default_date = "%m月%d日";
 			scheduler.config.first_hour="8";
-			scheduler.config.last_hour="19";
+			scheduler.config.last_hour="18";
 			scheduler.init('myCalendar', new Date(), "week");			
 			scheduler.config.cascade_event_display = true;			
 			scheduler.attachEvent("onEventAdded", addEvent);

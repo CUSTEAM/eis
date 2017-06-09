@@ -2,7 +2,6 @@ package ajax;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -16,8 +15,7 @@ import action.BaseAction;
  */
 public class getMySchedule extends BaseAction{
 	
-	public String execute()throws Exception {		
-		
+	public String execute()throws Exception {			
 		//可用變數
 		String week;		
 		String start;
@@ -33,41 +31,52 @@ public class getMySchedule extends BaseAction{
 		
 		response.setContentType("text/xml; charset=UTF-8");
 		PrintWriter out=response.getWriter();
-		out.println("<data>");				
-		List<Map>list=new ArrayList();
-		//課程
-		/*List<Map>list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
-		"dc.*, cl.ClassName, cs.chi_name FROM Dtime d, Csno cs, Class cl, Dtime_class dc " +
-		"WHERE d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND d.Oid=dc.Dtime_oid AND " +
-		"d.Sterm='"+getContext().getAttribute("school_term")+"' AND d.techid='"+getSession().getAttribute("userid")+"'");
-		//多教師課程
-		list.addAll(df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, dc.*, cl.ClassName, cs.chi_name FROM Dtime_teacher dt, Dtime d, "
-		+ "Csno cs, Class cl, Dtime_class dc WHERE dt.Dtime_oid=d.Oid AND d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND "
-		+ "d.Oid=dc.Dtime_oid AND d.Sterm='"+getContext().getAttribute("school_term")+"' AND dt.teach_id='"+getSession().getAttribute("userid")+"'"));
-		*/
-		//課程-排除夜間與假日
-		/*List<Map>list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
-		"dc.*, cl.ClassName, cs.chi_name FROM Dtime d, Csno cs, Class cl, Dtime_class dc " +
-		"WHERE d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND d.Oid=dc.Dtime_oid AND dc.begin<=10 AND dc.week<=5 AND " +
-		"d.Sterm='"+getContext().getAttribute("school_term")+"' AND d.techid='"+getSession().getAttribute("userid")+"'");
-		//多教師課程
-		list.addAll(df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, dc.*, cl.ClassName, cs.chi_name FROM Dtime_teacher dt, Dtime d, "
-		+ "Csno cs, Class cl, Dtime_class dc WHERE dt.Dtime_oid=d.Oid AND d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND "
-		+ "d.Oid=dc.Dtime_oid AND d.Sterm='"+getContext().getAttribute("school_term")+"' AND dt.teach_id='"+getSession().getAttribute("userid")+"'"));
-		*/
+		
 		Calendar begin=Calendar.getInstance();
 		Calendar show;
 		begin.setTime(school_term_begin);
+		out.println("<data>");				
+		
+		List<Map>list;
+		
+		//掛名課程
+		/*list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
+		"dc.*, cl.ClassName, cs.chi_name FROM Dtime d, Csno cs, Class cl, Dtime_class dc " +
+		"WHERE d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND d.Oid=dc.Dtime_oid AND " +
+		"d.Sterm='"+getContext().getAttribute("school_term")+"' AND d.techid='"+getSession().getAttribute("userid")+"'");
+		
+		//多教師課程
+		list.addAll(df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, dc.*, cl.ClassName, cs.chi_name FROM Dtime_teacher dt, Dtime d, "
+		+ "Csno cs, Class cl, Dtime_class dc WHERE dt.Dtime_oid=d.Oid AND d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND "
+		+ "d.Oid=dc.Dtime_oid AND d.Sterm='"+getContext().getAttribute("school_term")+"' AND dt.teach_id='"+getSession().getAttribute("userid")+"'"));
 		
 		for(int i=0; i<list.size(); i++){
 			show=Calendar.getInstance();			
 			show.setTime(begin.getTime());
 			week=list.get(i).get("week").toString();
 			show=setCalendar(show, week);
-			start=df.sqlGetStr("SELECT d.DSbegin FROM Dtimestamp d WHERE " +
-					"Cidno IS NULL AND d.DSweek='"+week+"' AND d.DSreal="+list.get(i).get("begin"));
-					end=df.sqlGetStr("SELECT d.DSend FROM Dtimestamp d WHERE " +
-					"d.Cidno IS NULL AND d.DSweek='"+list.get(i).get("week")+"' AND d.DSreal="+list.get(i).get("end"));
+			
+			
+			
+			//上課時間, 一五以64, 六日以72的時間為準
+			try{
+				start=df.sqlGetStr("SELECT d.DSbegin FROM Dtimestamp d WHERE " +
+						"Cidno IS NULL AND d.DSweek='"+week+"' AND d.DSreal="+list.get(i).get("begin"));
+				
+				end=df.sqlGetStr("SELECT d.DSend FROM Dtimestamp d WHERE " +
+						"d.Cidno IS NULL AND d.DSweek='"+list.get(i).get("week")+"' AND d.DSreal="+list.get(i).get("end"));
+			}catch(Exception e){
+				try{
+					start=df.sqlGetStr("SELECT d.DSbegin FROM Dtimestamp d WHERE " +
+							"d.DSweek='"+week+"' AND d.DSreal="+list.get(i).get("begin"));				
+							end=df.sqlGetStr("SELECT d.DSend FROM Dtimestamp d WHERE " +
+							"d.DSweek='"+list.get(i).get("week")+"' AND d.DSreal="+list.get(i).get("end"));
+				}catch(Exception ex){
+					continue;
+				}
+				
+			}
+			
 			
 			//TODO 課程未排時間
 			try{
@@ -92,11 +101,12 @@ public class getMySchedule extends BaseAction{
 			out.println("<members><![CDATA["+list.get(i).get("ClassName")+"選課同學]]></members>");
 			out.println("<status_no><![CDATA[1]]></status_no>");			
 			out.println("</event>");			
-		}		
+		}
+		*/
+		
 		//留校時間, 一五以64, 六日以72的時間為準
 		list=df.sqlGet("SELECT '1'as CampusNo,  (if(e.week=6||e.week=7,'72','64'))as SchoolNo, e.week, e.period as begin, "
-		+ "e.period as end, e.kind as ClassName, 'Office Hour'as chi_name FROM Empl_stay_info e WHERE e.idno='"+
-		getSession().getAttribute("userid")+"' AND e.school_year='"
+		+ "e.period as end, e.kind as ClassName, 'Office Hour'as chi_name FROM Empl_stay_info e WHERE e.idno='"+getSession().getAttribute("userid")+"' AND e.school_year='"
 		+getContext().getAttribute("school_year")+"'AND e.school_term='"+getContext().getAttribute("school_term")+"'");
 		
 		for(int i=0; i<list.size(); i++){
@@ -106,10 +116,12 @@ public class getMySchedule extends BaseAction{
 			
 			show=setCalendar(show, week);			
 			//計算起迄時間差 TODO 各部制時間表
+			
 			start=df.sqlGetStr("SELECT d.DSbegin FROM Dtimestamp d WHERE " +
-			"Cidno IS NULL AND d.DSweek='"+week+"' AND d.DSreal="+list.get(i).get("begin"));
+			"d.DSweek='"+week+"' AND d.DSreal="+list.get(i).get("begin"));
+			
 			end=df.sqlGetStr("SELECT d.DSend FROM Dtimestamp d WHERE " +
-			"d.Cidno IS NULL AND d.DSweek='"+list.get(i).get("week")+"' AND d.DSreal="+list.get(i).get("end"));		
+			"d.DSweek='"+list.get(i).get("week")+"' AND d.DSreal="+list.get(i).get("end"));		
 			
 			//TODO 課程未排時間
 			try{

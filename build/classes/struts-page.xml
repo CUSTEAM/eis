@@ -60,7 +60,15 @@
 			<result name="stdaddr">/jsp/eis/Outlook/stdaddr.jsp</result>
 			<result name="stdlost">/jsp/eis/Outlook/stdlost.jsp</result>
 			<result name="merge">/jsp/eis/Outlook/merge.jsp</result>
-		</action>			
+		</action>	
+		
+		<action name="MailSender" class="action.eis.MailSender">
+			<result>/jsp/eis/MailSender.jsp</result>
+		</action>	
+		
+		<action name="Research" class="action.eis.ResearchAction">
+			<result>/jsp/eis/Research.jsp</result>
+		</action>	
 	</package>
 	
 	<package name="account" extends="abstract_struts" namespace="/">		
@@ -112,7 +120,9 @@
 			<result>/jsp/sa/StdSearch.jsp</result>
 		</action>
 		
-		
+		<action name="STDQAManager" class="action.sa.STDQAManagerAction">
+			<result>/jsp/sa/STDQAManager.jsp</result>
+		</action>
 		
 	</package>
 	

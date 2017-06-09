@@ -14,7 +14,7 @@ public class AqPrint extends BaseAction{
 	public String execute() throws IOException{
 		
 		Date date=new Date();
-		//response.setContentType("text/html; charset=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-disposition","attachment;filename="+date.getTime()+".xls");
 		

@@ -83,11 +83,14 @@ public class ChangeTermAction extends BaseAction{
 			return execute();
 		}
 		
+		
+		
 		try{			
 			//備份與清除備份
 			msg.addMsg(duplicateTable());//備份資料
 			msg.addMsg(saveDtime(year, term));//課程轉歷年
 			msg.addMsg(clearColumn(term));//清除非重用欄位
+			msg.addMsg(clearOdDate(term));//個別成績開放設定
 			msg.addMsg("<br>資料清除工作<br>");
 			msg.addMsg(clearReuseTable());//清重用資料表
 		}catch(Exception e){
@@ -169,6 +172,15 @@ public class ChangeTermAction extends BaseAction{
 		df.exSql("DELETE FROM Dtime_class WHERE Dtime_oid IN(SELECT Oid FROM Dtime WHERE Sterm='"+term+"')");
 		df.exSql("DELETE FROM Seld WHERE Dtime_oid IN(SELECT Oid FROM Dtime WHERE Sterm='"+term+"')");
 		return "清除第"+term+"學期教師/排課/問卷/選課<br>";
+	}
+	
+	/**
+	 * 個別設定成績輸入與開放
+	 * @return
+	 */
+	private String clearOdDate(String term){		
+		df.exSql("DELETE FROM ScoreOdDate WHERE DtimeOid IN (SELECT Oid FROM Dtime WHERE Sterm='"+term+"')");		
+		return "刪除成績個別輸入與開放時間<br>";
 	}
 	
 	/**
