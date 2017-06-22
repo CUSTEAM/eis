@@ -65,14 +65,17 @@
 <c:set var="now" value="<%=new Date()%>"/>
 <input type="hidden" id="Oid" name="Oid" />
 <div class="panel panel-primary">
-	<div class="panel-heading">問卷列表</div>
+	<div class="panel-heading">
+	<c:if test="${empty inity}">問卷查詢列表</c:if>
+	<c:if test="${!empty inity}">進行中的問卷</c:if>
+	</div>
 <display:table name="${quests}" id="row" class="table table-condensed" sort="list" excludedParams="*" >
  	<display:column style="white-space:nowrap;width:120px;">
  		<fmt:parseDate var="bdate" value="${row.beginDate}" type="DATE" pattern="yyyy-MM-dd"/> 		
  		
  		<button <c:if test="${bdate.getTime()<=now.getTime()}">disabled</c:if> type="button" onClick="try{winid1.close()}catch(e){};winid1=window.open('STDQAManager?method=edit&method:edit&Oid=${row.Oid}','_blank', 'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=1024, height=800,top=0,left=0');" class="btn btn-danger edit">編輯問卷</button>
 		<button onclick="return confirm('請問是否刪除?包含:問卷、題目、選項，以及所有樣本');" class="btn btn-default" name="method:delete" onMouseOver="$('#Oid').val('${row.Oid}')">刪除</button>
-		
+		<button class="btn btn-default" name="method:print" onMouseOver="$('#Oid').val('${row.Oid}')">閱卷</button>
 	</display:column>
  	<display:column style="white-space:nowrap;" title="標題" property="title" sortable="true" />
  	<display:column style="white-space:nowrap;" title="題數" property="qs" sortable="true"/>
@@ -80,8 +83,7 @@
  	<display:column style="white-space:nowrap;" title="結束日期" property="enDate" sortable="true"/>
  	<display:column style="white-space:nowrap;" title="應收" property="cnt" sortable="true"/>
  	<display:column style="white-space:nowrap;" title="實收" property="rel" sortable="true"/> 	
- 	<display:column style="white-space:nowrap;" title="建立" property="cname" sortable="true"/> 	
- 	
+ 	<display:column style="white-space:nowrap;" title="建立" property="cname" sortable="true"/> 
 </display:table>
 </div>
 </c:if>

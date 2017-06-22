@@ -1,12 +1,3 @@
-
-
-$(document).ready(function() {
-	$("#ActLink").change(function() {
-		$.blockUI({
-			message : null,
-			onOverlayClick : $.unblockUI
-		});
-	});
-	
-	$("#mainmenu").load("/eis/jsp/decorators/menu.jsp?r="+Math.floor(Math.random()*11));
-});
+$.ajaxSetup({cache: false});
+window.onbeforeunload=function(){$.unblockUI();};
+$("#mainmenu").load("/eis/jsp/decorators/menu_3.jsp?r="+Math.floor(Math.random()*11));

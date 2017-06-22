@@ -12,10 +12,7 @@
 		
 		<action name="SeminarReg" class="action.calendar.SeminarReg">
 			<result>/jsp/SeminarReg.jsp</result>
-		</action>
-		
-		
-		
+		</action>		
 	</package>
 	
 	<package name="aq" extends="abstract_struts" namespace="/">				

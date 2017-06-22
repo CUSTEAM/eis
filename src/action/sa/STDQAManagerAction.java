@@ -29,6 +29,8 @@ public class STDQAManagerAction extends BaseAction{
 	public String cno, stno, sno, cono, dno, gno, zno;
 	public String Oid, title, beginDate, enDate;
 	public File upload;
+	SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+	Date now=new Date();
 	
 	/**
 	 * excel欄位強制轉文字 2003+
@@ -139,15 +141,19 @@ public class STDQAManagerAction extends BaseAction{
 	}
 	
 	public String execute(){
+		request.setAttribute("inity", "yes");
 		
-		
+		request.setAttribute("quests", df.sqlGet("SELECT e.cname, q.*,(SELECT COUNT(*)FROM QUEST_RES WHERE Qid=q.Oid)as cnt,"
+		+ "(SELECT COUNT(*)FROM QUEST_RES WHERE Qid=q.Oid AND reply IS NOT NULL)as rel, (SELECT COUNT(*)FROM QUEST_QUE WHERE Qid=q.Oid)as qs "
+		+ "FROM QUEST q LEFT OUTER JOIN empl e ON e.idno=q.owner WHERE q.beginDate<'"+sf.format(now)+"'AND q.enDate>'"+sf.format(now)+"'"));
 		return SUCCESS;
 	}
 	
 	public String search(){
+		//request.setAttribute("now", false);
 		StringBuilder sql=new StringBuilder("SELECT e.cname, q.*,(SELECT COUNT(*)FROM QUEST_RES WHERE Qid=q.Oid)as cnt,"
-				+ "(SELECT COUNT(*)FROM QUEST_RES WHERE Qid=q.Oid AND reply IS NOT NULL)as rel, (SELECT COUNT(*)FROM QUEST_QUE WHERE Qid=q.Oid)as qs "
-				+ "FROM QUEST q LEFT OUTER JOIN empl e ON e.idno=q.owner WHERE q.Oid IS NOT NULL ");
+		+ "(SELECT COUNT(*)FROM QUEST_RES WHERE Qid=q.Oid AND reply IS NOT NULL)as rel, (SELECT COUNT(*)FROM QUEST_QUE WHERE Qid=q.Oid)as qs "
+		+ "FROM QUEST q LEFT OUTER JOIN empl e ON e.idno=q.owner WHERE q.Oid IS NOT NULL ");
 		if(!title.equals(""))sql.append("AND q.title='"+title+"'");
 		if(!beginDate.equals(""))sql.append("AND q.beginDate>='"+beginDate+"'");
 		if(!enDate.equals(""))sql.append("AND q.enDate<='"+enDate+"'");
@@ -172,8 +178,7 @@ public class STDQAManagerAction extends BaseAction{
 		out.println("<body>");
 		
 		List<Map>quests=df.sqlGet("SELECT * FROM QUEST_QUE WHERE Qid="+request.getParameter("Oid")+" ORDER BY Oid");
-		
-		Map quest=df.sqlGetMap("SELECT q.*, e.cname FROM QUEST q LEFT OUTER JOIN empl e ON e.idno=q.owner");
+		Map quest=df.sqlGetMap("SELECT q.*, e.cname FROM QUEST q LEFT OUTER JOIN empl e ON e.idno=q.owner WHERE q.Oid="+request.getParameter("Oid"));
 		List<Map>opt;		
 		out.println("<h1>"+quest.get("title")+"</h1>");		
 		
@@ -263,8 +268,6 @@ public class STDQAManagerAction extends BaseAction{
 		return search();
 	}
 	
-	
-	
 	public String save(){
 		//public String cno, stno, sno, cono, dno, gno, zno;
 		Message msg=new Message();
@@ -297,6 +300,166 @@ public class STDQAManagerAction extends BaseAction{
 		msg.addMsg("並重新建立 "+df.sqlGetStr("SELECT COUNT(*)FROM QUEST_RES WHERE Qid="+Oid)+"份問卷");
 		this.savMessage(msg);
 		return edit();
+	}
+	
+	public String print() throws IOException{
+		Date date=new Date();
+		response.setContentType("text/html; charset=UTF-8");
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-disposition","attachment;filename="+date.getTime()+".xls");
+		List<Map>ans=df.sqlGet("SELECT student_no, IFNULL(reply,'')as reply FROM QUEST_RES WHERE Qid="+Oid+" ORDER BY student_no");
+		List<Map>que=dm.sqlGet("SELECT * FROM QUEST_QUE WHERE Qid="+Oid);
+		for(int i=0; i<que.size(); i++){
+			que.get(i).put("opt", dm.sqlGet("SELECT * FROM QUEST_OPT WHERE Qid="+que.get(i).get("Oid")+" ORDER BY Oid"));
+		}
+		PrintWriter out=response.getWriter();	
+		
+		out.println ("<?xml version='1.0'?>");
+		out.println ("<?mso-application progid='Excel.Sheet'?>");
+		out.println ("<Workbook xmlns='urn:schemas-microsoft-com:office:spreadsheet'");
+		out.println (" xmlns:o='urn:schemas-microsoft-com:office:office'");
+		out.println (" xmlns:x='urn:schemas-microsoft-com:office:excel'");
+		out.println (" xmlns:ss='urn:schemas-microsoft-com:office:spreadsheet'");
+		out.println (" xmlns:html='http://www.w3.org/TR/REC-html40'>");
+		out.println (" <DocumentProperties xmlns='urn:schemas-microsoft-com:office:office'>");
+		out.println ("  <Author>John</Author>");
+		out.println ("  <LastAuthor>John</LastAuthor>");
+		out.println ("  <Created>2017-06-02T07:15:18Z</Created>");
+		out.println ("  <LastSaved>2017-06-22T05:28:36Z</LastSaved>");
+		out.println ("  <Version>15.00</Version>");
+		out.println (" </DocumentProperties>");
+		out.println (" <OfficeDocumentSettings xmlns='urn:schemas-microsoft-com:office:office'>");
+		out.println ("  <AllowPNG/>");
+		out.println (" </OfficeDocumentSettings>");
+		out.println (" <ExcelWorkbook xmlns='urn:schemas-microsoft-com:office:excel'>");
+		out.println ("  <WindowHeight>9645</WindowHeight>");
+		out.println ("  <WindowWidth>13380</WindowWidth>");
+		out.println ("  <WindowTopX>0</WindowTopX>");
+		out.println ("  <WindowTopY>0</WindowTopY>");
+		out.println ("  <ActiveSheet>1</ActiveSheet>");
+		out.println ("  <ProtectStructure>False</ProtectStructure>");
+		out.println ("  <ProtectWindows>False</ProtectWindows>");
+		out.println (" </ExcelWorkbook>");
+		out.println (" <Styles>");
+		out.println ("  <Style ss:ID='Default' ss:Name='Normal'>");
+		out.println ("   <Alignment ss:Vertical='Center'/>");
+		out.println ("   <Borders/>");
+		out.println ("   <Font ss:FontName='新細明體' x:CharSet='136' x:Family='Roman' ss:Size='12'");
+		out.println ("    ss:Color='#000000'/>");
+		out.println ("   <Interior/>");
+		out.println ("   <NumberFormat/>");
+		out.println ("   <Protection/>");
+		out.println ("  </Style>");
+		out.println ("  <Style ss:ID='s16'>");
+		out.println ("   <Font ss:FontName='新細明體' x:CharSet='136' x:Family='Roman' ss:Size='16'");
+		out.println ("    ss:Color='#000000' ss:Bold='1'/>");
+		out.println ("  </Style>");
+		out.println ("  <Style ss:ID='s17'>");
+		out.println ("   <Font ss:FontName='新細明體' x:CharSet='136' x:Family='Roman' ss:Size='16'");
+		out.println ("    ss:Color='#000000'/>");
+		out.println ("  </Style>");
+		out.println (" </Styles>");
+		out.println (" <Worksheet ss:Name='題目格式'>");
+		out.println ("  <Table ss:ExpandedColumnCount='999' ss:ExpandedRowCount='"+(que.size()+10)+"' x:FullColumns='1'");
+		out.println ("   x:FullRows='1' ss:StyleID='s17' ss:DefaultColumnWidth='54'");
+		out.println ("   ss:DefaultRowHeight='21'>");
+		out.println ("   <Column ss:StyleID='s17' ss:Width='43.5'/>");
+		out.println ("   <Column ss:StyleID='s17' ss:Width='372'/>");
+		out.println ("   <Column ss:StyleID='s17' ss:Width='57.75' ss:Span='3'/>");
+		out.println ("   <Column ss:Index='7' ss:StyleID='s17' ss:Width='51.75' ss:Span='4'/>");
+		out.println ("   <Row ss:StyleID='s16'>");
+		out.println ("    <Cell><Data ss:Type='String'>題型</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>問題內容</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>選項1</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>選項2</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>選項3</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>選項4</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>選項5</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>選項6</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>選項7</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>選項8</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>選項9</Data></Cell>");
+		out.println ("   </Row>");
+		List<Map>opt;
+		for(int i=0; i<que.size(); i++){
+			out.println ("   <Row>");
+			out.println ("    <Cell><Data ss:Type='String'>"+que.get(i).get("category")+"</Data></Cell>");
+			out.println ("    <Cell><Data ss:Type='String'>"+que.get(i).get("value")+"</Data></Cell>");
+			opt=(List<Map>)que.get(i).get("opt");
+			for(int j=0; j<opt.size(); j++){
+				out.println ("    <Cell><Data ss:Type='String'>"+opt.get(j).get("value")+"</Data></Cell>");
+			}			
+			out.println ("   </Row>");
+			
+		}
+		
+		
+		out.println ("  </Table>");
+		out.println ("  <WorksheetOptions xmlns='urn:schemas-microsoft-com:office:excel'>");
+		out.println ("   <PageSetup>");
+		out.println ("    <Header x:Margin='0.3'/>");
+		out.println ("    <Footer x:Margin='0.3'/>");
+		out.println ("    <PageMargins x:Bottom='0.75' x:Left='0.7' x:Right='0.7' x:Top='0.75'/>");
+		out.println ("   </PageSetup>");
+		out.println ("   <Print>");
+		out.println ("    <ValidPrinterInfo/>");
+		out.println ("    <PaperSizeIndex>9</PaperSizeIndex>");
+		out.println ("    <HorizontalResolution>-1</HorizontalResolution>");
+		out.println ("    <VerticalResolution>-1</VerticalResolution>");
+		out.println ("   </Print>");
+		out.println ("   <ProtectObjects>False</ProtectObjects>");
+		out.println ("   <ProtectScenarios>False</ProtectScenarios>");
+		out.println ("  </WorksheetOptions>");
+		out.println (" </Worksheet>");
+		out.println (" <Worksheet ss:Name='答案格式'>");
+		out.println ("  <Table ss:ExpandedColumnCount='2' ss:ExpandedRowCount='"+(ans.size()+100)+"' x:FullColumns='1'");
+		out.println ("   x:FullRows='1' ss:StyleID='s17' ss:DefaultColumnWidth='54'");
+		out.println ("   ss:DefaultRowHeight='21'>");
+		out.println ("   <Column ss:StyleID='s17' ss:Width='83.25'/>");
+		out.println ("   <Column ss:StyleID='s17' ss:Width='124.5'/>");
+		
+		
+		for(int i=0; i<ans.size(); i++){
+			out.println ("   <Row>");
+			out.println ("    <Cell><Data ss:Type='String'>"+ans.get(i).get("student_no")+"</Data></Cell>");
+			out.println ("    <Cell><Data ss:Type='String'>"+ans.get(i).get("reply")+"</Data></Cell>");
+			out.println ("   </Row>");
+			
+		}
+		
+		
+		
+		
+		
+		
+		out.println ("  </Table>");
+		out.println ("  <WorksheetOptions xmlns='urn:schemas-microsoft-com:office:excel'>");
+		out.println ("   <PageSetup>");
+		out.println ("    <Header x:Margin='0.3'/>");
+		out.println ("    <Footer x:Margin='0.3'/>");
+		out.println ("    <PageMargins x:Bottom='0.75' x:Left='0.7' x:Right='0.7' x:Top='0.75'/>");
+		out.println ("   </PageSetup>");
+		out.println ("   <Print>");
+		out.println ("    <ValidPrinterInfo/>");
+		out.println ("    <PaperSizeIndex>9</PaperSizeIndex>");
+		out.println ("    <HorizontalResolution>-1</HorizontalResolution>");
+		out.println ("    <VerticalResolution>-1</VerticalResolution>");
+		out.println ("   </Print>");
+		out.println ("   <Selected/>");
+		out.println ("   <ProtectObjects>False</ProtectObjects>");
+		out.println ("   <ProtectScenarios>False</ProtectScenarios>");
+		out.println ("  </WorksheetOptions>");
+		out.println (" </Worksheet>");
+		out.println ("</Workbook>");
+		out.println ("");
+		
+		
+		out.close();
+		out.flush();
+		
+		
+		
+		return null;
 	}
 
 }
