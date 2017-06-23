@@ -239,7 +239,13 @@ public class STDQAManagerAction extends BaseAction{
 	}
 	
 	public String edit(){
-		
+		Map q=df.sqlGetMap("SELECT * FROM QUEST WHERE Oid="+Oid);
+		if(!q .get("owner").equals(getSession().getAttribute("userid"))){
+			Message msg=new Message();
+			msg.setError("只有"+df.sqlGetStr("SELECT cname FROM empl WHERE idno='"+q.get("owner")+"'")+"可以編輯");
+			this.savMessage(msg);
+			return SUCCESS;
+		}
 		Map quest;
 		if(Oid==null){
 			quest=df.sqlGetMap("SELECT * FROM QUEST WHERE Oid="+request.getParameter("Oid"));
@@ -261,6 +267,16 @@ public class STDQAManagerAction extends BaseAction{
 	}
 	
 	public String delete(){		
+		
+		Map q=df.sqlGetMap("SELECT * FROM QUEST WHERE Oid="+Oid);
+		if(!q .get("owner").equals(getSession().getAttribute("userid"))){
+			Message msg=new Message();
+			msg.setError("只有"+df.sqlGetStr("SELECT cname FROM empl WHERE idno='"+q.get("owner")+"'")+"可以刪除");
+			this.savMessage(msg);
+			return search();
+		}
+		
+		
 		df.exSql("DELETE FROM QUEST WHERE Oid="+Oid);//刪問卷
 		df.exSql("DELETE FROM QUEST_QUE WHERE Qid="+Oid);//刪問題
 		df.exSql("DELETE FROM QUEST_OPT WHERE Qid NOT IN(SELECT Oid FROM QUEST_QUE)");//刪選項
