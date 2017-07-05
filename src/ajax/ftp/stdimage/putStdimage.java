@@ -74,7 +74,7 @@ public class putStdimage extends BaseAction {
 		}
 		
 		String fullpath=getContext().getRealPath("/tmp" )+"/";
-		//System.out.println(fullpath);
+		System.out.println(fullpath);
 		
 		//來自學生自行上傳
 		if(myStdNo!=null){	
@@ -120,7 +120,9 @@ public class putStdimage extends BaseAction {
 			ftp.setBinaryTransfer(true);
 			ftp.put(imageFileName, true);
 			*/
-			
+			System.out.println(fullpath);
+			System.out.println(ftpinfo.get("path")+"/"+folder+"/");
+			System.out.println(imageFileName);
 			bio.putFTPFile(ftpinfo.get("host"), ftpinfo.get("username"), ftpinfo.get("password"), fullpath+"/", 
 					ftpinfo.get("path")+"/"+folder+"/", imageFileName);			
 						
