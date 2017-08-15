@@ -119,17 +119,18 @@ public class StdSearch extends BaseAction{
 	 * @throws IOException
 	 */
 	private void list() throws IOException{
-		StringBuilder sb=new StringBuilder("SELECT w.inco, s.*,c.ClassName, "
+		StringBuilder sb=new StringBuilder("SELECT cp9.id4, cp.id as peid, w.inco, s.*,c.ClassName, "
 		+ "d.name as DeptName, c5.name,c51.name as team,c3.name as county,"
 		+ "c31.name as province, c52.name as status_name, c53.name as caurse_name,"
-		+ "c54.name as ident_name2 FROM(((((((("+type+" s LEFT OUTER JOIN Class c ON "
+		+ "c54.name as ident_name2 FROM((((((((("+type+" s LEFT OUTER JOIN Class c ON "
 		+ "s.depart_class=c.ClassNo)LEFT OUTER JOIN code5 c5 ON c5.idno=s.ident AND "
 		+ "c5.category='Identity')LEFT OUTER JOIN code5 c51 ON c51.idno=s.divi AND "
 		+ "c51.category='GROUP')LEFT OUTER JOIN code3 c3 ON s.birth_county=c3.no)LEFT "
 		+ "OUTER JOIN code3 c31 ON c31.no=s.birth_province)LEFT OUTER JOIN code5 c52 ON "
 		+ "s.occur_status=c52.idno AND c52.category='Status')LEFT OUTER JOIN code5 c53 ON "
 		+ "s.occur_cause=c53.idno AND c53.category='Cause')LEFT OUTER JOIN code5 c54 ON "
-		+ "s.ident_basic=c54.idno AND c53.category='Identity', CODE_DEPT d)LEFT OUTER JOIN wwpass w ON s.student_no=w.username WHERE "
+		+ "s.ident_basic=c54.idno AND c53.category='Identity', CODE_DEPT d)LEFT OUTER JOIN wwpass w ON s.student_no=w.username "
+		+ "LEFT OUTER JOIN CODE_PE11 cp ON cp.id1=c.SchoolNo)LEFT OUTER JOIN CODE_PE9 cp9 ON c.DeptNo=cp9.id1 WHERE "
 		+ "d.id=c.DeptNo");
 		if(!occur_status.equals(""))sb.append(" AND s.occur_status='"+occur_status+"'");
 		if(!occur_date_begin.equals(""))sb.append(" AND s.occur_date>='"+occur_date_begin+"'");
@@ -156,6 +157,7 @@ public class StdSearch extends BaseAction{
 		if(!addr.equals(""))sb.append(" AND s.perm_addr LIKE'%"+addr+"%' || s.curr_addr LIKE'%"+addr+"%'");
 			
 		sb.append(" ORDER BY c.ClassNo, s.student_no");		
+		System.out.println(sb);
 		print(df.sqlGet(sb.toString()));		
 	}
 	
@@ -398,7 +400,7 @@ public class StdSearch extends BaseAction{
 		out.println ("  </Style>");
 		out.println (" </Styles>");
 		out.println (" <Worksheet ss:Name='工作表1'>");
-		out.println ("  <Table ss:ExpandedColumnCount='39' ss:ExpandedRowCount='"+(list.size()+999)+"' x:FullColumns='1'");
+		out.println ("  <Table ss:ExpandedColumnCount='41' ss:ExpandedRowCount='"+(list.size()+999)+"' x:FullColumns='1'");
 		out.println ("   x:FullRows='1' ss:DefaultColumnWidth='54' ss:DefaultRowHeight='16.5'>");
 		out.println ("   <Column ss:StyleID='s64' ss:Span='38'/>");
 		
@@ -452,6 +454,9 @@ public class StdSearch extends BaseAction{
 		if(col[34]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>身份備註</Data></Cell>");
 		if(col[35]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>英譯姓名</Data></Cell>");
 		if(col[36]==true)out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>卡號</Data></Cell>");
+		
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>教育部學制代碼</Data></Cell>");
+		out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>教育部科系代碼</Data></Cell>");
 		
 		out.println ("   </Row>");
 		
@@ -692,6 +697,18 @@ public class StdSearch extends BaseAction{
 			if (list.get(i).get("inco") != null) {
 				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("inco") + "</Data></Cell>");
 			} else {
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("peid") != null) {
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("peid")+"</Data></Cell>");
+			}else{
+				out.println ("    <Cell ss:StyleID='s62'></Cell>");
+			}
+			
+			if (list.get(i).get("id4") != null) {
+				out.println ("    <Cell ss:StyleID='s62'><Data ss:Type='String'>"+list.get(i).get("id4")+"</Data></Cell>");
+			}else{
 				out.println ("    <Cell ss:StyleID='s62'></Cell>");
 			}
 			

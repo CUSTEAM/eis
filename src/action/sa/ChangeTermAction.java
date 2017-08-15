@@ -153,10 +153,20 @@ public class ChangeTermAction extends BaseAction{
 		//刪除已存在
 		df.exSql("DELETE FROM Savedtime WHERE school_year='"+year+"' AND school_term='"+term+"'");
 		//轉開課資料
-		df.exSql("INSERT INTO Savedtime(school_year,school_term,depart_class,cscode,techid,"
-		+ "opt,credit,thour,stu_select,avg,samples,Introduction,Syllabi,Syllabi_sub,effsamples)"
-		+ "SELECT'"+year+"','"+term+"',depart_class,cscode,techid,opt,credit,thour,stu_select,(coansw*20),"
-		+ "samples,Introduction,Syllabi,Syllabi_sub,effsamples FROM Dtime WHERE Sterm='"+term+"'");		
+		df.exSql("INSERT INTO Savedtime(school_year,school_term,depart_class,cscode,"
+				+ "techid,opt,credit,thour,stu_select,samples,Introduction,Syllabi,"
+				+ "Syllabi_sub,effsamples,avg0)SELECT '"+year+"','"+term+"',depart_class,"
+				+ "cscode,techid,opt,credit,thour,stu_select,samples,Introduction,"
+				+ "Syllabi,Syllabi_sub,effsamples,ROUNd ((coansw/effsamples*20),2)"
+				+ "FROM Dtime WHERE Sterm='"+term+"'");		
+		
+		
+		
+		
+		
+		
+		
+		
 		return "Savedtime匯入"+year+"學年第"+term+"學期資料<br>";
 	}
 	
@@ -224,7 +234,7 @@ public class ChangeTermAction extends BaseAction{
 		
 		boolean b;
 		for(int i=0; i<cls.size(); i++){
-			//if(!upCheck(cls.get(i)))continue;
+			if(!upCheck(cls.get(i)))continue;
 			
 			b=false;//預設無班可升
 			m.putAll(cls.get(i));//載入暫存班級
@@ -268,25 +278,24 @@ public class ChangeTermAction extends BaseAction{
 	
 	/**
 	 * 以年級反向排序取班級與人數
-	 * 動態檢察人數為0, 排除延修班, 年級為0..
 	 * @return 班級列表
 	 */
 	private List getCls(){
-		return df.sqlGet("SELECT c.*, (SELECT COUNT(*)FROM stmd WHERE depart_class=c.ClassNo)as cnt FROM Class c WHERE c.Type='P' AND c.Grade!=0 HAVING cnt>0 AND c.Grade!=0 ORDER BY c.Grade DESC");
+		return df.sqlGet("SELECT c.*, (SELECT COUNT(*)FROM stmd WHERE depart_class=c.ClassNo)as cnt FROM Class c ORDER BY c.Grade DESC");
 	}
 	
 	/**
-	 * 檢查是否需要升級
-	 * 動態檢察人數為0, ...
+	 * 檢查是否需要升級的過濾器
+	 * 條件:人數為0, 延修班, 年級為0
 	 * @param m
-	 * @return 是否需要
+	 * @return 是否需要--->需要
 	 */
-	//private boolean upCheck(Map m){
-		//if(Integer.parseInt(m.get("cnt").toString())<1)return false;//無人班跳過
-		//if(m.get("Type").toString().equals("E"))return false;//延修班不測試是否有班級可升級
-		//if(m.get("Grade").toString().equals("0"))return false;//推廣與跨校不測試是否有班級可升級
-		//return true;
-	//}
+	private boolean upCheck(Map m){
+		if(Integer.parseInt(m.get("cnt").toString())<1)return false;//無人班跳過
+		if(m.get("Type").toString().equals("E"))return false;//延修班不測試是否有班級可升級
+		if(m.get("Grade").toString().equals("0"))return false;//推廣與跨校不測試是否有班級可升級
+		return true;
+	}
 	
 	/**
 	 * 升級
@@ -302,7 +311,7 @@ public class ChangeTermAction extends BaseAction{
 		boolean b;
 			
 		for(int i=0; i<cls.size(); i++){			
-			//if(!upCheck(cls.get(i)))continue;
+			if(!upCheck(cls.get(i)))continue;
 			
 			b=false;//無班指標
 			m.putAll(cls.get(i));//載入暫存班
