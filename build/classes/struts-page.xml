@@ -66,6 +66,10 @@
 		<action name="Research" class="action.eis.ResearchAction">
 			<result>/jsp/eis/Research.jsp</result>
 		</action>	
+		
+		<action name="StdScoreViewer" class="action.eis.StdScoreViewerAction">
+			<result>/jsp/eis/StdScoreViewer.jsp</result>
+		</action>
 	</package>
 	
 	<package name="account" extends="abstract_struts" namespace="/">		
@@ -139,31 +143,25 @@
 			<result>/jsp/task/TaskTemplateManager.jsp</result>
 		</action>
 		
-		
-		
-			
-		
 		<action name="TaskAdd" class="action.task.TaskAddAction">
 			<result>/jsp/task/TaskAdd.jsp</result>
 			<result name="edit">/jsp/task/TaskAdd/edit.jsp</result>
 			<result name="add">/jsp/task/TaskAdd/add.jsp</result>
 		</action>
 		
-		
-		
 		<!-- action name="TaskAddInPending" class="action.task.TaskAddAction">
 			<result>/jsp/task/TaskAdd.jsp</result>
 			<result name="edit">/jsp/task/TaskAdd/edit.jsp</result>
 		</action-->
-		
-		
 		
 		<action name="TaskDeal" class="action.task.TaskDealAction">
 			<result>/jsp/task/TaskDeal.jsp</result>
 			<result name="edit">/jsp/task/TaskDeal/edit.jsp</result>
 		</action>
 		
-		
+		<action name="TaskManager" class="action.task.TaskManagerAction">
+			<result>/jsp/task/TaskManager.jsp</result>
+		</action>
 		
 			
 	</package>

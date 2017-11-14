@@ -38,9 +38,9 @@
             	<value>model/AmsDocApply.hbm.xml</value>
             	<value>model/NabbrBorApp.hbm.xml</value>
             	<value>model/NabbrBoro.hbm.xml</value>
-            	<value>model/TaskApply.hbm.xml</value>
+            	<!-- value>model/TaskApply.hbm.xml</value>
             	<value>model/Task.hbm.xml</value>
-            	<value>model/TaskHist.hbm.xml</value>
+            	<value>model/TaskHist.hbm.xml</value-->
             	<value>model/QUEST_QUE.hbm.xml</value>
             </list>
         </property>

@@ -83,8 +83,6 @@ public class ChangeTermAction extends BaseAction{
 			return execute();
 		}
 		
-		
-		
 		try{			
 			//備份與清除備份
 			msg.addMsg(duplicateTable());//備份資料

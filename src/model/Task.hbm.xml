@@ -24,11 +24,11 @@
             <column name="template" />
         </property>
         
-        <property name="target" type="java.lang.String">
+        <property name="target" type="java.util.Date">
             <column name="target" />
         </property>
         
-        <property name="ensure" type="java.lang.Integer">
+        <property name="ensure" type="java.util.Date">
             <column name="ensure" />
         </property>
         
