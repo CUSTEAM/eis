@@ -1,15 +1,12 @@
 package action.sa;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +17,11 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import action.BaseAction;
+import action.BasePrintXmlAction;
 import model.Message;
 import model.QUEST_QUE;
 
-public class STDQAManagerAction extends BaseAction{
+public class STDQAManagerAction extends BasePrintXmlAction{
 	
 	public String cno, stno, sno, cono, dno, gno, zno;
 	public String Oid, title, beginDate, enDate;
@@ -321,8 +318,8 @@ public class STDQAManagerAction extends BaseAction{
 	public String print() throws IOException{
 		Date date=new Date();
 		response.setContentType("text/html; charset=UTF-8");
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition","attachment;filename="+date.getTime()+".xls");
+		xml2ods(response, getRequest(), date);
+		
 		List<Map>ans=df.sqlGet("SELECT student_no, IFNULL(reply,'')as reply FROM QUEST_RES WHERE Qid="+Oid+" ORDER BY student_no");
 		List<Map>que=dm.sqlGet("SELECT * FROM QUEST_QUE WHERE Qid="+Oid);
 		for(int i=0; i<que.size(); i++){

@@ -155,7 +155,7 @@ public class ChangeTermAction extends BaseAction{
 				+ "techid,opt,credit,thour,stu_select,samples,Introduction,Syllabi,"
 				+ "Syllabi_sub,effsamples,avg0)SELECT '"+year+"','"+term+"',depart_class,"
 				+ "cscode,techid,opt,credit,thour,stu_select,samples,Introduction,"
-				+ "Syllabi,Syllabi_sub,effsamples,ROUNd ((coansw/effsamples*20),2)"
+				+ "Syllabi,Syllabi_sub,effsamples,ROUND((coansw/effsamples*20),2)"
 				+ "FROM Dtime WHERE Sterm='"+term+"'");		
 		
 		
@@ -179,7 +179,8 @@ public class ChangeTermAction extends BaseAction{
 		//清除Dtime_class
 		df.exSql("DELETE FROM Dtime_class WHERE Dtime_oid IN(SELECT Oid FROM Dtime WHERE Sterm='"+term+"')");
 		df.exSql("DELETE FROM Seld WHERE Dtime_oid IN(SELECT Oid FROM Dtime WHERE Sterm='"+term+"')");
-		return "清除第"+term+"學期教師/排課/問卷/選課<br>";
+		df.exSql("DELETE FROM Dtime_teacher");
+		return "清除第"+term+"學期教師/排課/問卷/選課/多教師<br>";
 	}
 	
 	/**

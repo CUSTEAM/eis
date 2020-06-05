@@ -31,9 +31,8 @@
 <body <decorator:getProperty property="body.onload" writeEntireProperty="true" />>
 	<div id="mainmenu" style="height:40px;"></div>
 	<div class="content-page-3">
-		<decorator:body />
+	<decorator:body />
 	</div>
-	
 	<c:if test="${!empty msg}">
 		<script>
 			$(window).load(function() {
@@ -72,6 +71,14 @@
 <script src="/eis/inc/bootstrap/plugin/bootstrap-submenu/js/bootstrap-submenu.min.js" defer></script>
 <script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/bootstrap-select.min.js"></script>
 <script src="/eis/inc/bootstrap/plugin/silviomoreto-bootstrap-select/js/i18n/defaults-zh_TW.min.js"></script>
-	<script src="/eis/inc/js/advance.js"></script>
+<script src="/eis/inc/js/advance.js"></script>
+<script>
+var timer;
+setInterval(function() {
+	$.getJSON('/eis/onlineCheck', function(d){	
+		ipin=JSON.stringify(d, null, 2);
+	});
+}, 10000); 
+</script>
 </body>
 </html>

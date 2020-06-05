@@ -38,9 +38,9 @@ public class getMySchedule extends BaseAction{
 		out.println("<data>");				
 		
 		List<Map>list;
-		
+		/*
 		//掛名課程
-		/*list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
+		list=df.sqlGet("SELECT cl.CampusNo,  cl.SchoolNo, " +
 		"dc.*, cl.ClassName, cs.chi_name FROM Dtime d, Csno cs, Class cl, Dtime_class dc " +
 		"WHERE d.cscode=cs.cscode AND d.depart_class=cl.ClassNo AND d.Oid=dc.Dtime_oid AND " +
 		"d.Sterm='"+getContext().getAttribute("school_term")+"' AND d.techid='"+getSession().getAttribute("userid")+"'");
@@ -101,8 +101,8 @@ public class getMySchedule extends BaseAction{
 			out.println("<members><![CDATA["+list.get(i).get("ClassName")+"選課同學]]></members>");
 			out.println("<status_no><![CDATA[1]]></status_no>");			
 			out.println("</event>");			
-		}
-		*/
+		}*/
+		
 		
 		//留校時間, 一五以64, 六日以72的時間為準
 		list=df.sqlGet("SELECT '1'as CampusNo,  (if(e.week=6||e.week=7,'72','64'))as SchoolNo, e.week, e.period as begin, "
@@ -255,8 +255,8 @@ public class getMySchedule extends BaseAction{
 				out.println("<members><![CDATA[]]></members>");			
 				out.println("</event>");				
 			}			
-		}
-		*/ 
+		}*/
+		
 		
 		out.println("</data>");		
 		out.close();		

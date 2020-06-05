@@ -32,11 +32,12 @@
 	    		<td>
 			    <select data-width="auto" name="unit" class="form-control selectpicker " data-size="auto">
 					<option value=""></option>
-					<c:forEach items="${CODE_UNIT}" var="u">
+					<c:forEach items="${ulist}" var="u">
 					<c:if test="${u.moduleCnt>0}">
 					<option 
-					data-content="${u.name} 
-					<span class='label label-default'>${u.sname}</span> 
+					data-content="
+					<c:if test="${!empty u.pName}">【${u.pName}】</c:if>
+					</span>${u.name} </span> 
 					<span class='label label-danger'>${u.moduleCnt}</span>" 
 					<c:if test="${u.id eq unit}">selected</c:if> value="${u.id}">
 					</option>
@@ -82,14 +83,6 @@
 
 
 </c:if>
-	
-	 
-<script>
-$('.selectpicker').selectpicker({
-    //style: 'btn-info',
-    //size: 8
-});
-</script>
 </form>
 </body>
 </html>

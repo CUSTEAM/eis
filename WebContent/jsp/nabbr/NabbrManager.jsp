@@ -244,7 +244,10 @@ $(document).ready(function() {
 
 </form>
 <script>
-$(".timepick" ).datepicker();
+$(".timepick" ).datepicker({
+	changeMonth: true,
+	changeYear: true,
+});
 </script>
 </body>
 </html>

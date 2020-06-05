@@ -25,6 +25,8 @@
 			   <!-- prop key="hibernate.cache.use_query_cache">true</prop-->
 	     	</props>
         </property>     
+       
+       
         <property name="mappingResources">
             <list>
             	<value>model/Dilg.hbm.xml</value>
@@ -38,12 +40,28 @@
             	<value>model/AmsDocApply.hbm.xml</value>
             	<value>model/NabbrBorApp.hbm.xml</value>
             	<value>model/NabbrBoro.hbm.xml</value>
-            	<!-- value>model/TaskApply.hbm.xml</value>
-            	<value>model/Task.hbm.xml</value>
-            	<value>model/TaskHist.hbm.xml</value-->
+            	<value>model/Task.hbm.xml</value>            	
+            	<value>model/Task_hist.hbm.xml</value>
             	<value>model/QUEST_QUE.hbm.xml</value>
+            	<value>model/Mail.hbm.xml</value>
+            	<value>model/MailReceiver.hbm.xml</value>
+            	<value>model/MailAttache.hbm.xml</value>
+            	<value>model/WeatherHist.hbm.xml</value>
+            	<value>model/SysLog.hbm.xml</value>
+            	<value>model/SysLogSecurity.hbm.xml</value>
+            	<value>model/SysTable.hbm.xml</value>
+            	<value>model/PRJ.hbm.xml</value>
+            	
             </list>
         </property>
+        
+        <!--property name="packagesToScan"> 
+      		<list> 
+        		<value>model</value> 
+      		</list> 
+    	</property--> 
+        
+        
     </bean>
     
     <bean id="JdbcDAO" class="dao.JdbcDAO">

@@ -49,9 +49,10 @@
 </form>
     
 <script>
-$(".dtpick" ).datetimepicker({
-		onSelect:function(){
-			//alert(this.id);
+$(".dtpick" ).datetimepicker({	
+		changeMonth: true,
+		changeYear: true,	
+		onSelect:function(){			
 			$("#name"+this.id).val(this.id);
 		}
 });

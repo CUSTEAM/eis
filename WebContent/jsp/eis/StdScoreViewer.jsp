@@ -15,7 +15,6 @@
 <script src="/eis/inc/js/plugin/jquery.chained.min.js"></script>
 </head>
 <body>
-
 <div class="bs-callout bs-callout-danger">
 <b>成績查詢</b>
 資訊系統經相關單位授權提供資料，缺少或不足的部份請洽相關單位 <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
@@ -25,37 +24,33 @@
 	<div class="panel-heading">
 	  <h3 class="panel-title">成績查詢</h3>
 	</div>
-		<table class="table">
-			<tr>
-				<td>
-				<label>單一學生查詢</label>
-				<small>請輸入學號或姓名</small>
-				<div class="input-group">
-				<span class="input-group-addon">學號</span>
-				<input class="form-control" type="text" id="student_no" name="student_no" autocomplete="off" value="${student_no}"/>
-				</div>
-				</td>
-			</tr>
-			<tr>
-				<td>				
-				<label>批次學生查詢</label>
-				<small>請先下載「<a href="/eis/jsp/eis/sample.xlsx"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> 查詢格式</a>」編輯資料後點選瀏覽..</small>
-				<input id="upload" name="fileUpload" multiple type="file" class="file-loading">
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<button name="method:print" class="btn btn-danger btn-lg">歷年成績查詢</button>
-				</td>
-			</tr>
-		
-		</table>
+	<table class="table">
+		<tr>
+			<td>
+			<label>單一學生查詢</label>
+			<small>請輸入學號或姓名</small>
+			<div class="input-group">
+			<span class="input-group-addon">學號</span>
+			<input class="form-control" type="text" id="student_no" name="student_no" autocomplete="off" value="${student_no}"/>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td>				
+			<label>批次學生查詢</label>
+			<small>請先下載「<a href="/eis/jsp/eis/sample.xlsx"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> 查詢格式</a>」編輯資料後點選瀏覽..</small>
+			<input id="upload" name="fileUpload" multiple type="file" class="file-loading">
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<button name="method:print" class="btn btn-danger btn-lg">歷年成績查詢</button>
+			</td>
+		</tr>	
+	</table>
 </div>
 </form>
 <script>
-
-
-
 $(document).ready(function(){
 	
 	$("#upload").fileinput({

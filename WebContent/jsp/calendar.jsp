@@ -60,7 +60,7 @@
 			scheduler.config.xml_date = "%Y-%m-%d %H:%i";
 			scheduler.config.default_date = "%m月%d日";
 			scheduler.config.first_hour="8";
-			scheduler.config.last_hour="18";
+			scheduler.config.last_hour="23";
 			scheduler.init('myCalendar', new Date(), "week");			
 			scheduler.config.cascade_event_display = true;			
 			scheduler.attachEvent("onEventAdded", addEvent);
@@ -136,7 +136,9 @@
 	</script>
 </head>
 <body onload="init();">
-<div id="myCalendar" class="dhx_cal_container" style='width:100%; height:100%; top:15px;'>
+
+<div style="width:100%; height:95%;top:15px;">
+<div id="myCalendar" class="dhx_cal_container" style="width:100%; height:100%;">
 	<div class="dhx_cal_navline">
 	<div class="dhx_cal_prev_button">&nbsp;</div>
 	<div class="dhx_cal_next_button">&nbsp;</div>
@@ -156,5 +158,10 @@
 	
 </div>
 
+	
+
+</div>
+
+<div style="position:absolute; top:90%; right:40px;"><span class="label label-danger"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> 節次與時間依各部制規定為準</span></div>
 </body>
 </html>

@@ -46,6 +46,7 @@
 		<action name="Calendar" class="action.calendar.MyCalendar">
 			<result name="intro">/jsp/calendar.jsp</result>
 		</action>		
+			
 	</package>
 	
 	<package name="eis" extends="abstract_struts" namespace="/">		
@@ -125,6 +126,10 @@
 			<result>/jsp/sa/STDQAManager.jsp</result>
 		</action>
 		
+		<action name="TableDirector" class="action.sa.TableDirectorAction">
+			<result>/jsp/sa/TableDirector.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="card" extends="abstract_struts" namespace="/">
@@ -136,33 +141,19 @@
 	
 	<!-- 工作單 -->
 	<package name="task" extends="abstract_struts" namespace="/">		
-		
-		
-		
-		<action name="TaskTemplateManager" class="action.task.TaskTemplateManagerAction">
-			<result>/jsp/task/TaskTemplateManager.jsp</result>
-		</action>
-		
-		<action name="TaskAdd" class="action.task.TaskAddAction">
-			<result>/jsp/task/TaskAdd.jsp</result>
-			<result name="edit">/jsp/task/TaskAdd/edit.jsp</result>
-			<result name="add">/jsp/task/TaskAdd/add.jsp</result>
-		</action>
-		
-		<!-- action name="TaskAddInPending" class="action.task.TaskAddAction">
-			<result>/jsp/task/TaskAdd.jsp</result>
-			<result name="edit">/jsp/task/TaskAdd/edit.jsp</result>
-		</action-->
-		
-		<action name="TaskDeal" class="action.task.TaskDealAction">
-			<result>/jsp/task/TaskDeal.jsp</result>
-			<result name="edit">/jsp/task/TaskDeal/edit.jsp</result>
-		</action>
-		
 		<action name="TaskManager" class="action.task.TaskManagerAction">
-			<result>/jsp/task/TaskManager.jsp</result>
+			<result>/jsp/TaskManager.jsp</result>
+			<result name="deal">/jsp/task/TaskHistDeal.jsp</result>
+			<result name="dealTask">/jsp/task/TaskDeal.jsp</result>
 		</action>
 		
+		<action name="TaskReview" class="action.task.TaskReviewAction">
+			<result>/jsp/task/TaskReview.jsp</result>		
+		</action>
+		
+		<action name="StrategsManager" class="action.task.StrategsManagerAction">
+			<result>/jsp/task/StrategsManager.jsp</result>
+		</action>
 			
 	</package>
 	

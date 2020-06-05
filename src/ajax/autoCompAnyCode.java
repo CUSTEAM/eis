@@ -35,9 +35,10 @@ public class autoCompAnyCode extends BaseAction{
 			return SUCCESS;
 		}else{
 			List<Map>tmp=df.sqlGet("SELECT "+request.getParameter("idCol")+" as id, "+request.getParameter("nameCol")+" as name FROM "+request.getParameter("table")+
-					" WHERE "+request.getParameter("idCol")+" LIKE'"+request.getParameter("value")+"%' OR "+request.getParameter("nameCol")+" LIKE'"+request.getParameter("value")+"%'");
+					" WHERE "+request.getParameter("idCol")+" LIKE'%"+request.getParameter("value")+"%' OR "+request.getParameter("nameCol")+" LIKE'%"+request.getParameter("value")+"%'");
 			
 			list=new Object[tmp.size()];
+			//重新組裝			
 			for(int i=0; i<tmp.size(); i++){
 				list[i]=tmp.get(i).get("id")+","+tmp.get(i).get("name");
 			}			

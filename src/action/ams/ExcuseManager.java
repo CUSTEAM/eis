@@ -27,7 +27,8 @@ public class ExcuseManager extends BaseAction{
 	public String startDate1;
 	public String endDate1;
 	public String reason1;
-
+	
+	String oMonth="5";
 	SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat sf1=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	SimpleDateFormat sf2=new SimpleDateFormat("yyyy-MM-dd");
@@ -111,9 +112,9 @@ public class ExcuseManager extends BaseAction{
 		doc.setReason(reason);
 		doc.setSn(String.valueOf(new Date().getTime()));
 		doc.setStartDate(sf1.parse(startDate));
-		doc.setTotalDay(Short.valueOf(String.valueOf(totalDay)));
-		doc.setTotalHour(Short.valueOf(String.valueOf(totalHour)));
-		doc.setTotalMinute(Short.valueOf(String.valueOf(0)));
+		doc.setTotalDay(Integer.valueOf(String.valueOf(totalDay)));
+		doc.setTotalHour(Integer.valueOf(String.valueOf(totalHour)));
+		doc.setTotalMinute(Integer.valueOf(String.valueOf(0)));
 		try{
 			df.update(doc);
 		}catch(Exception e){
@@ -252,18 +253,19 @@ public class ExcuseManager extends BaseAction{
 		doc.setReason(reason1);
 		doc.setSn(String.valueOf(new Date().getTime()));
 		doc.setStartDate(sf1.parse(startDate1));
-		doc.setTotalDay(Short.valueOf("0"));
+		doc.setTotalDay(Integer.valueOf("0"));
 		if(totalHour>4&&totalHour<8){
 			totalHour=4L;
 		}
 		if(totalHour>8){
 			totalHour=8L;
 		}
-		doc.setTotalHour(Short.valueOf(String.valueOf(totalHour)));
-		doc.setTotalMinute(Short.valueOf(String.valueOf(0)));
+		doc.setTotalHour(Integer.valueOf(String.valueOf(totalHour)));
+		doc.setTotalMinute(Integer.valueOf(String.valueOf(0)));
 		try{
 			df.update(doc);
 		}catch(Exception e){
+			e.printStackTrace();
 			doc=null;
 			setInfo();
 			Message msg=new Message();
@@ -316,12 +318,12 @@ public class ExcuseManager extends BaseAction{
 		
 		//補休單09列表
 		request.setAttribute("docs09", df.sqlGet("SELECT d.*,((d.totalDay*8)+d.totalHour)as hours FROM AMS_DocApply d WHERE " +
-		"d.startDate>='"+beginYear+"/6/1' AND d.startDate<='"+endYear+"/6/1' AND d.idno='"+getSession().getAttribute("userid")+
+		"d.startDate>='"+beginYear+"/"+oMonth+"/1' AND d.startDate<='"+endYear+"/"+oMonth+"/1' AND d.idno='"+getSession().getAttribute("userid")+
 		"' AND d.askLeaveType='09' ORDER BY d.endDate DESC"));
 		
 		//加班單2列表
 		List docs2=df.sqlGet("SELECT d.*,((d.totalDay*8)+d.totalHour)as hours FROM AMS_DocApply d WHERE (d.status!='0'OR d.status IS NULL)AND " +
-		"d.startDate>='"+beginYear+"/6/1' AND d.startDate<='"+endYear+"/6/1' AND d.idno='"+getSession().getAttribute("userid")+"' AND docType='2' ORDER BY d.endDate DESC");
+		"d.startDate>='"+beginYear+"/"+oMonth+"/1' AND d.startDate<='"+endYear+"/"+oMonth+"/1' AND d.idno='"+getSession().getAttribute("userid")+"' AND docType='2' ORDER BY d.endDate DESC");
 		docs2.addAll(df.sqlGet("SELECT hours, '補償'as endDate, '-'as status FROM AMS_Redeem WHERE idno='"+getSession().getAttribute("userid")+"' AND expiry>='"+this.sf.format(new Date())+"'"));
 		request.setAttribute("docs2", docs2);
 	}
@@ -332,13 +334,13 @@ public class ExcuseManager extends BaseAction{
 	 */
 	private int getTotal(int beginYear, int endYear){		
 		return df.sqlGetInt("SELECT IFNULL(((SUM(totalDay)*8)+SUM(totalHour)),0)as hours FROM AMS_DocApply WHERE (status!='0' AND status!='2' AND status IS NOT NULL)AND " +
-		"docType='2' AND startDate>='"+beginYear+"/6/1' AND startDate<='"+endYear+"/6/1' AND idno='"+getSession().getAttribute("userid")+"'")+
+		"docType='2' AND startDate>='"+beginYear+"/"+oMonth+"/1' AND startDate<='"+endYear+"/"+oMonth+"/1' AND idno='"+getSession().getAttribute("userid")+"'")+
 		df.sqlGetInt("SELECT IFNULL(SUM(hours),0)as hours FROM AMS_Redeem WHERE idno='"+getSession().getAttribute("userid")+"' AND expiry>='"+this.sf.format(new Date())+"'");
 	}
 	
 	private int getUsed(int beginYear, int endYear){		
 		return df.sqlGetInt("SELECT IFNULL(((SUM(totalDay)*8)+SUM(totalHour)),0)as hours FROM AMS_DocApply WHERE (status!='0' AND status!='2' OR status IS NULL) AND " +
-		"askLeaveType='09' AND startDate>='"+beginYear+"/6/1' AND startDate<='"+endYear+"/6/1' AND idno='"+getSession().getAttribute("userid")+"'");
+		"askLeaveType='09' AND startDate>='"+beginYear+"/"+oMonth+"/1' AND startDate<='"+endYear+"/"+oMonth+"/1' AND idno='"+getSession().getAttribute("userid")+"'");
 	}
 	
 	private boolean checkTime(long in, long out, long setIn, long setOut){	

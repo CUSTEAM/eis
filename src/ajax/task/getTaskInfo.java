@@ -1,6 +1,7 @@
 package ajax.task;
  
 import java.util.List;
+import java.util.Map;
 
 //import org.apache.struts2.json.annotations.JSON;
 
@@ -13,28 +14,10 @@ import action.BaseAction;
  */
 public class getTaskInfo extends BaseAction{
 	
-	private List list;
-	private List files;
-	public List getFiles() {
-		return files;
-	}
-
-	public void setFiles(List files) {
-		this.files = files;
-	}
-
-	private String unitName;
 	
-	public String getUnitName() {
-		return unitName;
-	}
-
-	public void setUnitName(String unitName) {
-		this.unitName = unitName;
-	}
-
-	//@JSON(format="yyyy-MM-dd HH:mm:ss")
-	//@JSON(serialize=false)
+	
+	private List list;
+	
 	public List getList() {
 		return list;
 	}
@@ -42,22 +25,27 @@ public class getTaskInfo extends BaseAction{
 	public void setList(List list) {
 		this.list = list;
 	}
+
 	
-	public String execute() {
-		
-		if(request.getParameter("unit")!=null){
-			setList(df.sqlGet("SELECT (SELECT COUNT(*)FROM Task_apply WHERE Task=t.Oid AND status!='C')as cnt, t.title, t.Oid FROM Task t WHERE t.unit='"+request.getParameter("unit")+"'"));
-			setUnitName(df.sqlGetStr("SELECT name FROM CODE_UNIT WHERE id='"+request.getParameter("unit")+"'"));
-			setFiles(df.sqlGet("SELECT f.path, f.file_name FROM Task_file f, Task t WHERE f.Task_oid=t.Oid AND t.unit="+request.getParameter("unit")));
+
+	public String execute() {		
+		List<Map>list=null;
+		if(request.getParameter("histOid")!=null){
+			list=df.sqlGet("SELECT cu.name as unitName, e.cname, th.* FROM (Task_hist th LEFT OUTER JOIN empl e ON th.empl=e.idno)LEFT OUTER JOIN CODE_UNIT cu ON cu.id=e.unit_module WHERE th.Oid="+request.getParameter("histOid"));
+			for(int i=0; i<list.size(); i++){
+				list.get(i).put("files", df.sqlGet("SELECT * FROM Task_file WHERE back='0' AND Task_hist_oid="+list.get(i).get("Oid")));
+				list.get(i).put("bFiles", df.sqlGet("SELECT * FROM Task_file WHERE back='1' AND Task_hist_oid="+list.get(i).get("Oid")));
+			}
 		}
-		
-		if(request.getParameter("Oid")!=null){
-			setList(df.sqlGet("SELECT t.title,t.template, t.ensure FROM Task t WHERE t.Oid="+request.getParameter("Oid")));
-			setFiles(df.sqlGet("SELECT path, file_name FROM Task_file WHERE Task_oid="+request.getParameter("Oid")));
+		if(request.getParameter("taskOid")!=null){			
+			list=df.sqlGet("SELECT cu.name as unitName, e.cname,t.note as TaskNote,t.title, th.* FROM (Task t, Task_hist th LEFT OUTER JOIN empl e ON th.empl=e.idno)LEFT OUTER JOIN CODE_UNIT cu ON cu.id=e.unit_module WHERE th.Task_oid=t.Oid AND th.Task_hist_oid IS NULL AND th.Task_oid="+request.getParameter("taskOid"));
+			for(int i=0; i<list.size(); i++){
+				list.get(i).put("files", df.sqlGet("SELECT * FROM Task_file WHERE back='0' AND Task_oid="+list.get(i).get("Task_oid")));
+				list.get(i).put("bFiles", df.sqlGet("SELECT * FROM Task_file WHERE back='1' AND Task_hist_oid="+list.get(i).get("Oid")));
+			}		
 		}
-		
-		
-				
+		if(list.isEmpty())return SUCCESS;		
+		this.setList(list);					
         return SUCCESS;               
     }
 	

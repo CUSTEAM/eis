@@ -10,9 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import action.BaseAction;
+import action.BasePrintXmlAction;
 
-public class PubNabbrSearchAction extends BaseAction{
+public class PubNabbrSearchAction extends BasePrintXmlAction{
 	
 	public String building;
 	public String floor;
@@ -309,8 +309,8 @@ public class PubNabbrSearchAction extends BaseAction{
 		
 		Date date=new Date();
 		response.setContentType("text/html; charset=UTF-8");
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition","attachment;filename="+date.getTime()+".xls");			
+		xml2ods(response, getRequest(), date);
+					
 		
 		
 		

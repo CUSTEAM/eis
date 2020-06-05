@@ -83,7 +83,7 @@ public class getTimeTable extends BaseAction{
 					+ "c.ClassNo=d.depart_class AND d.Oid=dc.Dtime_oid AND d.techid ='"+value+"'");
 			case"nabbr":return df.sqlGet("SELECT d.Oid, dc.week, dc.begin, dc.end, IFNULL(dc.place,'')as place,"
 					+ "cs.chi_name,IFNULL(e.cname, '')as cname, c.ClassName FROM Dtime d LEFT OUTER JOIN empl e ON "
-					+ "d.techid=e.idno, Dtime_class dc, Class c, Csno cs WHERE d.Sterm='"+term+"'AND cs.cscode=d.cscode AND "
+					+ "d.techid=e.idno, Dtime_class dc, Class c, Csno cs WHERE cs.cscode=d.cscode AND "
 					+ "c.ClassNo=d.depart_class AND d.Oid=dc.Dtime_oid AND dc.place ='"+value+"'");
 			case"student":return df.sqlGet("SELECT d.Oid, dc.week, dc.begin, dc.end, IFNULL(dc.place,'')as place,"
 					+ "cs.chi_name,IFNULL(e.cname, '')as cname, c.ClassName FROM Dtime d LEFT OUTER JOIN empl e ON "

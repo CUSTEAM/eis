@@ -29,9 +29,13 @@ public class ModuleUnitManagerAction extends BaseAction{
 		
 		List<Map>list=(List<Map>) getContext().getAttribute("CODE_UNIT");
 		for(int i=0; i<list.size(); i++){
+			if(!list.get(i).get("pid").equals("0"))
+			list.get(i).put("pName",df.sqlGetStr("SELECT name FROM CODE_UNIT WHERE id='"+list.get(i).get("pid")+"'"));
 			list.get(i).put("moduleCnt", df.sqlGetInt("SELECT COUNT(*)FROM SYS_MODULE_UNIT WHERE unit_id='"+list.get(i).get("id")+"'"));
 		}
-		getContext().setAttribute("CODE_UNIT", list);
+		//getContext().setAttribute("CODE_UNIT", list);
+		request.setAttribute("ulist", list);
+		
 		return SUCCESS;
 	}
 	
@@ -45,7 +49,7 @@ public class ModuleUnitManagerAction extends BaseAction{
 			changUnit();
 		}
 		
-		return SUCCESS;
+		return execute();
 	}
 	
 	/**

@@ -7,39 +7,41 @@
 <head>
 
 
-<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9Y8oHl3dtYJUiOG0ZFzxzurFdd57-DVY&callback=initMap" type="text/javascript"></script>
 <script src="/eis/inc/js/plugin/tinyMap/markerclusterer.js"></script>
 <script src="/eis/inc/js/plugin/tinyMap/markerwithlabel.js"></script>
 <script src="/eis/inc/js/plugin/jquery.tinyMap.min.js"></script>
 
 
 <script>
-$.fn.tinyMapConfigure({
-    // Google Maps API URL
-    'api': 'https://maps.googleapis.com/maps/api/js',
-    // Google Maps API Version
-    'v': '3.3',
-    // Google Maps API Key，預設 null
-    //'key': 'Google Maps API KEY'
-    // 使用的地圖語言
-    'language': 'zh‐TW'
-    // 載入的函式庫名稱，預設 null
-    //'libraries': 'adsense,drawing,geometry...',
-    // 使用個人化的地圖，預設 false
-    //'signed_in': true|false,
-    // MarkerClustererPlus.js 路徑
-    // 預設 '//google‐maps‐utility‐library‐v3.googlecode.com/svn/trunk/markerclustererplus/src/markerclusterer_packed.js'
-    // 建議下載至自有主機，避免讀取延遲造成無法使用。
-    //'clusterer': '/eis/inc/js/plugin/tinyMap/markerclusterer.js',
-    // MarkerWithLabel.js 路徑
-    // 預設 '//google‐maps‐utility‐library‐v3.googlecode.com/svn/trunk/markerwithlabel/src/markerwithlabel_packed.js'
-    // 建議下載至自有主機，避免讀取延遲造成無法使用。
-    //'withLabel': '/eis/inc/js/plugin/tinyMap/markerwithlabel.js'
-});
+
 
 
 
 $(document).ready(function() {
+	
+	$.fn.tinyMapConfigure({
+	    // Google Maps API URL
+	    'api': 'https://maps.googleapis.com/maps/api/js',
+	    // Google Maps API Version
+	    'v': '3.3',
+	    // Google Maps API Key，預設 null
+	    'key': 'AIzaSyB9Y8oHl3dtYJUiOG0ZFzxzurFdd57-DVY',
+	    // 使用的地圖語言
+	    'language': 'zh‐TW'
+	    // 載入的函式庫名稱，預設 null
+	    //'libraries': 'adsense,drawing,geometry...',
+	    // 使用個人化的地圖，預設 false
+	    //'signed_in': true|false,
+	    // MarkerClustererPlus.js 路徑
+	    // 預設 '//google‐maps‐utility‐library‐v3.googlecode.com/svn/trunk/markerclustererplus/src/markerclusterer_packed.js'
+	    // 建議下載至自有主機，避免讀取延遲造成無法使用。
+	    //'clusterer': '/eis/inc/js/plugin/tinyMap/markerclusterer.js',
+	    // MarkerWithLabel.js 路徑
+	    // 預設 '//google‐maps‐utility‐library‐v3.googlecode.com/svn/trunk/markerwithlabel/src/markerwithlabel_packed.js'
+	    // 建議下載至自有主機，避免讀取延遲造成無法使用。
+	    //'withLabel': '/eis/inc/js/plugin/tinyMap/markerwithlabel.js'
+	});
 	
 	$('#map').tinyMap({
 	    'center': ['25.039065815333753', '121.56097412109375'],

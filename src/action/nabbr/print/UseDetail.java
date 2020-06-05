@@ -5,13 +5,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import action.BasePrintXmlAction;
 
-import action.BaseAction;
-
-public class UseDetail extends BaseAction{
+public class UseDetail extends BasePrintXmlAction{
 	
 	private List<String>list;
 	private String room_id;
@@ -67,8 +64,8 @@ public class UseDetail extends BaseAction{
 		
 		Date date=new Date();
 		response.setContentType("text/html; charset=UTF-8");
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition","attachment;filename="+date.getTime()+".xls");		
+		xml2ods(response, getRequest(), date);
+				
 		
 		PrintWriter out=response.getWriter();
 		out.println ("<?xml version='1.0'?>");

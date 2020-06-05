@@ -168,7 +168,9 @@ $(document).ready(function() {
 </form>
 
 <script>
-$("input[name='begin'], input[name='end']" ).datetimepicker();
+$("input[name='begin'], input[name='end']" ).datetimepicker({
+	changeMonth: true,
+	changeYear: true,});
 
 </script>
 

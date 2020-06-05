@@ -206,7 +206,10 @@ $(document).ready(function() {
 </c:if>
 </form>
 <script>
-$(".timepick" ).datepicker();
+$(".timepick" ).datepicker({
+	changeMonth: true,
+	changeYear: true,
+});
 function check(Oid){
 	$("#Oid"+Oid).val(Oid);
 }

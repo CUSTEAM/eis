@@ -6,6 +6,16 @@
 		<action name="getMySchedule" class="ajax.getMySchedule"/>
 		<action name="editMySchedule" class="ajax.editMySchedule"/>
 		
+		<!-- 記錄線上人數 -->
+		<action name="onlineCheck" class="ajax.onlineCheck">
+		    <result type="json"/>
+		</action>
+		
+		<!-- 改文件格式 -->
+		<action name="xml2osd" class="ajax.xml2osd">
+			<result type="json"/>
+		</action>
+		
 		<!-- 居住地 -->
 		<action name="getStdsgeo" class="ajax.eis.getStdsgeo">
 			<result type="json"/>
@@ -158,6 +168,14 @@
 		   	</result>
 		</action>
 		
+		<!-- 取RcAio -->
+		<action name="autoCompRcAio" class="ajax.autoCompRcAio">
+			<result type="json">
+			    <param name="list">list</param>
+			    <param name="callbackParameter">back</param>
+		   	</result>
+		</action>
+		
 		<!-- 取各項代碼 -->
 		<action name="autoCompAnyCode" class="ajax.autoCompAnyCode">
 			<result type="json">
@@ -242,22 +260,24 @@
 	</package>
 	
 	<package name="tasks" extends="abstract_struts, struts-default, json-default" namespace="/">
-	    <!-- 任務模版細節 -->
+	   
 		<action name="getTaskInfo" class="ajax.task.getTaskInfo">
-			<result type="json">
-			    <param name="list">list</param>
-			    <param name="uintName">unitName</param>
+			<result type="json">			    
 			    <param name="callbackParameter">back</param>
 		   	</result>
 		</action>
 		
-		<!-- 任務模版細節 -->
+		<!-- 任務模版細節 >
 		<action name="getTaskAppInfo" class="ajax.task.getTaskAppInfo">
 			<result type="json">
 			    <param name="list">list</param>
 			    <param name="callbackParameter">back</param>
 		   	</result>
-		</action>
+		</action-->
+		
+		
+		
+		
 	</package>
 
 	<include file="struts-ajax-dtime.xml" />

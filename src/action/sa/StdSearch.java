@@ -2,14 +2,12 @@ package action.sa;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import action.BaseAction;
+import action.BasePrintXmlAction;
 
 /**
  * 學生查詢與報表列印程式
@@ -32,7 +30,7 @@ import action.BaseAction;
  * 
  * @author shawn 
  */
-public class StdSearch extends BaseAction{
+public class StdSearch extends BasePrintXmlAction{
 	
 	/**
 	 * 部制
@@ -46,7 +44,7 @@ public class StdSearch extends BaseAction{
 	/**
 	 * 校區 部制 學制 院 科系 年級 班級
 	 */
-	public String cno, stno, sno, cono, dno, gno, zno;
+	public String cno, stno, sno, cono, dno, gno, zno, graduate;
 	/**
 	 * 學號或姓名
 	 */
@@ -137,7 +135,7 @@ public class StdSearch extends BaseAction{
 		if(!occur_date_end.equals(""))sb.append(" AND s.occur_date<='"+occur_date_end+"'");
 		if(!occur_year_begin.equals(""))sb.append(" AND s.occur_year>='"+occur_year_begin+"'");
 		if(!occur_year_end.equals(""))sb.append(" AND s.occur_year<='"+occur_year_end+"'");
-		
+		if(!graduate.equals(""))sb.append(" AND c.graduate='"+graduate+"'");
 		
 		if(!cno.equals(""))sb.append(" AND c.CampusNo='"+cno+"'");			
 		if(!stno.equals(""))sb.append(" AND c.SchoolType='"+stno+"'");
@@ -157,7 +155,7 @@ public class StdSearch extends BaseAction{
 		if(!addr.equals(""))sb.append(" AND s.perm_addr LIKE'%"+addr+"%' || s.curr_addr LIKE'%"+addr+"%'");
 			
 		sb.append(" ORDER BY c.ClassNo, s.student_no");		
-		System.out.println(sb);
+		//System.out.println(sb);
 		print(df.sqlGet(sb.toString()));		
 	}
 	
@@ -167,9 +165,7 @@ public class StdSearch extends BaseAction{
 	 */
 	private void cls() throws IOException{
 		Date d=new Date();
-		response.setContentType("application/vnd.ms-excel; charset=UTF-8");
-		response.setHeader("Content-disposition", "attachment;filename="+d.getTime()+".xls");
-		
+		xml2ods(response, getRequest(), d);
 		String sterm=getContext().getAttribute("school_term").toString();
 		StringBuilder sb=new StringBuilder("SELECT c.ClassNo, c.ClassName FROM Class c WHERE c.Type='p'");
 		if(!cno.equals(""))sb.append("AND c.CampusNo='"+cno+"'");			
@@ -298,9 +294,8 @@ public class StdSearch extends BaseAction{
 	 * @throws IOException
 	 */
 	private void print(List<Map>list) throws IOException{		
-		//response.setContentType("application/vnd.ms-excel");
-		response.setContentType("application/vnd.ms-excel; charset=UTF-8");
-		response.setHeader("Content-disposition","attachment;filename="+new Date().getTime()+".xls");		
+				
+		xml2ods(response, getRequest(), new Date());
 		PrintWriter out=response.getWriter();		
 		out.println ("<?xml version='1.0'?>");
 		out.println ("<?mso-application progid='Excel.Sheet'?>");

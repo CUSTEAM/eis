@@ -6,17 +6,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import action.BaseAction;
+import action.BasePrintXmlAction;
 
-public class AqPrint extends BaseAction{
+public class AqPrint extends BasePrintXmlAction{
 	
 	
 	public String execute() throws IOException{
 		
 		Date date=new Date();
 		response.setContentType("text/html; charset=UTF-8");
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-disposition","attachment;filename="+date.getTime()+".xls");
+		xml2ods(response, getRequest(), date);
+		
 		
 		PrintWriter out=response.getWriter();		
 		

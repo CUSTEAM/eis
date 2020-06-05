@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
-import org.json.JSONString;
 
-import action.BaseAction;
+import action.BasePrintXmlAction;
 
 /**
  * 圖表展示
@@ -19,7 +18,7 @@ import action.BaseAction;
  * @category TODO: 核心能力指標
  * ex: data:{cno:$("#").val(), stno:$("#").val(), sno:$("#").val(), cono:$("#").val(), dno:$("#").val(), gno:$("#").val(), zno:$("#").val()},
  */
-public class OutlookAction extends BaseAction{
+public class OutlookAction extends BasePrintXmlAction{
 	
 	public String execute(){
 		
@@ -135,8 +134,7 @@ public class OutlookAction extends BaseAction{
 	//來源校表
 	public String stdFromPrint() throws IOException{
 		Date date=new Date();
-		response.setContentType("application/vnd.ms-excel; charset=UTF-8");
-		response.setHeader("Content-disposition","attachment;filename="+date.getTime()+".xls");				
+		xml2ods(response, getRequest(), date);			
 		PrintWriter out=response.getWriter();
 		StringBuilder sql=new StringBuilder("SELECT COUNT(*)as cnt, r.name, r.no FROM stmd s, Recruit_school r, Class c WHERE r.geocode IS NOT NULL AND s.schl_code=r.no AND s.depart_class=c.ClassNo ");
 		if(!request.getParameter("cno").equals(""))sql.append("AND c.CampusNo='"+request.getParameter("cno")+"'");

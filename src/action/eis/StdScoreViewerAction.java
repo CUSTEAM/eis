@@ -2,12 +2,10 @@ package action.eis;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +13,10 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import action.BaseAction;
+import action.BasePrintXmlAction;
 import model.Message;
 
-public class StdScoreViewerAction extends BaseAction{
+public class StdScoreViewerAction extends BasePrintXmlAction{
 	
 	public File fileUpload;
     public String student_no;	
@@ -55,7 +53,7 @@ public class StdScoreViewerAction extends BaseAction{
 		}
 		
 		Date date=new Date();
-		response.setContentType("text/html; charset=UTF-8");response.setContentType("application/vnd.ms-excel");response.setHeader("Content-disposition","attachment;filename="+date.getTime()+".xls");		
+		response.setContentType("text/html; charset=UTF-8");xml2ods(response, getRequest(), date);		
 		PrintWriter out=response.getWriter();
 		
 		out.println ("<?xml version='1.0'?>");
@@ -95,7 +93,7 @@ public class StdScoreViewerAction extends BaseAction{
 		out.println ("  </Style>");
 		out.println (" </Styles>");
 		out.println (" <Worksheet ss:Name='工作表1'>");
-		out.println ("  <Table ss:ExpandedColumnCount='29' ss:ExpandedRowCount='"+(stds.size()+100)+"' x:FullColumns='1'");
+		out.println ("  <Table ss:ExpandedColumnCount='45' ss:ExpandedRowCount='"+(stds.size()+100)+"' x:FullColumns='1'");
 		out.println ("   x:FullRows='1' ss:DefaultColumnWidth='54' ss:DefaultRowHeight='16.5'>");
 		out.println ("   <Column ss:AutoFitWidth='0' ss:Width='75' ss:Span='2'/>");
 		out.println ("   <Column ss:Index='4' ss:AutoFitWidth='0' ss:Width='37.5'/>");
@@ -110,27 +108,43 @@ public class StdScoreViewerAction extends BaseAction{
 		out.println ("    <Cell><Data ss:Type='String'>第1學期學業</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第1學期操行</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第1學期名次</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第1學期應修學分</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第1學期不及格學分</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第2學期學業</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第2學期操行</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第2學期名次</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第2學期應修學分</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第2學期不及格學分</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第3學期學業</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第3學期操行</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第3學期名次</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第3學期應修學分</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第3學期不及格學分</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第4學期學業</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第4學期操行</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第4學期名次</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第4學期應修學分</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第4學期不及格學分</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第5學期學業</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第5學期操行</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第5學期名次</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第5學期應修學分</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第5學期不及格學分</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第6學期學業</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第6學期操行</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第6學期名次</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第6學期應修學分</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第6學期不及格學分</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第7學期學業</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第7學期操行</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第7學期名次</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第7學期應修學分</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第7學期不及格學分</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第8學期學業</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第8學期操行</Data></Cell>");
 		out.println ("    <Cell><Data ss:Type='String'>第8學期名次</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第8學期應修學分</Data></Cell>");
+		out.println ("    <Cell><Data ss:Type='String'>第8學期不及格學分</Data></Cell>");
 		out.println ("   </Row>");
 		for(int i=0; i<stds.size(); i++){			
 			out.println ("   <Row>");
@@ -144,20 +158,33 @@ public class StdScoreViewerAction extends BaseAction{
 				if(stds.get(i).get("score"+j)!=null){
 					out.println ("    <Cell><Data ss:Type='Number'>"+stds.get(i).get("score"+j)+"</Data></Cell>");
 				}else{
-					out.println ("    <Cell></Cell>");
+					out.println ("    <Cell>0</Cell>");
 				}
 				
 				if(stds.get(i).get("score1"+j)!=null){
 					out.println ("    <Cell><Data ss:Type='Number'>"+stds.get(i).get("score1"+j)+"</Data></Cell>");
 				}else{
-					out.println ("    <Cell></Cell>");
+					out.println ("    <Cell>0</Cell>");
 				}	
 				
 				if(stds.get(i).get("rank"+j)!=null && !stds.get(i).get("rank"+j).equals("")){
 					out.println ("    <Cell><Data ss:Type='Number'>"+stds.get(i).get("rank"+j)+"</Data></Cell>");
 				}else{
-					out.println ("    <Cell></Cell>");
+					out.println ("    <Cell>0</Cell>");
 				}
+				
+				if(stds.get(i).get("tot"+j)!=null && !stds.get(i).get("tot"+j).equals("")){
+					out.println ("    <Cell><Data ss:Type='Number'>"+stds.get(i).get("tot"+j)+"</Data></Cell>");
+				}else{
+					out.println ("    <Cell>0</Cell>");
+				}
+				
+				if(stds.get(i).get("pas"+j)!=null && !stds.get(i).get("pas"+j).equals("")){
+					out.println ("    <Cell><Data ss:Type='Number'>"+stds.get(i).get("pas"+j)+"</Data></Cell>");
+				}else{
+					out.println ("    <Cell>0</Cell>");
+				}
+				
 			}			
 			out.println ("   </Row>");			
 		}		
@@ -217,23 +244,35 @@ public class StdScoreViewerAction extends BaseAction{
 	
 	private Map getScore(String stdNo){
 		
-		List<Map>s=df.sqlGet("SELECT s.rank, s.score, c.score as score1 FROM Stavg s LEFT OUTER JOIN cond c ON "
+		List<Map>s=df.sqlGet("SELECT IFNULL((SELECT SUM(credit)FROM ScoreHist WHERE student_no=s.student_no AND school_year=s.school_year AND school_term=s.school_term),0)as tot, "
+		+ "IFNULL((SELECT SUM(credit)FROM ScoreHist WHERE score<=60 AND student_no=s.student_no AND school_year=s.school_year AND school_term=s.school_term), 0)as pas, "
+		+ "s.rank, s.score, c.score as score1 FROM Stavg s LEFT OUTER JOIN cond c ON "
 		+ "s.student_no=c.student_no AND s.school_year=c.school_year AND s.school_term=c.school_term WHERE "
 		+ "s.student_no='"+stdNo+"'ORDER BY s.school_year, s.school_term");
 		
 		Map m=df.sqlGetMap("SELECT csi.name, IF(s.sex='1','男' ,'女')as sex, c.ClassName, s.student_no, "
 		+ "s.student_name FROM Class c, stmd s LEFT OUTER JOIN CODE_STMD_IDENT csi ON s.ident=csi.id WHERE "
 		+ "c.ClassNo=s.depart_class AND s.student_no='"+stdNo+"'");
+		
+		if(m==null)m=df.sqlGetMap("SELECT csi.name, IF(s.sex='1','男' ,'女')as sex, c.ClassName, s.student_no, "
+				+ "s.student_name FROM Class c, Gstmd s LEFT OUTER JOIN CODE_STMD_IDENT csi ON s.ident=csi.id WHERE "
+				+ "c.ClassNo=s.depart_class AND s.student_no='"+stdNo+"'");
+		
+		
 		for(int i=0; i<8; i++){
 			
 			if(i+1<=s.size()){
 				m.put("rank"+(i+1), s.get(i).get("rank"));
 				m.put("score"+(i+1), s.get(i).get("score"));
 				m.put("score1"+(i+1), s.get(i).get("score1"));
+				m.put("tot"+(i+1), s.get(i).get("tot"));
+				m.put("pas"+(i+1), s.get(i).get("pas"));
 			}else{
 				m.put("rank"+(i+1), "");
 				m.put("score"+(i+1), "");
 				m.put("score1"+(i+1), "");
+				m.put("tot"+(i+1), "0");
+				m.put("pas"+(i+1), "0");
 			}			
 		}		
 		return m;

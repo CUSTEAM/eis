@@ -13,7 +13,6 @@ import org.apache.commons.io.FileUtils;
 import action.BaseAction;
 import model.Message;
 import model.Task;
-import model.TaskApply;
 
 /**
  * 工作單建立
@@ -55,56 +54,24 @@ public class TaskAddAction extends BaseAction{
 	public String checker;
 	
 	public String execute(){
-		//預載使用者email
-		//request.setAttribute("email", df.sqlGetStr("SELECT Email FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'"));
 		
-		request.setAttribute("myApps", df.sqlGet("SELECT cts.name as status, e.cname, ta.Oid, cu.name, t.title, ta.sdate, ta.edate FROM "
-				+ "CODE_TASK_STATUS cts,Task t, Task_apply ta LEFT OUTER JOIN empl e ON e.idno=ta.next_empl, CODE_UNIT cu "
-				+ "WHERE cts.id=ta.status AND t.unit=cu.id AND t.Oid=ta.Task AND ta.from_empl='"+getSession().getAttribute("userid")+"'ORDER BY ta.Oid DESC"));		
 		
-		/*request.setAttribute("myFin", df.sqlGet("SELECT cts.name as status, e.cname, ta.Oid, cu.name, t.title, ta.sdate, ta.edate FROM "
-				+ "CODE_TASK_STATUS cts,Task t, Task_apply ta LEFT OUTER JOIN empl e ON e.idno=ta.next_empl, CODE_UNIT cu "
-				+ "WHERE cts.id=ta.status AND t.unit=cu.id AND t.Oid=ta.Task AND ta.status='C'AND ta.from_empl='"+getSession().getAttribute("userid")+"'ORDER BY ta.Oid DESC"));
-		*/
+		
+		
+		
+		
+		
 		
 		return SUCCESS;
 	}
 	
 	public String add(){
-		request.setAttribute("aunit", getUnit());
+		
 		
 		return "add";
 	}
 
 	public String save(){		
-		//SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		//df.exSql("INSERT INTO Task_apply(Task, from_empl, note, sdate)VALUES("+addOid+","+
-		//df.sqlGetStr("SELECT Oid FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'")+", '"+appInfo+"', '"+sf.format(new Date())+"');");
-		Message msg=new Message();
-		Task t=(Task) df.hqlGetListBy("FROM Task WHERE Oid="+addOid).get(0);
-		
-		if(t.getEnsure()==1&& checker.trim().equals("")){
-			msg.setError("此項申請需填寫主管");
-			this.savMessage(msg);
-			return execute();
-		}
-		
-		
-		TaskApply a=new TaskApply();
-		//t.setEmail(email);
-		a.setFrom_empl(getSession().getAttribute("userid").toString());
-		a.setNote(appInfo);
-		a.setSdate(new Date());
-		
-		
-		if(!checker.trim().equals("")){
-			a.setChecker(df.sqlGetStr("SELECT idno FROM empl WHERE Oid='"+checker.substring(0, checker.indexOf(","))+"'"));
-			a.setStatus("H");
-		}else{
-			a.setStatus("N");
-		}
-		a.setTask(Integer.parseInt(addOid));
-		df.update(a);
 		
 		//處理附加檔案
 		if(fileUpload!=null){
@@ -130,8 +97,8 @@ public class TaskAddAction extends BaseAction{
 				bio.copyFile(fileUpload[i], new File(filePath));
 				ftpinfo=df.sqlGetMap("SELECT "+target+" as host, username, password, path FROM SYS_HOST WHERE useid='TaskFile'");
 				//String filePath=ftpinfo.get("path")+"/"+t.getOid()+"/", file_name;
-				bio.putFTPFile(ftpinfo.get("host"), ftpinfo.get("username"), ftpinfo.get("password"), tmp_path+"/", ftpinfo.get("path")+"/"+t.getOid()+"/", fileName);
-				df.exSql("INSERT INTO Task_file(Task_app_oid, path, file_name)VALUES("+t.getOid()+",'task/"+t.getOid()+"/', '"+fileName+"');");		            
+				//bio.putFTPFile(ftpinfo.get("host"), ftpinfo.get("username"), ftpinfo.get("password"), tmp_path+"/", ftpinfo.get("path")+"/"+t.getOid()+"/", fileName);
+				//df.exSql("INSERT INTO Task_file(Task_app_oid, path, file_name)VALUES("+t.getOid()+",'task/"+t.getOid()+"/', '"+fileName+"');");		            
 	        }
 			
 		}		
@@ -139,20 +106,7 @@ public class TaskAddAction extends BaseAction{
 	}
 	
 	
-	/*public String search(){
-		StringBuilder sb=new StringBuilder("SELECT cts.name as status, e.cname, ta.Oid, cu.name, t.title, ta.edate, ta.sdate FROM "
-		+ "CODE_TASK_STATUS cts,Task t, Task_apply ta LEFT OUTER JOIN empl e ON e.Oid=ta.next_empl, CODE_UNIT cu WHERE "
-		+ "cts.id=ta.status AND t.unit=cu.id AND t.Oid=ta.Task AND cu.id LIKE'"+unitSearch+"%'");
-		if(!begin.trim().equals("")){
-			sb.append("AND sdate>='"+begin+"'");
-		}
-		if(!end.trim().equals("")){
-			sb.append("AND sdate<='"+end+"'");
-		}		
-		request.setAttribute("myApps", df.sqlGet(sb.toString()));
-		request.setAttribute("aunit", getUnit());
-		return SUCCESS;
-	}*/
+	
 	
 	public String unit,begin,end,stat;
 	

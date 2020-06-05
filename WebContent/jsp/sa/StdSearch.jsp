@@ -90,7 +90,6 @@ $(document).ready(function() {
 });
 </script>
 <style>
-
 .material-switch > input[type="checkbox"] {
     display: none;   
 }
@@ -161,7 +160,10 @@ $(document).ready(function() {
 		</td>
 	</tr>
 	<tr class="tsel">
-		<td><%@ include file="/inc/jsp-kit/classSelectorFull.jsp"%></td>
+		<td>
+		<%@ include file="/inc/jsp-kit/classSelectorFullCampus.jsp"%>
+		
+		</td>
 	</tr>
 	
 	<tr class="tname">
@@ -195,6 +197,16 @@ $(document).ready(function() {
 				<option value="${i.id}">${i.name}</option>
 				</c:forEach>
 			</select>
+		</div>
+		
+		<div class="input-group">
+			<span class="input-group-addon">畢業班</span>
+			<select class="form-control" name=graduate>
+				<option value="">不限畢業資格</option>
+				<option value="1">應屆畢業班</option>
+				<option value="0">非畢業班</option>
+			</select>
+			 
 		</div>
 		</td>
 	</tr>

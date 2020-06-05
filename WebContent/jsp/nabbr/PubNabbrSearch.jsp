@@ -472,7 +472,10 @@ legend.append('text')
 
 
 <script>
-$(".timepick" ).datepicker();
+$(".timepick" ).datepicker({
+	changeMonth: true,
+	changeYear: true,
+});
 </script>
 </form>
 </body>

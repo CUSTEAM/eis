@@ -257,7 +257,10 @@ $(document).ready(function() {
 </form>
 
 <script>
-$(".timepick" ).datepicker();
+$(".timepick" ).datepicker({
+	changeMonth: true,
+	changeYear: true,
+});
 
 var chProp=false;
 var chCls=false;

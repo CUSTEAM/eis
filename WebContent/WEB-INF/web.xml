@@ -12,6 +12,12 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/applicationContext.xml</param-value>
 	</context-param>
+	
+	<listener>
+		<listener-class>
+			service.listener.OnlineStatusListener
+		</listener-class>
+	</listener>
 
 	<listener>
 		<listener-class>
@@ -19,11 +25,15 @@
 		</listener-class>
 	</listener>
 	
+	
+	
 	<listener>
 		<listener-class>
 			service.listener.ContextSetupListener
 		</listener-class>
 	</listener>
+	
+	
 
 	<filter>
 		<filter-name>sitemesh</filter-name>

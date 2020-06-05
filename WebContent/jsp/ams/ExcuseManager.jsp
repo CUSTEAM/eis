@@ -221,6 +221,8 @@ $(document).ready(function() {
 $('.timepick').datetimepicker({
 	controlType: 'select',
 	//addSliderAccess: true,
+	changeMonth: true,
+	changeYear: true,
 	sliderAccessArgs: { touchonly: false },
 	stepHour: 1,
 	stepMinute: 30,

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<decorators defaultdir="/decorators">
-	<excludes>
-        <pattern>index</pattern>
-    </excludes> 
-	
+<decorators defaultdir="/decorators">	
 	<page-parsers>
 		<parser default="true" class="com.opensymphony.module.sitemesh.parser.HTMLPageParser" />
 		<parser content-type="text/html" class="com.opensymphony.module.sitemesh.parser.HTMLPageParser" />
@@ -25,7 +21,7 @@
 		<pattern>/*</pattern>
 	</decorator>
 	
-	 <excludes>  
+	<excludes>  
        <pattern>/jsp/decorators/*</pattern>
        <pattern>/inc/*</pattern>
        <pattern>/Aqansw*</pattern>
