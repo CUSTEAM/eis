@@ -28,7 +28,7 @@ public class ExcuseManager extends BaseAction{
 	public String endDate1;
 	public String reason1;
 	
-	String oMonth="5";
+	String oMonth="6";
 	SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat sf1=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	SimpleDateFormat sf2=new SimpleDateFormat("yyyy-MM-dd");

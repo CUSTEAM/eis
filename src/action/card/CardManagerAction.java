@@ -45,6 +45,7 @@ public class CardManagerAction extends CardService{
 		List success=new ArrayList();
 		int cnt=0;
 		boolean b;
+		StringBuilder inco;
 		while ((line=br.readLine())!=null){
 			cnt++;
 			d=line.split(",");
@@ -52,8 +53,17 @@ public class CardManagerAction extends CardService{
 			for(int i=0; i<w.size(); i++){
 				if(w.get(i).get("username").equals(d[0])){
 					try{
-						df.exSql("UPDATE wwpass SET inco='"+d[1]+"' WHERE username='"+d[0]+"'");
+						//必須補滿10碼
+						inco=new StringBuilder(d[1]);
+						if(inco.length()<10) {
+							for(int j=inco.length(); j<10; j++) {
+								inco.insert(0, "0");
+							}
+						}
+						
+						df.exSql("UPDATE wwpass SET inco='"+inco+"' WHERE username='"+d[0]+"'");
 					}catch(Exception e){
+						e.printStackTrace();
 						break;
 					}
 					success.add(d);

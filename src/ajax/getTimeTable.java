@@ -34,29 +34,31 @@ public class getTimeTable extends BaseAction{
 		String student_no=request.getParameter("student_no");
 		String emplOid=request.getParameter("emplOid");
 		String nabbr=request.getParameter("nabbr");
+		String term=request.getParameter("term");
+		if(term==null)term=getContext().getAttribute("school_term").toString();
 		
 		//取班級課表
 		if(ClassNo!=null){
-			setList(getTime(ClassNo, "ClassNo", getContext().getAttribute("school_term").toString()));
+			setList(getTime(ClassNo, "ClassNo", term));
 			return SUCCESS;
 		}
 		
 		//取學生課表
 		if(student_no!=null){
-			setList(getTime(student_no, "student", getContext().getAttribute("school_term").toString()));
+			setList(getTime(student_no, "student", term));
 			return SUCCESS;
 		}
 		
 		//取教師課表
 		if(emplOid!=null){
-			setList(getTime(df.sqlGetStr("SELECT idno FROM empl WHERE Oid="+emplOid), "techid", getContext().getAttribute("school_term").toString()));
+			setList(getTime(df.sqlGetStr("SELECT idno FROM empl WHERE Oid="+emplOid), "techid", term));
 			return SUCCESS;
 		}
 		
 		//取教室課表
 		if(nabbr!=null){
 			
-			setList(getTime(nabbr, "nabbr", getContext().getAttribute("school_term").toString()));
+			setList(getTime(nabbr, "nabbr", term));
 			//setList(getTime(nabbr, "nabbr", getContext().getAttribute("school_term").toString()).toArray());
 			return SUCCESS;
 		}		
@@ -84,7 +86,7 @@ public class getTimeTable extends BaseAction{
 			case"nabbr":return df.sqlGet("SELECT d.Oid, dc.week, dc.begin, dc.end, IFNULL(dc.place,'')as place,"
 					+ "cs.chi_name,IFNULL(e.cname, '')as cname, c.ClassName FROM Dtime d LEFT OUTER JOIN empl e ON "
 					+ "d.techid=e.idno, Dtime_class dc, Class c, Csno cs WHERE cs.cscode=d.cscode AND "
-					+ "c.ClassNo=d.depart_class AND d.Oid=dc.Dtime_oid AND dc.place ='"+value+"'");
+					+ "c.ClassNo=d.depart_class AND d.Oid=dc.Dtime_oid AND dc.place ='"+value+"' AND d.Sterm='"+term+"'");
 			case"student":return df.sqlGet("SELECT d.Oid, dc.week, dc.begin, dc.end, IFNULL(dc.place,'')as place,"
 					+ "cs.chi_name,IFNULL(e.cname, '')as cname, c.ClassName FROM Dtime d LEFT OUTER JOIN empl e ON "
 					+ "d.techid=e.idno, Dtime_class dc, Class c, Csno cs WHERE d.Sterm='"+term+"'AND cs.cscode=d.cscode AND "
