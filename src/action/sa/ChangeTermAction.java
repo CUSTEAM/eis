@@ -238,7 +238,10 @@ public class ChangeTermAction extends BaseAction{
 			b=false;//預設無班可升
 			m.putAll(cls.get(i));//載入暫存班級
 			m.put("Grade", String.valueOf(  Integer.parseInt(cls.get(i).get("Grade").toString())+1));//暫存班升級			
-			if(m.get("graduate").toString().equals("1"))m.put("SeqNo", "1");//若為畢業班升延修班強置轉為甲班
+			if(m.get("graduate").toString().equals("1")) {
+				m.put("SeqNo", "1");//若為畢業班升延修班強置轉為甲班
+				//m.put("Grade", "0");//若為畢業班年級為0
+			}
 			
 			for(int j=0; j<cls.size(); j++){					
 				if(
@@ -292,7 +295,14 @@ public class ChangeTermAction extends BaseAction{
 	private boolean upCheck(Map m){
 		if(Integer.parseInt(m.get("cnt").toString())<1)return false;//無人班跳過
 		if(m.get("Type").toString().equals("E"))return false;//延修班不測試是否有班級可升級
-		if(m.get("Grade").toString().equals("0"))return false;//推廣與跨校不測試是否有班級可升級
+		if(m.get("Grade").toString().equals("0"))return false;//推廣與跨校不測試是否有班級可升級		
+		/*try {
+			if(m.get("graduate").toString().equals("1"))return true;//畢業班不測試是否有班級可升級
+		}catch(Exception e) {
+			return false;
+		}*/
+		
+		
 		return true;
 	}
 	
@@ -315,7 +325,11 @@ public class ChangeTermAction extends BaseAction{
 			b=false;//無班指標
 			m.putAll(cls.get(i));//載入暫存班
 			m.put("Grade", String.valueOf(Integer.parseInt(cls.get(i).get("Grade").toString())+1));//暫存班升級
-			if(m.get("graduate").toString().equals("1"))m.put("SeqNo", "1");//畢業班升延修班一律為甲班
+			if(m.get("graduate").toString().equals("1")) {
+				m.put("SeqNo", "1");//畢業班升延修班一律為甲班
+				///m.put("Grade", "0");//畢業班0年級
+				
+			}
 			
 			for(int j=0; j<cls.size(); j++){					
 				if(
