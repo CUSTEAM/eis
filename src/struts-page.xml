@@ -106,9 +106,9 @@
 			<result>/jsp/sa/ModuleUnitManager.jsp</result>
 		</action>
 		
-		<!--action name="DeLasTermData" class="action.sa.DeLasTermDataAction">
-			<result>/jsp/sa/DeLasTermData.jsp</result>
-		</action-->
+		<action name="BankMarge" class="action.sa.BankMargeAction">
+			<result>/jsp/sa/BankMarge.jsp</result>
+		</action>
 		
 		<action name="ChangeTerm" class="action.sa.ChangeTermAction">
 			<result>/jsp/sa/ChangeTerm.jsp</result>

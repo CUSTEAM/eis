@@ -44,7 +44,8 @@
 		</tr>
 		<tr>
 			<td>
-			<button name="method:print" class="btn btn-danger btn-lg">歷年成績查詢</button>
+			<button name="method:print" class="btn btn-danger ">歷年成績查詢</button>
+			<button name="method:StudentCompositData" class="btn btn-default ">歷年綜合資料</button>
 			</td>
 		</tr>	
 	</table>
