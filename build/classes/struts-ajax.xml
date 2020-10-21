@@ -11,6 +11,11 @@
 		    <result type="json"/>
 		</action>
 		
+		<!-- 圖書館讀者 -->
+		<action name="OnlineSync4Lib" class="ajax.OnlineSync4Lib">
+		    <result type="json"/>
+		</action>
+		
 		<!-- 改文件格式 -->
 		<action name="xml2osd" class="ajax.xml2osd">
 			<result type="json"/>
