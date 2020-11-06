@@ -19,6 +19,12 @@
 		<action name="AqPrint" class="action.aq.AqPrint"></action>
 	</package>
 	
+	<package name="cm" extends="abstract_struts" namespace="/">
+		<action name="CounselorManager" class="action.counselor.CounselorManagerAction">
+			<result>/jsp/counselor/CounselorManager.jsp</result>
+		</action>
+	</package>
+	
 	<!-- 實驗室 -->
 	<package name="nabbr" extends="abstract_struts" namespace="/">
 		<action name="NabbrBoroRegister" class="action.nabbr.NabbrBoroRegisterAction">

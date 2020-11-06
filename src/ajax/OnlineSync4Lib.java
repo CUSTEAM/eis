@@ -45,7 +45,7 @@ public class OnlineSync4Lib extends BaseAction{
 					+ " `s`.`perm_post` AS `perm_post`, `s`.`perm_addr` AS `perm_addr`,"
 					+ " `s`.`sex` AS `sex`, `s`.`Email` AS `Email`, `s`.`entrance` AS `entrance`,"
 					+ " `sc`.`card_num` AS `card_num`from (`stmd` `s` left join `StmdCardNum` `sc` "
-					+ "on ((`s`.`student_no` = `sc`.`student_no`))), Class c WHERE c.ClassNo=s.depart_class;"));
+					+ "on ((`s`.`student_no` = `sc`.`student_no`))), Class c WHERE c.ClassNo=s.depart_class LIMIT 10;"));
 	        
 		}else {
 			Map m=new HashMap();
