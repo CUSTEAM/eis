@@ -5,27 +5,39 @@ import model.Message;
 
 public class CounselorManagerAction extends BaseAction{
 	
-	public String beginDate, endDate, DeptStd, DeptMamber, techid;
+	public String beginDate, endDate, DeptStd, DeptMamber, techid, Oid;
 	
 	public String execute() {
 		
 		if(request.getParameter("delMember")!=null) {
+			
 			//System.out.println("DELETE FROM Counselor_stmd WHERE Oid="+request.getParameter("delMember"));
 			df.exSql("DELETE FROM Counselor_charge WHERE Oid="+request.getParameter("delMember"));
-			return searchMambers();
+			Message msg=new Message();
+			msg.setError("已刪除");
+			this.savMessage(msg);
 		}
+		
 		
 		return SUCCESS;
 	}
 	
 	public String searchStds() {
 		
-		StringBuilder sql=new StringBuilder("SELECT (SELECT COUNT(*)FROM Counselor_msg WHERE stmd_oid=c.Oid)as cnt, c.* FROM Counselor_stmd c WHERE c.student_name IS NOT NULL");
-		if(!beginDate.trim().equalsIgnoreCase(""))sql.append(" AND c.add_time>='"+beginDate+"'");
-		if(!endDate.trim().equalsIgnoreCase(""))sql.append(" AND c.add_time<='"+beginDate+"'");
-		if(!DeptStd.trim().equalsIgnoreCase(""))sql.append(" AND c.DeptNo='"+DeptStd+"'");
-		//System.out.println(sql);
-		request.setAttribute("stds", df.sqlGet(sql.toString()));
+		StringBuilder sql=new StringBuilder("SELECT(SELECT COUNT(*)FROM Counselor_msg WHERE stmd_oid=s.Oid)as cnt,"
+		+ "d.name as DeptName,s.* FROM Counselor_stmd s, CODE_DEPT d WHERE s.DeptNo=d.id ");
+		if(!DeptStd.contentEquals("")) {
+			sql.append("AND d.id='"+DeptStd+"'");
+		}
+		if(!beginDate.equals("")) {
+			sql.append("AND add_time>='"+beginDate+"'");
+		}
+		
+		if(!endDate.equals("")) {
+			sql.append("AND add_time<='"+endDate+"'");
+		}
+		request.setAttribute("stds", df.sqlGet(sql.toString()));		
+				
 		
 		return SUCCESS;
 	}
@@ -44,21 +56,32 @@ public class CounselorManagerAction extends BaseAction{
 		
 		Message msg=new Message();
 		if(techid.trim().indexOf(",")<1) {
-			msg.addError("未指定人員");
+			msg.setError("未指定人員");
+			this.savMessage(msg);
 			return SUCCESS;
 		}
 		
 		StringBuilder sql=new StringBuilder("INSERT INTO Counselor_charge(DeptNo, idno)VALUES('"+DeptMamber+"', '"+df.sqlGetStr("SELECT idno FROM empl WHERE Oid='"+techid.substring(0, techid.indexOf(","))+"'")+"');");
 		
+		try {
+			df.exSql(sql.toString());
+			msg.setError("已建立");
+		}catch(Exception e) {
+			msg.setError("重複建立!");
+		}
 		
-		//request.setAttribute("", df.sqlGet(sql.toString()));
+		//Message msg=new Message();
 		
-		
-		
-		df.exSql(sql.toString());
-		
+		this.savMessage(msg);
 		
 		return searchMambers();
 	}
 
+	public String edit() {
+		
+		request.setAttribute("info", df.sqlGetMap("SELECT s.*, cs.name as DeptName FROM Counselor_stmd s LEFT OUTER JOIN CODE_DEPT cs ON cs.id=s.SchoolNo WHERE s.Oid="+Oid));
+		request.setAttribute("ms", df.sqlGet("SELECT*FROM Counselor_msg WHERE stmd_oid="+Oid+" ORDER BY Oid DESC"));
+		
+		return SUCCESS;
+	}
 }

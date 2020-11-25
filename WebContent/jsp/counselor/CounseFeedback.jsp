@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>招生咨詢管理</title>
+<title>招生預約管理</title>
 <script src="/eis/inc/js/plugin/bootstrap-typeahead.js"></script>
 <script src="/eis/inc/js/plugin/jquery-ui.js"></script>
 <script src="/eis/inc/js/plugin/bootstrap-tooltip.js"></script>
@@ -17,9 +17,8 @@
 </head>
 <body>
 
-<div class="bs-callout bs-callout-danger">招生咨詢管理 <a href="/pis/Counselor">檢視咨詢網頁</a></div>
-
-<form action="CounselorManager" method="post" class="form-inline" enctype="multipart/form-data">
+<div class="bs-callout bs-callout-danger">招生預約管理 <a href="/pis/Counselor">檢視咨詢網頁</a></div>
+<form action="CounseFeedback" method="post" class="form-inline" enctype="multipart/form-data">
 <div class="panel panel-primary">
 <div class="panel-heading">查詢申請</div>
 <table class="table">	
@@ -34,24 +33,12 @@
 	  		<span class="input-group-addon">結束日期</span>
 	  		<input class="form-control" type="text" id="endDate" autocomplete="off" placeholder="點一下輸入日期" name="endDate" value="${endDate}"/>
 		</div>
+		<button class="btn btn-primary" id="search" name="method:search" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查詢申請狀況</button>
 		</td>	
-	</tr>
-	<tr>
-		<td>
-		
-		<select name="DeptStd" class="selectpicker">
-			<option value="">全部系所</option>
-			<c:forEach items="${allDept}" var="d">
-			<option <c:if test='${d.id eq  DeptStd}'>selected</c:if> value="${d.id}">${d.name}</option>
-			</c:forEach>
-		</select>
-		<button class="btn btn-primary" id="saveTxtFile" name="method:searchStds" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查詢申請狀況</button>
-		</td>
 	</tr>
 	
 </table>
 </div>
-<input type="hidden" name="Oid" id="Oid" value="${Oid }" />
 <c:if test="${!empty stds}">
 <div class="panel panel-primary">
 <div class="panel-heading">查詢結果</div>
@@ -88,58 +75,11 @@
 </div>
 </c:if>
 
-
-<div class="panel panel-primary">
-<div class="panel-heading">系所人員管理</div>
-<table class="table">	
-	
-	
-	<tr>
-		<td>
-		<input type="text" class="form-control techid" id="techid" name="techid" onClick="this.value=''" 
-		id="techids" value="${techid}" autocomplete="off" style="width:400px;"/>
-		<select name="DeptMamber" class="selectpicker">
-			<option value="">全部系所</option>
-			<c:forEach items="${allDept}" var="d">
-			<option <c:if test='${d.id eq  DeptMamber}'>selected</c:if> value="${d.id}">${d.name}</option>
-			</c:forEach>
-		</select>
-		<button class="btn btn-primary" id="saveTxtFile" name="method:searchMambers" type="submit"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 查詢權限</button>
-		<button class="btn btn-danger" id="saveTxtFile" name="method:addMambers" type="submit"><span class="glyphicon glyphicon-king" aria-hidden="true"></span> 建立權限</button>
-		</td>
-	</tr>
-</table>
-</div>
-
-<c:if test="${!empty members}">
-<div class="panel panel-primary">
-<div class="panel-heading">權限列表</div>
-<display:table name="${members}" id="row" class="table table-striped table-bordered" sort="list" requestURI="CounSelorManager?method=searchStds">
-	
-  	<display:column title="系所" property="DeptName" sortable="true" />
-	<display:column title="姓名" property="cname" sortable="true" />
-  	
-  	
-  	
-  	
-  	<display:column title="刪除">
-  	<a href="CounselorManager?delMember=${row.Oid}" class="btn btn-danger">刪除</a>
-  	</display:column>
-</display:table>
-</div>
-</c:if>
-
-
-
-
-
-
-
-
+<input type="hidden" name="Oid" id="Oid" value="${info.Oid}" />
 <c:if test="${!empty info}">
 
 <div class="panel panel-primary">
-<div class="panel-heading">連絡記錄</div>
+<div class="panel-heading">查詢結果</div>
 <table class="table">
 		<tr>
 			<td width="100">姓名</td>
@@ -179,17 +119,42 @@
 			<td width="100">預約備註</td>
 			<td>${info.note}</td>
 		</tr>
-		
+		<tr>
+			<td width="100">連繫結果</td>
+			<td>			
+			<script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
+			<textarea name="note" rows="8" style="height:200px; width:100%;"></textarea>
+                <script>
+                config.width = 850;     // 850 pixels wide.
+                config.width = '75%';   // CSS unit.
+                        CKEDITOR.inline( 'note', {
+                        	toolbar: [
+                        		
+                        		
+                        		{ name: 'document', items: [ 'Templates' ] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                        		{ name: 'basicstyles', items: [ 'Bold', 'Italic' ] },
+                        		[ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],			// Defines toolbar group without name.
+                        		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },																				// Line break - next group will be placed in new line.
+                        		
+                        	
+                        		
+                        		
+                        		
+                        		]
+                        });
+                </script>
+			</td>
+		</tr>
 	
 </table>
-<div class="panel-footer"><button class="btn btn-default" id="save" name="method:save" disabled type="submit"><span class=" glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> 儲存</button>
-<button name="method:searchStds" class="btn btn-default">離開</a></div>
+<div class="panel-footer"><button class="btn btn-default" id="save" name="method:save" type="submit"><span class=" glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> 儲存</button>
+<a href="CounseFeedback" class="btn btn-default">離開</a></div>
 
 </div>
 
 <c:if test="${!empty ms}">
 <div class="panel panel-primary">
-<div class="panel-heading">查詢結果</div>
+<div class="panel-heading">連絡記錄</div>
 <table class="table">
 	<c:forEach items="${ms}" var="m">
 		<tr>
@@ -212,8 +177,6 @@
 
 
 </form>
-
-
 <script>
 $("input[name='beginDate'], input[name='endDate']").datepicker({
 	changeMonth: true,
@@ -224,6 +187,5 @@ $("input[name='beginDate'], input[name='endDate']").datepicker({
 	//dateFormat: 'yy-MM-dd'
 });
 </script>
-
 </body>
 </html>

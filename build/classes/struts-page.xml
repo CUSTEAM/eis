@@ -23,6 +23,13 @@
 		<action name="CounselorManager" class="action.counselor.CounselorManagerAction">
 			<result>/jsp/counselor/CounselorManager.jsp</result>
 		</action>
+		
+		<action name="CounseFeedback" class="action.counselor.CounseFeedbackAction">
+			<result>/jsp/counselor/CounseFeedback.jsp</result>
+		</action>
+		
+		
+		
 	</package>
 	
 	<!-- 實驗室 -->

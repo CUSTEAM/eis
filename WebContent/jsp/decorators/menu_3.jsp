@@ -54,10 +54,21 @@
 				</c:forEach>			
 			</c:forEach>
 			</ul>
-			<c:if test="${!empty cookie['unit']}">
+			<c:if test="${!empty cookie['unit']}">			
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="javascript:chDocType();">切換為<span id="myDocType"><c:if test="${cookie['doctype'].value eq'odf'}">微軟</c:if><c:if test="${cookie['doctype'].value ne'odf'}">開放</c:if></span>報表</a></li>
-				<li class="dropdown"><a href="/eis/TaskManager">意見反應單</a></li>			
+				<li class="dropdown">
+				<a tabindex="0" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-submenu>意見反應單</a>
+				<ul class="dropdown-menu">
+					<li><a href="/eis/TaskManager">意見反應單</a></li>
+					<li><a href="/eis/CounseFeedback">招生咨詢反應單</a></li>
+				</ul>
+				
+				
+				
+				
+				
+				</li>			
 				<li class="dropdown"><a href="/eis/SeminarReg">活動報名</a></li>			
 				<li class="dropdown"><a href="/eis/Logout">登出</a></li>
 			</ul>

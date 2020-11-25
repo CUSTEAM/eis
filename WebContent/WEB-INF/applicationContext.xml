@@ -51,7 +51,8 @@
             	<value>model/SysLogSecurity.hbm.xml</value>
             	<value>model/SysTable.hbm.xml</value>
             	<value>model/PRJ.hbm.xml</value>
-            	
+            	<value>model/Counselor_stmd.hbm.xml</value>
+            	<value>model/Counselor_msg.hbm.xml</value>
             </list>
         </property>
         
