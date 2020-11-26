@@ -20,6 +20,11 @@
 <div class="bs-callout bs-callout-danger">招生咨詢管理 <a href="/pis/Counselor">檢視咨詢網頁</a></div>
 
 <form action="CounselorManager" method="post" class="form-inline" enctype="multipart/form-data">
+
+
+
+<div class="row">
+<div class="col-md-6">
 <div class="panel panel-primary">
 <div class="panel-heading">查詢申請</div>
 <table class="table">	
@@ -51,6 +56,41 @@
 	
 </table>
 </div>
+</div>
+<div class="col-md-6">
+<div class="panel panel-primary">
+<div class="panel-heading">系所人員管理</div>
+<table class="table">	
+	
+	
+	<tr>
+		<td>
+		<input type="text" class="form-control techid" id="techid" name="techid" onClick="this.value=''" 
+		placeholder="教職員姓名.." id="techids" value="${techid}" autocomplete="off" style="width:100%;"/>		
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<select name="DeptMamber" class="selectpicker">
+			<option value="">全部系所</option>
+			<c:forEach items="${allDept}" var="d">
+			<option <c:if test='${d.id eq  DeptMamber}'>selected</c:if> value="${d.id}">${d.name}</option>
+			</c:forEach>
+		</select>
+		<button class="btn btn-primary" id="saveTxtFile" name="method:searchMambers" type="submit"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 查詢權限</button>
+		<button class="btn btn-danger" id="saveTxtFile" name="method:addMambers" type="submit"><span class="glyphicon glyphicon-king" aria-hidden="true"></span> 建立權限</button>
+		</td>
+	</tr>
+</table>
+</div>
+</div>
+</div>
+
+
+
+
+
+
 <input type="hidden" name="Oid" id="Oid" value="${Oid }" />
 <c:if test="${!empty stds}">
 <div class="panel panel-primary">
@@ -89,27 +129,7 @@
 </c:if>
 
 
-<div class="panel panel-primary">
-<div class="panel-heading">系所人員管理</div>
-<table class="table">	
-	
-	
-	<tr>
-		<td>
-		<input type="text" class="form-control techid" id="techid" name="techid" onClick="this.value=''" 
-		id="techids" value="${techid}" autocomplete="off" style="width:400px;"/>
-		<select name="DeptMamber" class="selectpicker">
-			<option value="">全部系所</option>
-			<c:forEach items="${allDept}" var="d">
-			<option <c:if test='${d.id eq  DeptMamber}'>selected</c:if> value="${d.id}">${d.name}</option>
-			</c:forEach>
-		</select>
-		<button class="btn btn-primary" id="saveTxtFile" name="method:searchMambers" type="submit"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 查詢權限</button>
-		<button class="btn btn-danger" id="saveTxtFile" name="method:addMambers" type="submit"><span class="glyphicon glyphicon-king" aria-hidden="true"></span> 建立權限</button>
-		</td>
-	</tr>
-</table>
-</div>
+
 
 <c:if test="${!empty members}">
 <div class="panel panel-primary">
@@ -180,9 +200,34 @@
 			<td>${info.note}</td>
 		</tr>
 		
-	
+	<tr>
+			<td width="100">連繫結果</td>
+			<td>			
+			<script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
+			<textarea name="note" rows="8" style="height:200px; width:100%;"></textarea>
+                <script>
+                config.width = 850;     // 850 pixels wide.
+                config.width = '75%';   // CSS unit.
+                        CKEDITOR.inline( 'note', {
+                        	toolbar: [
+                        		
+                        		
+                        		{ name: 'document', items: [ 'Templates' ] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                        		{ name: 'basicstyles', items: [ 'Bold', 'Italic' ] },
+                        		[ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],			// Defines toolbar group without name.
+                        		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },																				// Line break - next group will be placed in new line.
+                        		
+                        	
+                        		
+                        		
+                        		
+                        		]
+                        });
+                </script>
+			</td>
+		</tr>
 </table>
-<div class="panel-footer"><button class="btn btn-default" id="save" name="method:save" disabled type="submit"><span class=" glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> 儲存</button>
+<div class="panel-footer"><button class="btn btn-default" id="save" name="method:save" type="submit"><span class=" glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> 儲存</button>
 <button name="method:searchStds" class="btn btn-default">離開</a></div>
 
 </div>

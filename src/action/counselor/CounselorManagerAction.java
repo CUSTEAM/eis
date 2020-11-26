@@ -1,11 +1,13 @@
 package action.counselor;
 
 import action.BaseAction;
+import model.Counselor_msg;
+import model.Counselor_stmd;
 import model.Message;
 
 public class CounselorManagerAction extends BaseAction{
 	
-	public String beginDate, endDate, DeptStd, DeptMamber, techid, Oid;
+	public String beginDate, endDate, DeptStd, DeptMamber, techid, Oid, reply, note;
 	
 	public String execute() {
 		
@@ -77,11 +79,28 @@ public class CounselorManagerAction extends BaseAction{
 		return searchMambers();
 	}
 
-	public String edit() {
-		
+	public String edit() {		
 		request.setAttribute("info", df.sqlGetMap("SELECT s.*, cs.name as DeptName FROM Counselor_stmd s LEFT OUTER JOIN CODE_DEPT cs ON cs.id=s.SchoolNo WHERE s.Oid="+Oid));
 		request.setAttribute("ms", df.sqlGet("SELECT*FROM Counselor_msg WHERE stmd_oid="+Oid+" ORDER BY Oid DESC"));
 		
 		return SUCCESS;
+	}
+	
+	public String save() {
+		Counselor_stmd s;
+		s=(Counselor_stmd) df.hqlGetListBy("FROM Counselor_stmd WHERE Oid="+Oid).get(0);		
+		s.setReply(reply);
+		//s.setNote(note);
+		df.update(s);
+		
+		Counselor_msg m=new Counselor_msg();
+		m.setStmd_oid(Integer.parseInt(Oid));
+		m.setName(df.sqlGetStr("SELECT cname FROM empl WHERE idno='"+getSession().getAttribute("userid")+"'"));
+		m.setNote(note);
+		df.update(m);
+		
+		request.setAttribute("info", df.sqlGetMap("SELECT s.*, cs.name as DeptName FROM Counselor_stmd s LEFT OUTER JOIN CODE_DEPT cs ON cs.id=s.SchoolNo WHERE s.Oid="+Oid));
+		request.setAttribute("ms", df.sqlGet("SELECT*FROM Counselor_msg WHERE stmd_oid="+Oid +" ORDER BY Oid DESC"));
+		return edit();
 	}
 }
