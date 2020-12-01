@@ -122,8 +122,8 @@
 	<display:column title="姓名" style="white-space:nowrap; width:100px;" property="student_name" sortable="true" />
   	<display:column title="電話" style="white-space:nowrap; width:100px;" property="cell_phone" sortable="true"/>  	
   	<display:column title="細節" style="width:50%;">
-  	<button name="method:edit" onClick="$('#Oid').val(${row.Oid})" class="btn btn-primary">查看</button>
-  	<button name="method:del" onClick="$('#Oid').val(${row.Oid})" class="btn btn-default">刪除</button>
+  	<button name="method:edit" onClick="$('#Oid').val(${row.Oid})" class="btn btn-default">查看</button>
+  	<button name="method:del" onClick="$('#Oid').val(${row.Oid})" class="btn btn-danger">刪除</button>
   	</display:column>
 </display:table>
 </div>
@@ -174,9 +174,9 @@
 			<td width="100">學制</td>
 			<td>			
 				<c:choose>
-			    <c:when test="${info.SchoolName eq 'M'}">碩士班</c:when>
-			    <c:when test="${info.SchoolName eq '2'}">二專</c:when>
-			    <c:when test="${info.SchoolName eq 'B2'}">四技</c:when>    
+			    <c:when test="${info.SchoolNo eq 'M'}">碩士班</c:when>
+			    <c:when test="${info.SchoolNo eq '2'}">二專</c:when>
+			    <c:when test="${info.SchoolNo eq 'B2'}">四技</c:when>    
 			    <c:otherwise>二技</c:otherwise>
 				</c:choose>			
 			</td>

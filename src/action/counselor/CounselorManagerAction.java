@@ -39,7 +39,7 @@ public class CounselorManagerAction extends BaseAction{
 			sql.append("AND add_time<='"+endDate+"'");
 		}
 		request.setAttribute("stds", df.sqlGet(sql.toString()));		
-				
+		//System.out.println(sql);
 		
 		return SUCCESS;
 	}
