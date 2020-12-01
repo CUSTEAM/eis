@@ -122,7 +122,8 @@
 	<display:column title="姓名" style="white-space:nowrap; width:100px;" property="student_name" sortable="true" />
   	<display:column title="電話" style="white-space:nowrap; width:100px;" property="cell_phone" sortable="true"/>  	
   	<display:column title="細節" style="width:50%;">
-  	<button name="method:edit" onClick="$('#Oid').val(${row.Oid})" class="btn btn-default btn-sm">查看</button>
+  	<button name="method:edit" onClick="$('#Oid').val(${row.Oid})" class="btn btn-primary">查看</button>
+  	<button name="method:del" onClick="$('#Oid').val(${row.Oid})" class="btn btn-default">刪除</button>
   	</display:column>
 </display:table>
 </div>

@@ -80,10 +80,21 @@ public class CounselorManagerAction extends BaseAction{
 	}
 
 	public String edit() {		
-		request.setAttribute("info", df.sqlGetMap("SELECT s.*, cs.name as DeptName FROM Counselor_stmd s LEFT OUTER JOIN CODE_DEPT cs ON cs.id=s.SchoolNo WHERE s.Oid="+Oid));
+		request.setAttribute("info", df.sqlGetMap("SELECT s.*, cs.name as DeptName FROM Counselor_stmd s LEFT OUTER JOIN CODE_DEPT cs ON cs.id=s.DeptNo WHERE s.Oid="+Oid));
 		request.setAttribute("ms", df.sqlGet("SELECT*FROM Counselor_msg WHERE stmd_oid="+Oid+" ORDER BY Oid DESC"));
 		
 		return SUCCESS;
+	}
+	
+	public String del() {		
+		df.exSql("DELETE FROM Counselor_stmd WHERE Oid="+Oid);
+		Message msg=new Message();
+		msg.setSuccess("已刪除");
+		this.savMessage(msg);
+		//request.setAttribute("info", df.sqlGetMap("SELECT s.*, cs.name as DeptName FROM Counselor_stmd s LEFT OUTER JOIN CODE_DEPT cs ON cs.id=s.SchoolNo WHERE s.Oid="+Oid));
+		//request.setAttribute("ms", df.sqlGet("SELECT*FROM Counselor_msg WHERE stmd_oid="+Oid+" ORDER BY Oid DESC"));
+				
+		return searchStds();
 	}
 	
 	public String save() {
