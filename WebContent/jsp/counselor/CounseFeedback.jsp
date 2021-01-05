@@ -34,6 +34,7 @@
 	  		<input class="form-control" type="text" id="endDate" autocomplete="off" placeholder="點一下輸入日期" name="endDate" value="${endDate}"/>
 		</div>
 		<button class="btn btn-primary" id="search" name="method:search" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查詢申請狀況</button>
+		<button class="btn btn-primary" id="search" name="method:print" type="submit"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> 列印</button>
 		</td>	
 	</tr>
 	

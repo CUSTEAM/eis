@@ -38,7 +38,7 @@ public class getStdimage extends BaseAction {
 			if(getContext().getAttribute("isServer").equals("0")){
 				host="192.192.230.167";
 			}
-			
+			System.out.println("StdImage/"+folder+"/"+ myStdNo+".jpg");
 			inStream=bio.getFtpInputStream(host, "CIS", "cust!@#", "StdImage/"+folder+"/", myStdNo+".jpg");
 			if (inStream == null) {
 				inStream = new ByteArrayInputStream("Sorry,File not found !".getBytes());
